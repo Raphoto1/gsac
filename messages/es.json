@@ -1,0 +1,51 @@
+{
+  "navigation": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "products": "Productos",
+    "contact": "Contacto"
+  },
+  "home": {
+    "welcome": "Bienvenido",
+    "description": "Tu descripción aquí"
+  },
+  "bigCard": {
+    "title": "Nuestro Enfoque",
+    "description": "Descubre nuestras novedades, servicios y soluciones para impulsar tu negocio con confianza."
+  },
+  "about": {
+    "title": "Acerca de nosotros",
+    "description": "Información sobre nuestra empresa"
+  },
+  "products": {
+    "title": "Nuestros productos",
+    "description": "Explora nuestro catálogo"
+  },
+  "companies": {
+    "title": "Empresas"
+  },
+  "cases": {
+    "title": "Casos de éxito"
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "description": "¿Tienes alguna pregunta o proyecto en mente? Completa el formulario y te responderemos a la brevedad.",
+    "nameLabel": "Nombre",
+    "namePlaceholder": "Tu nombre completo",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tu@correo.com",
+    "companyLabel": "Empresa (opcional)",
+    "companyPlaceholder": "Nombre de tu empresa",
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "¿En qué podemos ayudarte?",
+    "submitButton": "Enviar mensaje",
+    "phoneLabel": "Teléfono",
+    "successMessage": "¡Gracias! Tu mensaje ha sido enviado. Nos pondremos en contacto pronto."
+  },
+  "footer": {
+    "tagline": "Global Services and Consulting",
+    "rights": "Todos los derechos reservados"
+  },
+  "language": "Idioma",
+  "selectLanguage": "Seleccionar idioma"
+}

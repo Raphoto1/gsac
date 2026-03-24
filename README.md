@@ -20,6 +20,18 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Google Analytics
+
+Create a local environment file and define your measurement ID:
+
+```bash
+cp .env.example .env.local
+```
+
+Set `NEXT_PUBLIC_GA_MEASUREMENT_ID` to your Google Analytics ID, for example `G-XXXXXXXXXX`.
+
+The integration is loaded automatically from the root layout and tracks client-side route changes in the App Router.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

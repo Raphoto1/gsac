@@ -1,0 +1,51 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "products": "Products",
+    "contact": "Contact"
+  },
+  "home": {
+    "welcome": "Welcome",
+    "description": "Your description here"
+  },
+  "bigCard": {
+    "title": "Our Approach",
+    "description": "Discover our services and solutions to drive your business forward with confidence."
+  },
+  "about": {
+    "title": "About Us",
+    "description": "Information about our company"
+  },
+  "products": {
+    "title": "Our Products",
+    "description": "Explore our catalog"
+  },
+  "companies": {
+    "title": "Companies"
+  },
+  "cases": {
+    "title": "Success Cases"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Have a question or a project in mind? Fill out the form and we'll get back to you shortly.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your full name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "companyLabel": "Company (optional)",
+    "companyPlaceholder": "Your company name",
+    "messageLabel": "Message",
+    "messagePlaceholder": "How can we help you?",
+    "submitButton": "Send message",
+    "phoneLabel": "Phone",
+    "successMessage": "Thank you! Your message has been sent. We'll be in touch soon."
+  },
+  "footer": {
+    "tagline": "Global Services and Consulting",
+    "rights": "All rights reserved"
+  },
+  "language": "Language",
+  "selectLanguage": "Select language"
+}
