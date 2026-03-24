@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import ParticleNetwork from "@/components/utils/particles/ParticleNetwork";
 
 export default function BigCard() {
   const t = useTranslations("bigCard");
@@ -27,7 +28,8 @@ export default function BigCard() {
   }, []);
 
   return (
-    <div className="hero min-h-screen bg-base-200 px-4">
+    <div className="hero min-h-screen bg-base-200 px-4 relative overflow-hidden">
+      <ParticleNetwork />
       <div className="hero-content flex w-full max-w-7xl flex-col gap-8 lg:flex-row-reverse">
         <div
           ref={imageRef}

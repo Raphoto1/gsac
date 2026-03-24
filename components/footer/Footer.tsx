@@ -12,6 +12,17 @@ export default function Footer() {
         <p className="text-sm opacity-70">
           Copyright {new Date().getFullYear()} - {footer("rights")}
         </p>
+        <p className="text-xs opacity-50 mt-1">
+          Designed by{" "}
+          <a
+            href="https://creativerafa.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link link-hover"
+          >
+            Creative Rafa
+          </a>
+        </p>
       </aside>
       <nav className="flex w-full flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
         <a className="link link-hover" href="/">
