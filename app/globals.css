@@ -2,3 +2,12 @@
 @plugin "daisyui";
 
 /* Custom styles can be added here */
+
+[data-theme],
+:root,
+[data-theme="light"],
+[data-theme="dark"] {
+  --color-primary: oklch(45.2% 0.118 241.6);
+  --color-secondary: #2F99CC;
+  --color-secondary-content: #ffffff;
+}

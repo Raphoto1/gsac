@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { RiCloseLine, RiMenu3Line } from "react-icons/ri";
 import { LanguageSwitcher } from "@/components/utils/language/LanguageSwitcher";
 import ThemeSwitcher from "@/components/utils/theme/ThemeSwitcher";
+import Image from "next/image";
 
 export default function Nav() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -87,8 +88,8 @@ export default function Nav() {
       >
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 py-3 px-0 sm:px-2">
         <div className="flex items-center gap-3">
-          <Link href="/" className="text-2xl font-bold tracking-tight text-base-content">
-            GSAC
+          <Link href="/" >
+            <Image src="/img/logos/Logo.png" alt="GSAC Logo" width={150} height={150} />
           </Link>
         </div>
 

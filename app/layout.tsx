@@ -32,7 +32,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html>
+    <html data-theme="light">
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-full overflow-x-hidden antialiased`}>
         <SessionProvider>
           <NextIntlClientProvider messages={messages}>
