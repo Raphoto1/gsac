@@ -1,5 +1,6 @@
 import BigCardProps from "@/components/BigCardProps";
 import ProductsList from "@/components/products/ProductsList";
+import Cases from "@/components/home/Cases";
 import type { ProductItem } from "@/components/products/ProductsList";
 import { useTranslations } from "next-intl";
 
@@ -38,9 +39,10 @@ export default function Page() {
   ];
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center min-w-full">
       <BigCardProps title={t("title")} description={t("description")} imageUrl='https://images.pexels.com/photos/7698796/pexels-photo-7698796.jpeg' />
       <ProductsList products={products} />
+      <Cases />
     </div>
   );
 }

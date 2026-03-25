@@ -35,7 +35,7 @@ export default function Cases() {
 
 
   return (
-    <div className='relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-base-200 px-4 py-10'>
+    <div className='relative flex w-full min-h-screen flex-col items-center justify-center overflow-hidden bg-base-200 px-4 py-10'>
       <GeometricLinesBackground />
       <h1 className='relative z-20 text-center text-4xl font-bold md:text-6xl'>{t("title")}</h1>
       <div className='relative z-20 grid w-full max-w-7xl grid-cols-1 gap-4 py-6 md:auto-rows-[160px] md:grid-cols-6'>
