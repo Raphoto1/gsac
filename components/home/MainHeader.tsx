@@ -13,7 +13,7 @@ export default function MainHeader() {
       <div className='hero-overlay'></div>
       <div className='flex w-full justify-center md:justify-end md:pr-50 text-neutral-content text-center'>
         <div className='max-w-md'>
-          <Image src="/img/logos/Logo.png" alt="GSAC Logo" width={350} height={350} />
+          <Image src="/img/logos/LogoWhite.png" alt="GSAC Logo" width={350} height={350} />
           <p className='mb-2 text-4xl font-bold'>{t("welcome")}</p>
           <p className='text-lg'>{t("description")}</p>
         </div>

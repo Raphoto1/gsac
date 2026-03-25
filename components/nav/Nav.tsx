@@ -14,6 +14,7 @@ export default function Nav() {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const lastScrollY = useRef(0);
   const pathname = usePathname();
   const t = useTranslations("navigation");
@@ -57,6 +58,24 @@ export default function Nav() {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const updateThemeState = () => {
+      const theme = root.getAttribute("data-theme");
+      setIsDarkMode(theme === "dark");
+    };
+
+    updateThemeState();
+
+    const observer = new MutationObserver(updateThemeState);
+    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   const linkClassName = (href: string) =>
     [
       "rounded-full px-4 py-2 text-sm font-medium transition-colors",
@@ -89,7 +108,12 @@ export default function Nav() {
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 py-3 px-0 sm:px-2">
         <div className="flex items-center gap-3">
           <Link href="/" >
-            <Image src="/img/logos/Logo.png" alt="GSAC Logo" width={150} height={150} />
+            <Image
+              src={isDarkMode ? "/img/logos/LogoWhite.png" : "/img/logos/Logo.png"}
+              alt="GSAC Logo"
+              width={150}
+              height={150}
+            />
           </Link>
         </div>
 
