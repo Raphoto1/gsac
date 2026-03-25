@@ -39,6 +39,51 @@
   filter: saturate(1.06);
 }
 
+@keyframes geo-float-a {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(14px, -12px, 0) rotate(8deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+@keyframes geo-float-b {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-12px, 10px, 0) rotate(-10deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+@keyframes geo-spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.geo-float-a {
+  animation: geo-float-a 11s ease-in-out infinite;
+}
+
+.geo-float-b {
+  animation: geo-float-b 13s ease-in-out infinite;
+}
+
+.geo-spin-slow {
+  animation: geo-spin-slow 24s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card-enter {
     opacity: 1;
@@ -49,5 +94,11 @@
   .card-hover:hover {
     transition: none;
     transform: none;
+  }
+
+  .geo-float-a,
+  .geo-float-b,
+  .geo-spin-slow {
+    animation: none;
   }
 }

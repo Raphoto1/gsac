@@ -8,14 +8,16 @@ type CaseCardProps = {
   name: string;
   description: string;
   image: string;
+  className?: string;
 };
 
 export default function CaseCard(props: CaseCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const cardClassName = props.className ? props.className : "max-w-sm";
 
   return (
     <>
-      <div className='card w-full max-w-sm bg-base-100 shadow-sm'>
+      <div className={`card w-full bg-base-100 shadow-sm ${cardClassName}`}>
         <div className='card-body'>
           <h2 className='card-title'>{props.name}</h2>
           <p>{props.description}</p>

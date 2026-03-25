@@ -145,7 +145,9 @@ export default function CardBasicProp({
               <Link href={link}>
                 <button className="btn btn-sm">Learn More</button>
               </Link>
-            ) : null}
+            ) : <Link href='/contact'>
+                <button className="btn btn-sm">Contactanos</button>
+              </Link>}
             {hasExpandContent ? (
               <button
                 type="button"

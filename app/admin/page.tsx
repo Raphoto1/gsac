@@ -2,6 +2,9 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import LogoutButton from "@/components/auth/LogoutButton";
+import AdminHome from "@/components/admin/AdminHome";
+import AdminAbout from "@/components/admin/AdminAbout";
+import AdminProducts from "@/components/admin/AdminProducts";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -19,6 +22,9 @@ export default async function Page() {
         </div>
         <LogoutButton />
       </div>
+      <AdminHome />
+      <AdminAbout />
+      <AdminProducts />
     </div>
   );
 }

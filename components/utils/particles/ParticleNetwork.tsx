@@ -25,6 +25,8 @@ interface ParticleNetworkProps {
   dotOpacity?: number;
   /** Max opacity of connection lines (default: 0.4) */
   lineOpacity?: number;
+  /** Draw subtle connections from particles to pointer inside the canvas */
+  interactive?: boolean;
   /** Extra CSS classes for the canvas element */
   className?: string;
 }
@@ -37,6 +39,7 @@ export default function ParticleNetwork({
   color = "99,102,241",
   dotOpacity = 0.55,
   lineOpacity = 0.4,
+  interactive = false,
   className = "",
 }: ParticleNetworkProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -55,6 +58,7 @@ export default function ParticleNetwork({
     window.addEventListener("resize", resize);
 
     const [rMin, rMax] = radiusRange;
+    const mouse = { x: -9999, y: -9999, active: false };
 
     const particles: Particle[] = Array.from({ length: count }, () => ({
       x: Math.random() * canvas.width,
@@ -65,6 +69,27 @@ export default function ParticleNetwork({
     }));
 
     let animId: number;
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!interactive) return;
+      const rect = canvas.getBoundingClientRect();
+      const insideX = event.clientX >= rect.left && event.clientX <= rect.right;
+      const insideY = event.clientY >= rect.top && event.clientY <= rect.bottom;
+      if (!insideX || !insideY) {
+        mouse.active = false;
+        return;
+      }
+      mouse.x = event.clientX - rect.left;
+      mouse.y = event.clientY - rect.top;
+      mouse.active = true;
+    };
+
+    const handleMouseLeave = () => {
+      mouse.active = false;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseout", handleMouseLeave);
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -99,6 +124,21 @@ export default function ParticleNetwork({
         p.y += p.vy;
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        if (interactive && mouse.active) {
+          const dx = p.x - mouse.x;
+          const dy = p.y - mouse.y;
+          const pointerDistance = Math.sqrt(dx * dx + dy * dy);
+          const pointerRange = maxDistance * 0.9;
+          if (pointerDistance < pointerRange) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(${color},${(1 - pointerDistance / pointerRange) * (lineOpacity + 0.15)})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
       }
 
       animId = requestAnimationFrame(draw);
@@ -109,8 +149,10 @@ export default function ParticleNetwork({
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseout", handleMouseLeave);
     };
-  }, [count, maxDistance, radiusRange, speed, color, dotOpacity, lineOpacity]);
+  }, [count, maxDistance, radiusRange, speed, color, dotOpacity, lineOpacity, interactive]);
 
   return (
     <canvas
