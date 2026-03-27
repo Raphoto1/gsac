@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import CardBasicProp from "@/components/CardBasicProp";
 
 export type ProductItem = {
@@ -14,6 +17,7 @@ type ProductsListProps = {
 };
 
 export default function ProductsList({ products }: ProductsListProps) {
+  const [particlesActive, setParticlesActive] = useState(true);
   const desktopPositions = [
     "md:absolute md:left-[8%] md:top-[10%]",
     "md:absolute md:right-[8%] md:top-[3%]",
@@ -26,6 +30,16 @@ export default function ProductsList({ products }: ProductsListProps) {
     "self-start",
     "self-end",
   ];
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      setParticlesActive(false);
+    }, 10000);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, []);
 
   return (
     <section className="relative w-full overflow-hidden bg-white px-4 py-16">
@@ -48,26 +62,60 @@ export default function ProductsList({ products }: ProductsListProps) {
               <path d="M220 145 C390 255, 560 360, 700 585" className="company-network-path subtle" pathLength="100" />
               <path d="M730 135 C595 255, 460 400, 335 555" className="company-network-path subtle" pathLength="100" />
 
-              <circle cx="220" cy="145" r="7" className="company-network-node-svg" />
-              <circle cx="730" cy="135" r="7" className="company-network-node-svg" />
-              <circle cx="335" cy="555" r="7" className="company-network-node-svg" />
-              <circle cx="700" cy="585" r="7" className="company-network-node-svg" />
+              <circle
+                cx="220"
+                cy="145"
+                r="7"
+                className="company-network-node-svg"
+                style={particlesActive ? undefined : { animation: "none" }}
+              />
+              <circle
+                cx="730"
+                cy="135"
+                r="7"
+                className="company-network-node-svg"
+                style={particlesActive ? undefined : { animation: "none" }}
+              />
+              <circle
+                cx="335"
+                cy="555"
+                r="7"
+                className="company-network-node-svg"
+                style={particlesActive ? undefined : { animation: "none" }}
+              />
+              <circle
+                cx="700"
+                cy="585"
+                r="7"
+                className="company-network-node-svg"
+                style={particlesActive ? undefined : { animation: "none" }}
+              />
 
-              <circle r="5" className="company-network-dot-svg">
-                <animateMotion dur="4.8s" repeatCount="indefinite" rotate="auto">
-                  <mpath href="#product-line-a" />
-                </animateMotion>
-              </circle>
-              <circle r="5" className="company-network-dot-svg delay-a">
-                <animateMotion dur="5.2s" repeatCount="indefinite" rotate="auto">
-                  <mpath href="#product-line-b" />
-                </animateMotion>
-              </circle>
-              <circle r="5" className="company-network-dot-svg delay-b">
-                <animateMotion dur="5.6s" repeatCount="indefinite" rotate="auto">
-                  <mpath href="#product-line-c" />
-                </animateMotion>
-              </circle>
+              {particlesActive ? (
+                <>
+                  <circle r="5" className="company-network-dot-svg">
+                    <animateMotion dur="4.8s" repeatCount="indefinite" rotate="auto">
+                      <mpath href="#product-line-a" />
+                    </animateMotion>
+                  </circle>
+                  <circle r="5" className="company-network-dot-svg delay-a">
+                    <animateMotion dur="5.2s" repeatCount="indefinite" rotate="auto">
+                      <mpath href="#product-line-b" />
+                    </animateMotion>
+                  </circle>
+                  <circle r="5" className="company-network-dot-svg delay-b">
+                    <animateMotion dur="5.6s" repeatCount="indefinite" rotate="auto">
+                      <mpath href="#product-line-c" />
+                    </animateMotion>
+                  </circle>
+                </>
+              ) : (
+                <>
+                  <circle cx="485" cy="114" r="5" className="company-network-dot-svg" />
+                  <circle cx="262" cy="336" r="5" className="company-network-dot-svg delay-a" />
+                  <circle cx="524" cy="356" r="5" className="company-network-dot-svg delay-b" />
+                </>
+              )}
 
               <path id="product-line-a" d="M220 145 C360 105, 520 105, 730 135" fill="none" stroke="transparent" />
               <path id="product-line-b" d="M220 145 C245 270, 270 410, 335 555" fill="none" stroke="transparent" />
@@ -84,26 +132,60 @@ export default function ProductsList({ products }: ProductsListProps) {
                 <path d="M95 115 C145 300, 145 480, 120 600" className="company-network-path subtle" pathLength="100" />
                 <path d="M270 310 C240 510, 245 690, 275 845" className="company-network-path subtle" pathLength="100" />
 
-                <circle cx="95" cy="115" r="7" className="company-network-node-svg" />
-                <circle cx="270" cy="310" r="7" className="company-network-node-svg" />
-                <circle cx="120" cy="600" r="7" className="company-network-node-svg" />
-                <circle cx="275" cy="845" r="7" className="company-network-node-svg" />
+                <circle
+                  cx="95"
+                  cy="115"
+                  r="7"
+                  className="company-network-node-svg"
+                  style={particlesActive ? undefined : { animation: "none" }}
+                />
+                <circle
+                  cx="270"
+                  cy="310"
+                  r="7"
+                  className="company-network-node-svg"
+                  style={particlesActive ? undefined : { animation: "none" }}
+                />
+                <circle
+                  cx="120"
+                  cy="600"
+                  r="7"
+                  className="company-network-node-svg"
+                  style={particlesActive ? undefined : { animation: "none" }}
+                />
+                <circle
+                  cx="275"
+                  cy="845"
+                  r="7"
+                  className="company-network-node-svg"
+                  style={particlesActive ? undefined : { animation: "none" }}
+                />
 
-                <circle r="5" className="company-network-dot-svg">
-                  <animateMotion dur="4.2s" repeatCount="indefinite" rotate="auto">
-                    <mpath href="#product-mobile-a" />
-                  </animateMotion>
-                </circle>
-                <circle r="5" className="company-network-dot-svg delay-a">
-                  <animateMotion dur="4.8s" repeatCount="indefinite" rotate="auto">
-                    <mpath href="#product-mobile-b" />
-                  </animateMotion>
-                </circle>
-                <circle r="5" className="company-network-dot-svg delay-b">
-                  <animateMotion dur="5.2s" repeatCount="indefinite" rotate="auto">
-                    <mpath href="#product-mobile-c" />
-                  </animateMotion>
-                </circle>
+                {particlesActive ? (
+                  <>
+                    <circle r="5" className="company-network-dot-svg">
+                      <animateMotion dur="4.2s" repeatCount="indefinite" rotate="auto">
+                        <mpath href="#product-mobile-a" />
+                      </animateMotion>
+                    </circle>
+                    <circle r="5" className="company-network-dot-svg delay-a">
+                      <animateMotion dur="4.8s" repeatCount="indefinite" rotate="auto">
+                        <mpath href="#product-mobile-b" />
+                      </animateMotion>
+                    </circle>
+                    <circle r="5" className="company-network-dot-svg delay-b">
+                      <animateMotion dur="5.2s" repeatCount="indefinite" rotate="auto">
+                        <mpath href="#product-mobile-c" />
+                      </animateMotion>
+                    </circle>
+                  </>
+                ) : (
+                  <>
+                    <circle cx="175" cy="190" r="5" className="company-network-dot-svg" />
+                    <circle cx="206" cy="450" r="5" className="company-network-dot-svg delay-a" />
+                    <circle cx="205" cy="730" r="5" className="company-network-dot-svg delay-b" />
+                  </>
+                )}
 
                 <path id="product-mobile-a" d="M95 115 C165 150, 225 185, 270 310" fill="none" stroke="transparent" />
                 <path id="product-mobile-b" d="M270 310 C235 415, 160 470, 120 600" fill="none" stroke="transparent" />

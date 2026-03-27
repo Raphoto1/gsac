@@ -10,16 +10,16 @@ export default function CompanyList() {
   const [isVisible, setIsVisible] = useState(false);
   const [particlesActive, setParticlesActive] = useState(true);
   const desktopPositions = [
-    "md:absolute md:left-[4%] md:top-[10%]",
-    "md:absolute md:right-[2%] md:top-[2%]",
-    "md:absolute md:left-[15%] md:bottom-[10%]",
-    "md:absolute md:right-[8%] md:bottom-[1%]",
+    "md:absolute md:left-[10%] md:top-[14%]",
+    "md:absolute md:right-[10%] md:top-[8%]",
+    "md:absolute md:left-[20%] md:bottom-[16%]",
+    "md:absolute md:right-[18%] md:bottom-[10%]",
   ];
   const mobilePositions = [
-    "absolute left-2 top-[2%]",
-    "absolute right-2 top-[26%]",
-    "absolute left-5 top-[50%]",
-    "absolute right-3 top-[74%]",
+    "self-start",
+    "self-end",
+    "self-start",
+    "self-end",
   ];
 
     const companies = [
@@ -68,7 +68,7 @@ export default function CompanyList() {
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
       setParticlesActive(false);
-    }, 30000);
+    }, 15000);
 
     return () => {
       window.clearTimeout(timeoutId);
@@ -102,10 +102,34 @@ export default function CompanyList() {
               <path d='M220 150 C390 250, 520 360, 690 580' className='company-network-path subtle' pathLength='100' />
               <path d='M730 135 C620 250, 470 360, 320 560' className='company-network-path subtle' pathLength='100' />
 
-              <circle cx='220' cy='150' r='7' className='company-network-node-svg' />
-              <circle cx='730' cy='135' r='7' className='company-network-node-svg' />
-              <circle cx='320' cy='560' r='7' className='company-network-node-svg' />
-              <circle cx='690' cy='580' r='7' className='company-network-node-svg' />
+              <circle
+                cx='220'
+                cy='150'
+                r='7'
+                className='company-network-node-svg'
+                style={particlesActive ? undefined : { animation: 'none' }}
+              />
+              <circle
+                cx='730'
+                cy='135'
+                r='7'
+                className='company-network-node-svg'
+                style={particlesActive ? undefined : { animation: 'none' }}
+              />
+              <circle
+                cx='320'
+                cy='560'
+                r='7'
+                className='company-network-node-svg'
+                style={particlesActive ? undefined : { animation: 'none' }}
+              />
+              <circle
+                cx='690'
+                cy='580'
+                r='7'
+                className='company-network-node-svg'
+                style={particlesActive ? undefined : { animation: 'none' }}
+              />
 
               {particlesActive ? (
                 <>
@@ -139,7 +163,7 @@ export default function CompanyList() {
             </svg>
           </div>
 
-          <div className='relative h-245 md:hidden'>
+          <div className='relative md:hidden'>
             <div
               className={[
                 "pointer-events-none absolute inset-0 transition-opacity duration-700",
@@ -147,17 +171,41 @@ export default function CompanyList() {
               ].join(" ")}
               aria-hidden='true'
             >
-              <svg viewBox='0 0 360 980' className='h-full w-full overflow-visible'>
+              <svg viewBox='0 0 360 1200' className='h-full w-full overflow-visible'>
                 <path d='M95 115 C165 150, 225 185, 270 310' className='company-network-path' pathLength='100' />
                 <path d='M270 310 C235 415, 160 470, 120 600' className='company-network-path' pathLength='100' />
                 <path d='M120 600 C175 700, 235 760, 275 845' className='company-network-path' pathLength='100' />
                 <path d='M95 115 C145 300, 145 480, 120 600' className='company-network-path subtle' pathLength='100' />
                 <path d='M270 310 C240 510, 245 690, 275 845' className='company-network-path subtle' pathLength='100' />
 
-                <circle cx='95' cy='115' r='7' className='company-network-node-svg' />
-                <circle cx='270' cy='310' r='7' className='company-network-node-svg' />
-                <circle cx='120' cy='600' r='7' className='company-network-node-svg' />
-                <circle cx='275' cy='845' r='7' className='company-network-node-svg' />
+                <circle
+                  cx='95'
+                  cy='115'
+                  r='7'
+                  className='company-network-node-svg'
+                  style={particlesActive ? undefined : { animation: 'none' }}
+                />
+                <circle
+                  cx='270'
+                  cy='310'
+                  r='7'
+                  className='company-network-node-svg'
+                  style={particlesActive ? undefined : { animation: 'none' }}
+                />
+                <circle
+                  cx='120'
+                  cy='600'
+                  r='7'
+                  className='company-network-node-svg'
+                  style={particlesActive ? undefined : { animation: 'none' }}
+                />
+                <circle
+                  cx='275'
+                  cy='845'
+                  r='7'
+                  className='company-network-node-svg'
+                  style={particlesActive ? undefined : { animation: 'none' }}
+                />
 
                 {particlesActive ? (
                   <>
@@ -191,22 +239,24 @@ export default function CompanyList() {
               </svg>
             </div>
 
-            {companies.map((company, index) => (
-              <div
-                key={index}
-                className={[
-                  "w-72 transition-all duration-700 ease-out",
-                  mobilePositions[index],
-                  isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0",
-                ].join(" ")}
-                style={{ transitionDelay: `${index * 140}ms`, animationDelay: `${index * 0.7}s` }}
-              >
-                <CompanyCard {...company} />
-              </div>
-            ))}
+            <div className='relative z-10 flex flex-col gap-14 px-3 py-5'>
+              {companies.map((company, index) => (
+                <div
+                  key={index}
+                  className={[
+                    "w-[88%] max-w-72 transition-all duration-700 ease-out",
+                    mobilePositions[index],
+                    isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0",
+                  ].join(" ")}
+                  style={{ transitionDelay: `${index * 140}ms`, animationDelay: `${index * 0.7}s` }}
+                >
+                  <CompanyCard {...company} />
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className='relative hidden h-190 md:block'>
+          <div className='relative hidden h-170 md:block'>
             {companies.map((company, index) => (
               <div
                 key={index}
