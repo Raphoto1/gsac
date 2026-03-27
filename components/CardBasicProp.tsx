@@ -118,29 +118,34 @@ export default function CardBasicProp({
 
   return (
     <div
-      className={`relative w-96 transform-gpu transition-transform duration-500 ease-out ${
+      className={`relative w-full max-w-96 transform-gpu transition-all duration-500 ease-out ${
         isExpanded && !isMobile ? "z-40" : "z-0"
       } ${
         isExpanded && !isMobile
           ? side === "left" ? "-translate-x-3" : "translate-x-3"
           : ""
+      } ${
+        isExpanded && isMobile ? "mb-12" : ""
       }`}
     >
-      {/* Card — z-10 stays in front */}
       <div
         ref={cardRef}
-        className={`card relative z-10 w-full ${cardColorClassMap[color]} transform-gpu transition-all duration-700 ease-out ${
+        className={`company-card-float relative z-10 w-full rounded-4xl bg-white text-base-content shadow-[0_16px_40px_rgba(15,23,42,0.08)] transform-gpu transition-all duration-700 ease-out ${
           !isExpanded ? "hover:-translate-y-2 hover:shadow-2xl hover:saturate-110" : ""
         } ${
           isVisible ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-[0.98] opacity-0"
         }`}
         style={{ transitionDelay: `${delayIndex * 90}ms` }}
       >
-        <CardIcon className="absolute right-5 top-5" size={24} />
-        <div className="card-body">
-          <h2 className="card-title">{title}</h2>
-          <p>{description}</p>
-          <div className="card-actions justify-between items-center">
+        <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-primary/35 to-transparent" />
+        <div className={`absolute left-1/2 top-1 flex h-22 w-22 -translate-x-1/2 -translate-y-1/3 md:-translate-y-1/2 items-center justify-center rounded-full border-4 border-white shadow-xl ${cardColorClassMap[color]}`}>
+          <CardIcon size={28} />
+        </div>
+
+        <div className="flex flex-col px-6 pb-6 pt-14 text-center">
+          <h2 className="text-lg font-semibold">{title}</h2>
+          <p className="mt-2 text-sm leading-relaxed text-base-content/75">{description}</p>
+          <div className="mt-5 flex items-center justify-between gap-3">
             {link ? (
               <Link href={link}>
                 <button className="btn btn-sm">Learn More</button>
@@ -162,10 +167,9 @@ export default function CardBasicProp({
         </div>
       </div>
 
-      {/* Panel desktop — sale lateral, dentro del stacking context está bien */}
       {hasExpandContent && !isMobile ? (
         <div
-          className={`absolute z-0 w-72 rounded-2xl bg-base-100 text-base-content shadow-xl overflow-hidden transition-all duration-500 ease-out ${
+          className={`absolute z-0 w-72 overflow-hidden rounded-3xl bg-white text-base-content shadow-xl transition-all duration-500 ease-out ${
             side === "left"
               ? isExpanded
                 ? "translate-x-0 opacity-100 pointer-events-auto"
@@ -180,10 +184,9 @@ export default function CardBasicProp({
         </div>
       ) : null}
 
-      {/* Panel móvil — in-flow: se despliega hacia abajo sin z-index */}
       {hasExpandContent && isMobile ? (
         <div
-          className={`overflow-hidden rounded-b-2xl bg-base-100 text-base-content shadow-xl transition-all duration-500 ease-out ${
+          className={`overflow-hidden rounded-b-3xl bg-white text-base-content shadow-xl transition-all duration-500 ease-out ${
             isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           }`}
         >
