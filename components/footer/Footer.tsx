@@ -37,9 +37,6 @@ export default function Footer() {
         <a className="link link-hover" href="/contact">
           {navigation("contact")}
         </a>
-        <a className="link link-hover" href="/admin">
-          Admin
-        </a>
       </nav>
     </footer>
   );

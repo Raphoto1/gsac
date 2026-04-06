@@ -124,8 +124,9 @@ export default function Nav() {
             <Image
               src={isDarkMode ? "/img/logos/LogoWhite.png" : "/img/logos/Logo.png"}
               alt="GSAC Logo"
-              width={150}
-              height={150}
+                width={1080}
+                height={433}
+              className="h-auto w-37.5"
             />
           </Link>
         </div>
