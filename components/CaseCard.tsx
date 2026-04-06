@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import Modal from "@/components/utils/modal/Modal";
+import { trackEvent } from "@/components/utils/analytics/GoogleAnalytics";
 
 type CaseCardProps = {
   companyName: string;
@@ -70,6 +71,15 @@ export default function CaseCard(props: CaseCardProps) {
   const modalDescription = props.advancedDescription ?? props.description;
   const impactItems = props.impactItems ?? [];
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    trackEvent("open_success_case", {
+      case_name: props.companyName,
+      organization_type: props.organizationType,
+      page_location: window.location.pathname,
+    });
+  };
+
   return (
     <>
       <div className={`card relative w-full overflow-hidden border border-base-300/70 bg-base-100 shadow-sm ${cardClassName}`}>
@@ -113,7 +123,7 @@ export default function CaseCard(props: CaseCardProps) {
         <figure>
           <button
             type='button'
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleOpenModal}
             className='group relative w-full cursor-pointer overflow-hidden'
             aria-label={`Open details for ${props.companyName}`}
           >

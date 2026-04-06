@@ -30,7 +30,14 @@ cp .env.example .env.local
 
 Set `NEXT_PUBLIC_GA_MEASUREMENT_ID` to your Google Analytics ID, for example `G-XXXXXXXXXX`.
 
+Set `NEXT_PUBLIC_SITE_URL` to the full public origin of the site, including protocol, for example `https://www.grupogscapital.com`.
+
 The integration is loaded automatically from the root layout and tracks client-side route changes in the App Router.
+
+Tracked events:
+- `page_view`: Sent on every route change in the App Router.
+- `view_success_cases_section`: Sent when the success cases section enters the viewport.
+- `open_success_case`: Sent when a user opens a success case modal.
 
 ## Security Headers
 

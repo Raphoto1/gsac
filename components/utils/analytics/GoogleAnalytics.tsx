@@ -23,6 +23,14 @@ function trackPageView(url: string) {
   });
 }
 
+export function trackEvent(eventName: string, params?: Record<string, string | number | boolean>) {
+  if (!GA_MEASUREMENT_ID || typeof window === "undefined" || typeof window.gtag !== "function") {
+    return;
+  }
+
+  window.gtag("event", eventName, params);
+}
+
 export function GoogleAnalytics() {
   const pathname = usePathname();
   const searchParams = useSearchParams();

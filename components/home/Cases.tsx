@@ -1,11 +1,14 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import CaseCard from "../CaseCard";
 import GeometricLinesBackground from "@/components/utils/particles/GeometricLinesBackground";
+import { trackEvent } from "@/components/utils/analytics/GoogleAnalytics";
 
 export default function Cases() {
   const t = useTranslations("cases");
+  const sectionRef = useRef<HTMLDivElement | null>(null);
   const cases = [
     {
       companyName: "Case 1",
@@ -49,9 +52,45 @@ export default function Cases() {
     },
   ];
 
+  useEffect(() => {
+    const sectionElement = sectionRef.current;
+
+    if (!sectionElement) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+
+        if (!entry?.isIntersecting) {
+          return;
+        }
+
+        trackEvent("view_success_cases_section", {
+          section_name: "casos_de_exito",
+          page_location: window.location.pathname,
+        });
+
+        observer.disconnect();
+      },
+      {
+        threshold: 0.35,
+      }
+    );
+
+    observer.observe(sectionElement);
+
+    return () => observer.disconnect();
+  }, []);
+
 
   return (
-    <div className='relative flex w-full min-h-screen flex-col items-center justify-center overflow-hidden bg-base-200 px-4 py-10'>
+    <div
+      ref={sectionRef}
+      id='cases'
+      className='relative flex w-full min-h-screen flex-col items-center justify-center overflow-hidden bg-base-200 px-4 py-10'
+    >
       <GeometricLinesBackground />
       <h1 className='relative z-20 text-center text-4xl font-bold md:text-6xl'>{t("title")}</h1>
       <div className='relative z-20 grid w-full max-w-6xl grid-cols-1 gap-4 py-6 md:auto-rows-[112px] md:grid-cols-6'>

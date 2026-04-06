@@ -13,9 +13,30 @@ type PageMetadataOptions = {
   robots?: Metadata["robots"];
 };
 
+function normalizeSiteUrl(rawSiteUrl?: string) {
+  const fallbackUrl = "http://localhost:3000";
+  const trimmedSiteUrl = rawSiteUrl?.trim();
+
+  if (!trimmedSiteUrl) {
+    return fallbackUrl;
+  }
+
+  const siteUrlWithProtocol = /^[a-z][a-z\d+.-]*:\/\//i.test(trimmedSiteUrl)
+    ? trimmedSiteUrl
+    : /^(localhost|127(?:\.\d{1,3}){3}|0\.0\.0\.0)(:\d+)?(\/|$)/i.test(trimmedSiteUrl)
+      ? `http://${trimmedSiteUrl}`
+      : `https://${trimmedSiteUrl}`;
+
+  try {
+    return new URL(siteUrlWithProtocol).origin;
+  } catch {
+    return fallbackUrl;
+  }
+}
+
 export const siteConfig = {
   name: "GSAC",
-  siteUrl: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, ""),
+  siteUrl: normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   defaultDescription:
     "GSAC impulsa empresas con consultoria, soluciones operativas y acompanamiento estrategico para crecimiento sostenible.",
   defaultOgImage: "/img/logos/Logo.png",
