@@ -28,11 +28,11 @@ export default function Footer() {
         <a className="link link-hover" href="/">
           {navigation("home")}
         </a>
-        <a className="link link-hover" href="/about">
-          {navigation("about")}
-        </a>
         <a className="link link-hover" href="/products">
           {navigation("products")}
+        </a>
+        <a className="link link-hover" href="/about">
+          {navigation("about")}
         </a>
         <a className="link link-hover" href="/contact">
           {navigation("contact")}
