@@ -8,7 +8,12 @@
   },
   "home": {
     "welcome": "Welcome",
-    "description": "Your description here"
+    "description": "Your description here",
+    "impact": {
+      "projects": "120+ projects",
+      "clients": "40+ clients",
+      "sectors": "12 industries"
+    }
   },
   "bigCard": {
     "title": "Our Approach",
@@ -20,7 +25,8 @@
   },
   "products": {
     "title": "Our Products",
-    "description": "Explore our catalog"
+    "description": "Explore our catalog",
+    "secondaryDescription": "We provide solutions designed to improve control, operational efficiency, and growth capacity at every stage of the business."
   },
   "companies": {
     "title": "Companies"
@@ -41,11 +47,36 @@
     "messagePlaceholder": "How can we help you?",
     "submitButton": "Send message",
     "phoneLabel": "Phone",
-    "successMessage": "Thank you! Your message has been sent. We'll be in touch soon."
+    "successMessage": "Thank you! Your message has been sent. We'll be in touch soon.",
+    "validation": {
+      "nameRequired": "Enter your name.",
+      "nameMinLength": "The name must be at least 2 characters long.",
+      "emailRequired": "Enter your email address.",
+      "emailInvalid": "Enter a valid email address.",
+      "messageRequired": "Enter a message.",
+      "messageMinLength": "The message must be at least 10 characters long.",
+      "repeatedCharacters": "No more than 4 identical characters in a row are allowed."
+    }
   },
   "footer": {
     "tagline": "Operated by GSA Financiers",
     "rights": "All rights reserved"
+  },
+  "seo": {
+    "defaultTitle": "GSAC | Business consulting and solutions",
+    "defaultDescription": "GSAC helps companies optimize processes, strengthen operations, and grow with business consulting and practical solutions focused on results.",
+    "homeTitle": "Business consulting and solutions",
+    "homeDescription": "GSAC supports companies with consulting, operational optimization, and practical solutions to improve performance, control, and sustainable growth.",
+    "aboutTitle": "About GSAC",
+    "aboutDescription": "Learn about GSAC, a firm focused on consulting and business solutions that improve decisions, processes, and sustainable growth.",
+    "productsTitle": "Products and solutions",
+    "productsDescription": "Explore GSAC products and solutions designed to strengthen operations, improve management, and accelerate business outcomes.",
+    "newsTitle": "News and updates",
+    "newsDescription": "Read the latest GSAC news, partnerships, events, and releases related to consulting, innovation, and business solutions.",
+    "contactTitle": "Contact",
+    "contactDescription": "Talk to GSAC to assess needs, request information, or start a consulting and business improvement project.",
+    "articleNotFoundTitle": "Article not found",
+    "articleNotFoundDescription": "The requested news article is not available for indexing."
   },
   "language": "Language",
   "selectLanguage": "Select language"

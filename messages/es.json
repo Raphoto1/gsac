@@ -8,7 +8,12 @@
   },
   "home": {
     "welcome": "Bienvenido",
-    "description": "Tu descripción aquí"
+    "description": "Tu descripción aquí",
+    "impact": {
+      "projects": "120+ proyectos",
+      "clients": "40+ clientes",
+      "sectors": "12 sectores"
+    }
   },
   "bigCard": {
     "title": "Nuestro Enfoque",
@@ -20,7 +25,8 @@
   },
   "products": {
     "title": "Nuestros productos",
-    "description": "Explora nuestro catálogo"
+    "description": "Explora nuestro catálogo",
+    "secondaryDescription": "Integramos soluciones pensadas para mejorar control, eficiencia operativa y capacidad de crecimiento en cada etapa del negocio."
   },
   "companies": {
     "title": "Empresas"
@@ -41,11 +47,36 @@
     "messagePlaceholder": "¿En qué podemos ayudarte?",
     "submitButton": "Enviar mensaje",
     "phoneLabel": "Teléfono",
-    "successMessage": "¡Gracias! Tu mensaje ha sido enviado. Nos pondremos en contacto pronto."
+    "successMessage": "¡Gracias! Tu mensaje ha sido enviado. Nos pondremos en contacto pronto.",
+    "validation": {
+      "nameRequired": "Ingresa tu nombre.",
+      "nameMinLength": "El nombre debe tener al menos 2 caracteres.",
+      "emailRequired": "Ingresa tu correo electrónico.",
+      "emailInvalid": "Ingresa un correo electrónico válido.",
+      "messageRequired": "Ingresa un mensaje.",
+      "messageMinLength": "El mensaje debe tener al menos 10 caracteres.",
+      "repeatedCharacters": "No se permiten más de 4 caracteres iguales seguidos."
+    }
   },
   "footer": {
     "tagline": "Operado por GSA Financieros",
     "rights": "Todos los derechos reservados"
+  },
+  "seo": {
+    "defaultTitle": "GSAC | Consultoria y soluciones empresariales",
+    "defaultDescription": "GSAC ayuda a empresas a optimizar procesos, fortalecer su operacion y crecer con consultoria y soluciones empresariales enfocadas en resultados.",
+    "homeTitle": "Consultoria y soluciones empresariales",
+    "homeDescription": "GSAC acompana a empresas con consultoria, optimizacion operativa y soluciones practicas para mejorar desempeno, control y crecimiento.",
+    "aboutTitle": "Acerca de GSAC",
+    "aboutDescription": "Conoce a GSAC, una firma enfocada en consultoria y soluciones empresariales para impulsar decisiones, procesos y crecimiento sostenible.",
+    "productsTitle": "Productos y soluciones",
+    "productsDescription": "Explora los productos y soluciones de GSAC para fortalecer la operacion, mejorar la gestion y acelerar resultados empresariales.",
+    "newsTitle": "Novedades y actualizaciones",
+    "newsDescription": "Revisa las ultimas novedades, alianzas, eventos y lanzamientos de GSAC sobre consultoria, innovacion y soluciones empresariales.",
+    "contactTitle": "Contacto",
+    "contactDescription": "Habla con GSAC para evaluar necesidades, solicitar informacion o iniciar un proyecto de consultoria y mejora empresarial.",
+    "articleNotFoundTitle": "Articulo no encontrado",
+    "articleNotFoundDescription": "La novedad solicitada no esta disponible para indexacion."
   },
   "language": "Idioma",
   "selectLanguage": "Seleccionar idioma"

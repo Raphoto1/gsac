@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
@@ -5,6 +6,12 @@ import LogoutButton from "@/components/auth/LogoutButton";
 import AdminHome from "@/components/admin/AdminHome";
 import AdminAbout from "@/components/admin/AdminAbout";
 import AdminProducts from "@/components/admin/AdminProducts";
+import { buildNoIndexMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildNoIndexMetadata(
+  "Admin",
+  "Area privada de administracion de GSAC."
+);
 
 export default async function Page() {
   const session = await getServerSession(authOptions);

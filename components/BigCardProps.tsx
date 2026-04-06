@@ -2,17 +2,16 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
 import ParticleNetwork from "@/components/utils/particles/ParticleNetwork";
 
 type BigCardPropsData = {
   title: string;
   description: string;
+  secondaryDescription?: string;
   imageUrl?: string;
 };
 
-export default function BigCardProps({ title, description, imageUrl }: BigCardPropsData) {
-  const t = useTranslations("bigCard");
+export default function BigCardProps({ title, description, secondaryDescription, imageUrl }: BigCardPropsData) {
   const textRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const [textVisible, setTextVisible] = useState(false);
@@ -60,6 +59,7 @@ export default function BigCardProps({ title, description, imageUrl }: BigCardPr
         >
           <h1 className="text-5xl font-bold">{title}</h1>
           <p className="py-6 text-xl">{description}</p>
+          {secondaryDescription ? <p className="max-w-2xl text-base leading-7 text-base-content/80">{secondaryDescription}</p> : null}
         </div>
       </div>
     </div>

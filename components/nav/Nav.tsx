@@ -18,14 +18,22 @@ export default function Nav() {
   const lastScrollY = useRef(0);
   const pathname = usePathname();
   const t = useTranslations("navigation");
+  const isHomePage = pathname === "/";
 
   const navItems = [
     { href: "/", label: t("home") },
-    { href: "/about", label: t("about") },
-    { href: "/news", label: t("news") },
     { href: "/products", label: t("products") },
+    { href: "/about", label: t("about") },
     { href: "/contact", label: t("contact") },
   ];
+
+  //   const navItems = [
+  //   { href: "/", label: t("home") },
+  //   { href: "/about", label: t("about") },
+  //   { href: "/news", label: t("news") },
+  //   { href: "/products", label: t("products") },
+  //   { href: "/contact", label: t("contact") },
+  // ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,10 +64,6 @@ export default function Nav() {
   }, []);
 
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     const root = document.documentElement;
 
     const updateThemeState = () => {
@@ -85,30 +89,38 @@ export default function Nav() {
         : "text-base-content/80 hover:bg-base-200 hover:text-base-content",
     ].join(" ");
 
-  const navVisible = isVisible || isMobileMenuOpen || isHovering;
+  const navVisible = !isHomePage || isVisible || isMobileMenuOpen || isHovering;
+  const showHoverTrigger = isHomePage && !isMobileMenuOpen;
+  const handleNavigate = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <>
       {/* Invisible hover trigger zone — desktop only */}
-      <div
-        className="fixed top-0 left-0 right-0 z-40 h-10 hidden md:block"
-        onMouseEnter={() => setIsHovering(true)}
-      />
+      {showHoverTrigger ? (
+        <div
+          className="fixed top-0 left-0 right-0 z-40 hidden h-10 md:block"
+          onMouseEnter={() => setIsHovering(true)}
+        />
+      ) : null}
 
       <header
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         className={[
           "fixed top-0 left-0 right-0 z-50 border-b border-base-300 px-4 backdrop-blur transition-all duration-300",
-          navVisible
+          isHomePage && navVisible
             ? "translate-y-0 opacity-100"
-            : "-translate-y-full opacity-0 pointer-events-none",
+            : isHomePage
+              ? "-translate-y-full opacity-0 pointer-events-none"
+              : "translate-y-0 opacity-100",
           isScrolled ? "bg-base-100/95 shadow-lg" : "bg-base-100/88 shadow-sm",
         ].join(" ")}
       >
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 py-3 px-0 sm:px-2">
         <div className="flex items-center gap-3">
-          <Link href="/" >
+          <Link href="/" onClick={handleNavigate}>
             <Image
               src={isDarkMode ? "/img/logos/LogoWhite.png" : "/img/logos/Logo.png"}
               alt="GSAC Logo"
@@ -120,7 +132,7 @@ export default function Nav() {
 
         <nav className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className={linkClassName(item.href)}>
+            <Link key={item.href} href={item.href} className={linkClassName(item.href)} onClick={handleNavigate}>
               {item.label}
             </Link>
           ))}
@@ -151,7 +163,7 @@ export default function Nav() {
           <div className="rounded-3xl border border-base-300 bg-base-100 p-3 shadow-xl">
             <nav className="flex flex-col gap-2">
               {navItems.map((item) => (
-                <Link key={item.href} href={item.href} className={linkClassName(item.href)}>
+                <Link key={item.href} href={item.href} className={linkClassName(item.href)} onClick={handleNavigate}>
                   {item.label}
                 </Link>
               ))}

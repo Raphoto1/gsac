@@ -14,7 +14,7 @@ export default function Home() {
       <BigCard />
       <CompanyList />
       <Cases />
-      <HomeNewsPreview />
+      {/* <HomeNewsPreview /> */}
       <Contact />
     </div>
   );

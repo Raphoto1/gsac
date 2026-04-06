@@ -10,6 +10,7 @@ type ModalProps = {
   title?: string;
   isLoading?: boolean;
   loadingLabel?: string;
+  hideHeader?: boolean;
 };
 
 export default function Modal({
@@ -19,6 +20,7 @@ export default function Modal({
   title,
   isLoading = false,
   loadingLabel,
+  hideHeader = false,
 }: ModalProps) {
   useEffect(() => {
     if (!isOpen) return;
@@ -51,17 +53,19 @@ export default function Modal({
         aria-label={title ?? "Modal"}
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="flex items-center justify-between border-b border-base-300 px-5 py-4">
-          <h2 className="text-lg font-semibold">{title ?? "Dialog"}</h2>
-          <button
-            type="button"
-            className="btn btn-ghost btn-sm"
-            onClick={onClose}
-            aria-label="Close modal"
-          >
-            X
-          </button>
-        </div>
+        {hideHeader ? null : (
+          <div className="flex items-center justify-between border-b border-base-300 px-5 py-4">
+            <h2 className="text-lg font-semibold">{title ?? "Dialog"}</h2>
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              onClick={onClose}
+              aria-label="Close modal"
+            >
+              X
+            </button>
+          </div>
+        )}
 
         <div className="px-5 py-4">{isLoading ? <Loader label={loadingLabel} /> : children}</div>
       </div>

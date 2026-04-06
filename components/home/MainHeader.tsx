@@ -1,8 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+
 export default function MainHeader() {
   const t = useTranslations("home");
+  const impactItems = [t("impact.projects"), t("impact.clients"), t("impact.sectors")];
 
   return (
     <div
@@ -16,6 +18,13 @@ export default function MainHeader() {
           <Image src="/img/logos/LogoWhite.png" alt="GSAC Logo" width={350} height={350} />
           <p className='mb-2 text-4xl font-bold'>{t("welcome")}</p>
           <p className='text-lg'>{t("description")}</p>
+          <div className='mt-6 flex flex-wrap justify-center gap-3 text-sm font-semibold uppercase tracking-[0.18em] text-neutral-content/90 md:justify-center'>
+            {impactItems.map((item) => (
+              <span key={item} className='rounded-full border border-neutral-content/30 bg-black/15 px-4 py-2 backdrop-blur-sm'>
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </div>

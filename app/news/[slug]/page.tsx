@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import NewsShareButtons from "@/components/news/NewsShareButtons";
 import { getNewsBySlug, sampleNews } from "@/components/news/newsData";
+import { buildPageMetadata } from "@/lib/seo";
 
 type NewsArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -9,6 +12,32 @@ type NewsArticlePageProps = {
 
 export function generateStaticParams() {
   return sampleNews.map((article) => ({ slug: article.slug }));
+}
+
+export async function generateMetadata({ params }: NewsArticlePageProps): Promise<Metadata> {
+  const [{ slug }, locale, t] = await Promise.all([params, getLocale(), getTranslations("seo")]);
+  const article = getNewsBySlug(slug);
+
+  if (!article) {
+    return {
+      title: t("articleNotFoundTitle"),
+      description: t("articleNotFoundDescription"),
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  return buildPageMetadata({
+    title: article.title,
+    description: article.excerpt,
+    path: `/news/${article.slug}`,
+    locale,
+    image: article.imageUrl,
+    type: "article",
+    keywords: [article.category, "GSAC", "novedades", "articulo"],
+  });
 }
 
 export default async function NewsArticlePage({ params }: NewsArticlePageProps) {
