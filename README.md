@@ -32,6 +32,26 @@ Set `NEXT_PUBLIC_GA_MEASUREMENT_ID` to your Google Analytics ID, for example `G-
 
 The integration is loaded automatically from the root layout and tracks client-side route changes in the App Router.
 
+## Security Headers
+
+The application sends the following security headers globally from `next.config.ts`:
+
+- `Content-Security-Policy`: Restricts the allowed sources for scripts, styles, images, connections, frames, and other resources to reduce XSS and unauthorized third-party resource loading risks.
+- `Referrer-Policy: strict-origin-when-cross-origin`: Limits the referrer information shared with external sites.
+- `X-Content-Type-Options: nosniff`: Prevents browsers from MIME-sniffing files as a different content type.
+- `X-Frame-Options: DENY`: Blocks the site from being embedded in iframes to reduce clickjacking risk.
+- `Permissions-Policy`: Disables access to camera, microphone, geolocation, and browsing topics because the site does not require them.
+- `Strict-Transport-Security`: Forces HTTPS on subsequent visits and includes subdomains.
+- `X-DNS-Prefetch-Control: on`: Explicitly enables DNS prefetch behavior.
+
+Summary:
+These headers are intended to harden the site against content injection, insecure transport, unauthorized embedding, and unnecessary browser capability exposure.
+
+Notes:
+- The Content Security Policy allows only the resources required by the site itself plus the configured analytics services.
+- In development, the CSP also allows `unsafe-eval` for the local React and Turbopack workflow.
+- In production, the CSP adds `upgrade-insecure-requests`.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
