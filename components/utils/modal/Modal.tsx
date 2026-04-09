@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import Loader from "@/components/utils/loader/Loader";
 
 type ModalProps = {
@@ -40,9 +41,9 @@ export default function Modal({
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-100 flex items-center justify-center bg-base-content/45 p-4"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-base-content/45 p-4"
       role="presentation"
       onClick={onClose}
     >
@@ -69,6 +70,7 @@ export default function Modal({
 
         <div className="px-5 py-4">{isLoading ? <Loader label={loadingLabel} /> : children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

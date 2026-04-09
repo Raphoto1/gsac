@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
+import Modal from "@/components/utils/modal/Modal";
 import {
   IoAdd,
   IoBriefcase,
   IoBusiness,
-  IoClose,
   IoConstruct,
   IoGlobe,
   IoRocket,
@@ -21,7 +21,6 @@ type CardBasicProps = {
   color?: "primary" | "secondary" | "accent" | "neutral";
   icon?: "business" | "briefcase" | "construct" | "globe" | "rocket" | "settings";
   delayIndex?: number;
-  side?: "left" | "right";
   expandTitle?: string;
   expandText?: string;
   expandImage?: string;
@@ -50,25 +49,16 @@ export default function CardBasicProp({
   color = "primary",
   icon = "business",
   delayIndex = 0,
-  side = "left",
   expandTitle,
   expandText,
   expandImage,
 }: CardBasicProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const CardIcon = cardIconMap[icon];
 
   const hasExpandContent = expandTitle || expandText || expandImage;
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   useEffect(() => {
     const currentCard = cardRef.current;
@@ -95,7 +85,7 @@ export default function CardBasicProp({
   }, []);
 
   const expandPanel = (
-    <div className="flex flex-col gap-3 p-5">
+    <div className="flex max-h-[70vh] flex-col gap-4 overflow-y-auto pr-1">
       {expandImage ? (
         <div className="relative h-40 w-full overflow-hidden rounded-xl">
           <Image
@@ -107,31 +97,18 @@ export default function CardBasicProp({
           />
         </div>
       ) : null}
-      {expandTitle ? (
-        <h3 className="text-lg font-semibold">{expandTitle}</h3>
-      ) : null}
       {expandText ? (
-        <p className="text-sm text-base-content/80">{expandText}</p>
+        <p className="whitespace-pre-line text-sm leading-6 text-base-content/80">{expandText}</p>
       ) : null}
     </div>
   );
 
   return (
-    <div
-      className={`relative w-full max-w-96 transform-gpu transition-all duration-500 ease-out ${
-        isExpanded && !isMobile ? "z-40" : "z-0"
-      } ${
-        isExpanded && !isMobile
-          ? side === "left" ? "-translate-x-3" : "translate-x-3"
-          : ""
-      } ${
-        isExpanded && isMobile ? "mb-12" : ""
-      }`}
-    >
+    <div className="relative w-full max-w-96 transform-gpu transition-all duration-500 ease-out">
       <div
         ref={cardRef}
         className={`company-card-float relative z-10 w-full rounded-4xl bg-white text-base-content shadow-[0_16px_40px_rgba(15,23,42,0.08)] transform-gpu transition-all duration-700 ease-out ${
-          !isExpanded ? "hover:-translate-y-2 hover:shadow-2xl hover:saturate-110" : ""
+          "hover:-translate-y-2 hover:shadow-2xl hover:saturate-110"
         } ${
           isVisible ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-[0.98] opacity-0"
         }`}
@@ -157,41 +134,20 @@ export default function CardBasicProp({
               <button
                 type="button"
                 className="btn btn-circle btn-sm btn-ghost ml-auto"
-                onClick={() => setIsExpanded((prev) => !prev)}
-                aria-label={isExpanded ? "Cerrar detalle" : "Ver detalle"}
+                onClick={() => setIsModalOpen(true)}
+                aria-label="Ver detalle"
               >
-                {isExpanded ? <IoClose size={18} /> : <IoAdd size={18} />}
+                <IoAdd size={18} />
               </button>
             ) : null}
           </div>
         </div>
       </div>
 
-      {hasExpandContent && !isMobile ? (
-        <div
-          className={`absolute z-0 w-72 overflow-hidden rounded-3xl bg-white text-base-content shadow-xl transition-all duration-500 ease-out ${
-            side === "left"
-              ? isExpanded
-                ? "translate-x-0 opacity-100 pointer-events-auto"
-                : "-translate-x-full opacity-0 pointer-events-none"
-              : isExpanded
-              ? "translate-x-0 opacity-100 pointer-events-auto"
-              : "translate-x-full opacity-0 pointer-events-none"
-          }`}
-          style={side === "left" ? { top: 0, left: "100%" } : { top: 0, right: "100%" }}
-        >
+      {hasExpandContent ? (
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={expandTitle ?? title}>
           {expandPanel}
-        </div>
-      ) : null}
-
-      {hasExpandContent && isMobile ? (
-        <div
-          className={`overflow-hidden rounded-b-3xl bg-white text-base-content shadow-xl transition-all duration-500 ease-out ${
-            isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          {expandPanel}
-        </div>
+        </Modal>
       ) : null}
     </div>
   );

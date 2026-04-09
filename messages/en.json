@@ -22,6 +22,43 @@
   "about": {
     "title": "About Us",
     "description": "GS Capital supports impact organizations in structuring, strengthening, and executing their financial strategy by integrating specialized consulting, sustainability model design, investment project structuring, and fundraising strategies, with the goal of aligning their social mission with a real capacity for operation, growth, and scalability over time.",
+    "mission": {
+      "title": "Mission",
+      "description": "To support organizations, companies, and actors within the development ecosystem in structuring, strengthening, and executing their financial strategy by integrating consulting, fundraising, and investment plan structuring, with the aim of building sustainable models that enable growth, scalability, and real long-term impact."
+    },
+    "vision": {
+      "title": "Vision",
+      "description": "To be a leading firm in Latin America in structuring financial solutions for organizations and companies operating in development contexts, recognized for its ability to connect strategy, investments, capital, and impact, and for transforming the way purpose-driven initiatives are designed, financed, and scaled."
+    },
+    "values": {
+      "title": "Values",
+      "items": {
+        "financialRigor": {
+          "title": "Financial rigor",
+          "description": "We apply technical standards drawn from the financial industry in every process, ensuring deep analysis, solid structures, and informed decision-making."
+        },
+        "executionFocus": {
+          "title": "Execution focus",
+          "description": "We do not stop at diagnosis. We design solutions that can be implemented in real contexts, supporting our clients in decision-making and execution."
+        },
+        "contextUnderstanding": {
+          "title": "Contextual understanding",
+          "description": "We understand the dynamics of the social, business, and development sectors, adapting financial tools to operational, regulatory, and market realities."
+        },
+        "sustainability": {
+          "title": "Sustainability as a principle",
+          "description": "We promote financial models that ensure organizations can endure over time, avoiding dependency and strengthening autonomy."
+        },
+        "strategyCapitalAlignment": {
+          "title": "Alignment between strategy and capital",
+          "description": "We connect our clients' strategic objectives with coherent financial structures, facilitating access to and efficient use of resources."
+        },
+        "longTermRelationships": {
+          "title": "Long-term relationships",
+          "description": "We build relationships based on trust, confidentiality, and ongoing support, acting as strategic partners rather than external consultants."
+        }
+      }
+    },
     "services": {
       "title": "What specific service do we provide?",
       "description": "GS Capital provides consulting, advisory, and financial structuring services for NGOs, foundations, and impact organizations, covering everything from strategic planning to the implementation of sustainable financial models. Its work includes designing and optimizing fundraising strategies across individual donors, corporate partners, and grants; structuring investment projects with an impact focus; developing revenue collection and income generation models; and building financial frameworks that enable organizations to make informed decisions, manage risk, and scale operations sustainably. In addition, the firm supports development finance and impact investment processes, connecting social needs with viable financial structures under standards of financial rigor similar to those of investment firms, but adapted to the dynamics and constraints of the social sector.",

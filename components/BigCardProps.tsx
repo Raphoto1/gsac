@@ -19,6 +19,14 @@ type BigCardPropsData = {
   backgroundVariant?: number;
 };
 
+function renderParagraphs(text: string, className: string) {
+  return text.split(/\n\s*\n/).map((paragraph, index) => (
+    <p key={`${paragraph.slice(0, 24)}-${index}`} className={className}>
+      {paragraph}
+    </p>
+  ));
+}
+
 export default function BigCardProps({
   title,
   description,
@@ -75,8 +83,14 @@ export default function BigCardProps({
           }`}
         >
           <h1 className="text-5xl font-bold">{title}</h1>
-          <p className="py-6 text-xl">{description}</p>
-          {secondaryDescription ? <p className="max-w-2xl text-base leading-7 text-base-content/80">{secondaryDescription}</p> : null}
+          <div className="space-y-6 py-6 text-xl leading-8 text-base-content/90">
+            {renderParagraphs(description, "whitespace-pre-line")}
+          </div>
+          {secondaryDescription ? (
+            <div className="max-w-2xl space-y-4 text-base leading-7 text-base-content/80">
+              {renderParagraphs(secondaryDescription, "whitespace-pre-line")}
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
