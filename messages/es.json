@@ -1,9 +1,9 @@
 {
   "navigation": {
     "home": "Inicio",
-    "about": "Acerca de",
+    "about": "Acerca de Nosotros",
     "news": "Novedades",
-    "products": "Productos",
+    "products": "Servicios",
     "contact": "Contacto"
   },
   "home": {
@@ -17,19 +17,51 @@
   },
   "bigCard": {
     "title": "Nuestro Enfoque",
-    "description": "Descubre nuestras novedades, servicios y soluciones para impulsar tu negocio con confianza."
+    "description": "GS Capital acompaña a organizaciones de impacto en la estructuración, fortalecimiento y ejecución de su estrategia financiera, integrando consultoría especializada, diseño de modelos de sostenibilidad, estructuración de proyectos de inversión y estrategias de fundraising, con el objetivo de alinear su misión social con una capacidad real de operación, crecimiento y escalabilidad en el tiempo."
   },
   "about": {
     "title": "Acerca de nosotros",
-    "description": "Información sobre nuestra empresa"
+    "description": "GS Capital acompaña a organizaciones de impacto en la estructuración, fortalecimiento y ejecución de su estrategia financiera, integrando consultoría especializada, diseño de modelos de sostenibilidad, estructuración de proyectos de inversión y estrategias de fundraising, con el objetivo de alinear su misión social con una capacidad real de operación, crecimiento y escalabilidad en el tiempo.",
+    "services": {
+      "title": "¿Qué servicio específico les prestamos?",
+      "description": "GS Capital presta servicios de consultoría, asesoría y estructuración financiera para ONGs, fundaciones y organizaciones de impacto, abarcando desde la planeación estratégica hasta la implementación de modelos financieros sostenibles. Su trabajo incluye el diseño y optimización de estrategias de fundraising (donantes individuales, corporate y grants), la estructuración de proyectos de inversión con enfoque en impacto, el desarrollo de modelos de recaudo y generación de ingresos, y la construcción de marcos financieros que permitan a las organizaciones tomar decisiones informadas, gestionar riesgos y escalar sus operaciones de manera sostenible.Adicionalmente, acompañan procesos de finanzas para el desarrollo e inversión de impacto, conectando necesidades sociales con estructuras financieras viables, bajo estándares de rigor financiero similares a los de firmas de inversión, pero adaptados a las dinámicas y restricciones del sector social.",
+      "secondaryDescription": "Integramos soluciones pensadas para mejorar control, eficiencia operativa y capacidad de crecimiento en cada etapa del negocio."
+    },
+    "whyUs": {
+      "title": "¿Por qué elegirnos?",
+      "description": "GS Capital combina el rigor de una firma financiera con un entendimiento profundo de organizaciones que operan en contextos de desarrollo, incluyendo ONGs, fundaciones, empresas, pymes y compañías que buscan crecer con propósito y sostenibilidad. A diferencia de una consultora financiera tradicional, GS Capital no aplica modelos estándar diseñados para grandes corporaciones, sino que adapta y estructura soluciones financieras según la realidad de cada organización: modelos de ingresos mixtos, restricciones operativas, necesidades de capital, y dinámicas propias de crecimiento en mercados locales e internacionales. Su enfoque integra tres capacidades que rara vez se encuentran en una misma firma: estrategia, finanzas y fundraising. Esto permite acompañar a los clientes no solo en el diagnóstico, sino en la estructuración e implementación de modelos financieros completos que conectan crecimiento, sostenibilidad y acceso a recursos. GS Capital trabaja con metodologías propias que combinan planeación estratégica, estructuración financiera, diseño de modelos de recaudo y estructuración de proyectos de inversión, ajustadas al nivel de madurez y al tipo de organización, desde etapas tempranas hasta procesos de expansión y consolidación. Adicionalmente, cuenta con una red de aliados y un entendimiento del ecosistema de inversión y desarrollo que facilita la conexión entre organizaciones, fuentes de financiamiento, oportunidades de inversión y estructuras de colaboración, tanto a nivel nacional como internacional. En síntesis, GS Capital actúa como un socio estratégico que traduce objetivos de crecimiento y desarrollo en estructuras financieras viables, sostenibles y escalables, con un enfoque práctico orientado a la ejecución."
+    },
+    "experience": {
+      "title": "Nuestra Experiencia y Origen",
+      "description": "GS Capital opera como un spin-off de GSA Financieros S.A.S., firma colombiana fundada en 2013 con una trayectoria consolidada en asesoría bancaria y servicios especializados para el sector financiero. GSA Financieros ha desarrollado un alto nivel técnico en cálculo actuarial, liquidación de préstamos y análisis financiero profundo de productos como leasing y crédito en Colombia, trabajando bajo estándares de precisión, rigurosidad y entendimiento detallado de estructuras financieras complejas. A partir de esta base, GS Capital surge como una evolución estratégica que amplía estas capacidades hacia la consultoría financiera, la planeación estratégica, la estructuración de modelos de sostenibilidad, el diseño de estrategias de fundraising y la estructuración de proyectos de inversión, aplicadas tanto a organizaciones de impacto como a empresas, pymes y compañías que operan en contextos de desarrollo. La experiencia acumulada desde 2013 no solo respalda el conocimiento técnico, sino que permite trasladar herramientas y criterios del sector financiero tradicional hacia entornos donde la estructuración financiera es menos estandarizada, pero igual de crítica. Esto se traduce en la capacidad de diseñar soluciones viables, ejecutables y adaptadas a realidades operativas, de crecimiento y acceso a capital. Si bien su origen es colombiano, GS Capital opera con una visión y alcance latinoamericano, acompañando organizaciones en distintos países de la región y estructurando soluciones que combinan entendimiento local con estándares financieros de nivel internacional."
+    },
+    "countries": {
+      "title": "Países en los que Operamos",
+      "description": "Colombia / México / Uruguay / Argentina / Chile"
+    }
   },
   "products": {
-    "title": "Nuestros productos",
+    "title": "Nuestros servicios",
     "description": "Explora nuestro catálogo",
     "secondaryDescription": "Integramos soluciones pensadas para mejorar control, eficiencia operativa y capacidad de crecimiento en cada etapa del negocio."
   },
   "companies": {
-    "title": "Empresas"
+    "title": "Holding empresarial",
+    "description": "GS Capital opera como parte de un ecosistema de organizaciones y aliados estratégicos que complementan sus capacidades en estructuración financiera, consultoría y ejecución. Este ecosistema incluye tanto empresas del mismo grupo como organizaciones con las que se han desarrollado proyectos, colaboraciones o procesos estratégicos, permitiendo ofrecer soluciones integrales que conectan estrategia, capital y ejecución. Más que un portafolio de inversión, se trata de una red de relaciones construidas en torno a confianza, experiencia y trabajo conjunto en distintos contextos de desarrollo a nivel regional.",
+    "items": {
+      "gsaFinancieros": {
+        "description": "Firma especializada en asesoría financiera, cálculo actuarial, liquidación de préstamos y análisis técnico de productos financieros como leasing y crédito en Colombia."
+      },
+      "greenEnergySolutions": {
+        "description": "Energía sostenible para construir un mejor futuro."
+      },
+      "healthPlus": {
+        "description": "Soluciones innovadoras orientadas al sector salud."
+      },
+      "eduTech": {
+        "description": "Transformando la educación a través de la tecnología."
+      }
+    }
   },
   "cases": {
     "title": "Casos de éxito"

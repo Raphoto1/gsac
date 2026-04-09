@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="flex w-full flex-col items-center gap-6 overflow-hidden bg-base-200 px-4 py-8 text-base-content text-center sm:px-10">
       <aside className="w-full max-w-full">
-        <p className="text-lg font-semibold">GS CAPITAL</p>
+    <p className="text-lg font-semibold" > GS Capital S.A.S.NIT: 123456789-0</p>
         <p>{footer("tagline")}</p>
         <p className="text-sm opacity-70">
           Copyright {new Date().getFullYear()} - {footer("rights")}

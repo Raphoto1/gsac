@@ -2,20 +2,37 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import GeometricLinesBackground from "@/components/utils/particles/GeometricLinesBackground";
 import ParticleNetwork from "@/components/utils/particles/ParticleNetwork";
+
+const backgroundRenderers = [
+  () => <ParticleNetwork color="13,103,154" />,
+  () => <GeometricLinesBackground />,
+];
 
 type BigCardPropsData = {
   title: string;
   description: string;
   secondaryDescription?: string;
   imageUrl?: string;
+  horizontalOrder?: "image-right" | "image-left";
+  backgroundVariant?: number;
 };
 
-export default function BigCardProps({ title, description, secondaryDescription, imageUrl }: BigCardPropsData) {
+export default function BigCardProps({
+  title,
+  description,
+  secondaryDescription,
+  imageUrl,
+  horizontalOrder = "image-right",
+  backgroundVariant = 0,
+}: BigCardPropsData) {
   const textRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const [textVisible, setTextVisible] = useState(false);
   const [imageVisible, setImageVisible] = useState(false);
+  const isImageLeft = horizontalOrder === "image-left";
+  const BackgroundRenderer = backgroundRenderers[backgroundVariant] ?? backgroundRenderers[0];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -34,12 +51,12 @@ export default function BigCardProps({ title, description, secondaryDescription,
 
   return (
     <div className="hero min-h-screen bg-base-200 px-4 relative overflow-hidden">
-      <ParticleNetwork color="13,103,154"/>
-      <div className="hero-content flex w-full max-w-7xl flex-col gap-8 lg:flex-row-reverse">
+      <BackgroundRenderer />
+      <div className={["hero-content flex w-full max-w-7xl flex-col gap-8", isImageLeft ? "lg:flex-row" : "lg:flex-row-reverse"].join(" ")}>
         <div
           ref={imageRef}
-          className={`w-full max-w-sm rounded-lg shadow-2xl transition-all duration-700 ease-out delay-150 ${
-            imageVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-16"
+          className={`w-full max-w-sm rounded-lg shadow-2xl transition-all duration-700 ease-out delay-150 lg:w-1/4 lg:max-w-none ${
+            imageVisible ? "opacity-100 translate-x-0" : isImageLeft ? "opacity-0 -translate-x-16" : "opacity-0 translate-x-16"
           }`}
         >
           <Image
@@ -53,8 +70,8 @@ export default function BigCardProps({ title, description, secondaryDescription,
         </div>
         <div
           ref={textRef}
-          className={`text-center lg:pr-10 lg:text-left transition-all duration-700 ease-out ${
-            textVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-16"
+          className={`text-center lg:w-3/4 lg:text-left transition-all duration-700 ease-out ${isImageLeft ? "lg:pl-10" : "lg:pr-10"} ${
+            textVisible ? "opacity-100 translate-x-0" : isImageLeft ? "opacity-0 translate-x-16" : "opacity-0 -translate-x-16"
           }`}
         >
           <h1 className="text-5xl font-bold">{title}</h1>

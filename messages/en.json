@@ -21,7 +21,12 @@
   },
   "about": {
     "title": "About Us",
-    "description": "Information about our company"
+    "description": "GS Capital supports impact organizations in structuring, strengthening, and executing their financial strategy by integrating specialized consulting, sustainability model design, investment project structuring, and fundraising strategies, with the goal of aligning their social mission with a real capacity for operation, growth, and scalability over time.",
+    "services": {
+      "title": "What specific service do we provide?",
+      "description": "GS Capital provides consulting, advisory, and financial structuring services for NGOs, foundations, and impact organizations, covering everything from strategic planning to the implementation of sustainable financial models. Its work includes designing and optimizing fundraising strategies across individual donors, corporate partners, and grants; structuring investment projects with an impact focus; developing revenue collection and income generation models; and building financial frameworks that enable organizations to make informed decisions, manage risk, and scale operations sustainably. In addition, the firm supports development finance and impact investment processes, connecting social needs with viable financial structures under standards of financial rigor similar to those of investment firms, but adapted to the dynamics and constraints of the social sector.",
+      "secondaryDescription": "We integrate solutions designed to improve control, operational efficiency, and growth capacity at every stage of the business."
+    }
   },
   "products": {
     "title": "Our Products",
@@ -29,7 +34,22 @@
     "secondaryDescription": "We provide solutions designed to improve control, operational efficiency, and growth capacity at every stage of the business."
   },
   "companies": {
-    "title": "Companies"
+    "title": "Companies",
+    "description": "GS Capital operates as part of an ecosystem of organizations and strategic allies that complement its capabilities in financial structuring, consulting, and execution. This ecosystem includes both companies within the same group and organizations with which projects, collaborations, or strategic processes have been developed, enabling comprehensive solutions that connect strategy, capital, and execution. More than an investment portfolio, it is a network of relationships built on trust, experience, and collaborative work across different regional development contexts.",
+    "items": {
+      "gsaFinancieros": {
+        "description": "A firm specialized in financial advisory, actuarial calculations, loan settlements, and technical analysis of financial products such as leasing and credit in Colombia."
+      },
+      "greenEnergySolutions": {
+        "description": "Sustainable energy for a better future."
+      },
+      "healthPlus": {
+        "description": "Innovative healthcare solutions."
+      },
+      "eduTech": {
+        "description": "Revolutionizing education through technology."
+      }
+    }
   },
   "cases": {
     "title": "Success Cases"
