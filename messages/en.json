@@ -17,7 +17,7 @@
   },
   "bigCard": {
     "title": "Our Approach",
-    "description": "Discover our services and solutions to drive your business forward with confidence."
+    "description": "GS Capital supports impact organizations in structuring, strengthening, and executing their financial strategy by integrating specialized consulting, sustainability model design, investment project structuring, and fundraising strategies.\n\nThe goal is to align their social mission with a real capacity for operation, growth, and scalability over time."
   },
   "about": {
     "title": "About Us",
@@ -63,6 +63,18 @@
       "title": "What specific service do we provide?",
       "description": "GS Capital provides consulting, advisory, and financial structuring services for NGOs, foundations, and impact organizations, covering everything from strategic planning to the implementation of sustainable financial models. Its work includes designing and optimizing fundraising strategies across individual donors, corporate partners, and grants; structuring investment projects with an impact focus; developing revenue collection and income generation models; and building financial frameworks that enable organizations to make informed decisions, manage risk, and scale operations sustainably. In addition, the firm supports development finance and impact investment processes, connecting social needs with viable financial structures under standards of financial rigor similar to those of investment firms, but adapted to the dynamics and constraints of the social sector.",
       "secondaryDescription": "We integrate solutions designed to improve control, operational efficiency, and growth capacity at every stage of the business."
+    },
+    "whyUs": {
+      "title": "Why choose us?",
+      "description": "GS Capital combines the rigor of a financial firm with a deep understanding of organizations operating in development contexts, including NGOs, foundations, companies, SMEs, and businesses seeking to grow with purpose and sustainability.\n\nUnlike a traditional financial consultancy, GS Capital does not apply standard models designed for large corporations. Instead, it adapts and structures financial solutions according to the reality of each organization: mixed-income models, operational constraints, capital needs, and the specific dynamics of growth in local and international markets.\n\nIts approach integrates three capabilities that are rarely found within the same firm: strategy, finance, and fundraising. This makes it possible to support clients not only in diagnosis, but also in the structuring and implementation of complete financial models that connect growth, sustainability, and access to resources.\n\nGS Capital works with proprietary methodologies that combine strategic planning, financial structuring, fundraising model design, and investment project structuring, adapted to the level of maturity and type of organization, from early-stage processes to expansion and consolidation.\n\nIn addition, it has a network of allies and an understanding of the investment and development ecosystem that facilitates connections between organizations, funding sources, investment opportunities, and collaborative structures, both nationally and internationally.\n\nIn short, GS Capital acts as a strategic partner that translates growth and development goals into viable, sustainable, and scalable financial structures, with a practical execution-oriented approach."
+    },
+    "experience": {
+      "title": "Our Experience and Origins",
+      "description": "GS Capital operates as a spin-off of GSA Financieros S.A.S., a Colombian firm founded in 2013 with a well-established track record in banking advisory and specialized services for the financial sector.\n\nGSA Financieros has developed a high technical standard in actuarial calculations, loan settlements, and in-depth financial analysis of products such as leasing and credit in Colombia, working under standards of precision, rigor, and detailed understanding of complex financial structures.\n\nBased on this foundation, GS Capital emerged as a strategic evolution that expands these capabilities into financial consulting, strategic planning, sustainability model structuring, fundraising strategy design, and investment project structuring, applied both to impact organizations and to companies, SMEs, and businesses operating in development contexts.\n\nThe experience accumulated since 2013 not only supports its technical expertise, but also enables the transfer of tools and criteria from the traditional financial sector into environments where financial structuring is less standardized, but equally critical.\n\nThis translates into the ability to design viable, executable solutions adapted to operational realities, growth processes, and access to capital.\n\nAlthough its origin is Colombian, GS Capital operates with a Latin American vision and reach, supporting organizations in different countries across the region and structuring solutions that combine local understanding with international-level financial standards."
+    },
+    "countries": {
+      "title": "Countries Where We Operate",
+      "description": "Colombia / Mexico / Uruguay / Argentina / Chile"
     }
   },
   "products": {
@@ -229,7 +241,7 @@
     }
   },
   "footer": {
-    "tagline": "Operated by GSA Financiers",
+    "tagline": "Operated by GSA Financieros",
     "rights": "All rights reserved"
   },
   "seo": {
