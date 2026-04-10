@@ -13,6 +13,7 @@ type CaseCardProps = {
   impactItems?: string[];
   image: string;
   className?: string;
+  detailsLabel?: string;
 };
 
 function getOrganizationTheme(organizationType: string) {
@@ -70,6 +71,7 @@ export default function CaseCard(props: CaseCardProps) {
   const theme = getOrganizationTheme(props.organizationType);
   const modalDescription = props.advancedDescription ?? props.description;
   const impactItems = props.impactItems ?? [];
+  const detailsLabel = props.detailsLabel ?? "Advanced Description";
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -109,16 +111,18 @@ export default function CaseCard(props: CaseCardProps) {
           />
         </div>
         <div
-          className='card-body relative z-10 overflow-hidden pb-6 pt-5'
+          className='card-body relative z-10 overflow-hidden px-4 pb-5 pt-4 md:px-4 md:pb-4 md:pt-3.5'
           style={{
             background: `linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 58%, ${theme.accentSoft} 100%)`,
           }}
         >
-          <div className='flex items-start justify-between gap-3'>
-            <h2 className='card-title'>{props.companyName}</h2>
-            <span className={`badge border ${theme.badgeClassName}`}>{props.organizationType}</span>
+          <div className='pr-26 md:pr-28'>
+            <div className='flex items-start justify-between gap-3'>
+              <h2 className='card-title pr-2 text-xl leading-tight md:text-[1.1rem]'>{props.companyName}</h2>
+              <span className={`badge shrink-0 border ${theme.badgeClassName}`}>{props.organizationType}</span>
+            </div>
+            <p className='mt-2 text-sm leading-7 text-base-content/80 md:leading-6'>{props.description}</p>
           </div>
-          <p className='text-base-content/80'>{props.description}</p>
         </div>
         <figure>
           <button
@@ -134,11 +138,11 @@ export default function CaseCard(props: CaseCardProps) {
               }}
             />
             {impactItems.length > 0 ? (
-              <div className='pointer-events-none absolute bottom-3 right-3 z-10 flex w-[36%] flex-wrap justify-end gap-1.5'>
+              <div className='pointer-events-none absolute bottom-5 right-4 z-10 flex w-[38%] flex-wrap justify-end gap-2'>
                 {impactItems.map((item) => (
                   <span
                     key={item}
-                    className='rounded-full border px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm'
+                    className='rounded-full border px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm'
                     style={{
                       background: `color-mix(in srgb, ${theme.accentDeep} 58%, transparent)`,
                       borderColor: `color-mix(in srgb, ${theme.accent} 35%, white 15%)`,
@@ -150,7 +154,7 @@ export default function CaseCard(props: CaseCardProps) {
               </div>
             ) : null}
             <Image
-              className='h-40 w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105'
+              className='h-36 w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 md:h-30'
               src={props.image}
               alt={props.companyName}
               width={640}
@@ -207,11 +211,13 @@ export default function CaseCard(props: CaseCardProps) {
               background: `linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 58%, ${theme.accentSoft} 100%)`,
             }}
           >
-            <div className='flex items-start justify-between gap-3 pr-24'>
-              <h2 className='text-xl font-semibold'>{props.companyName}</h2>
-              <span className={`badge border ${theme.badgeClassName}`}>{props.organizationType}</span>
+            <div className='pr-26 md:pr-28'>
+              <div className='flex items-start justify-between gap-3'>
+                <h2 className='pr-2 text-xl font-semibold leading-tight'>{props.companyName}</h2>
+                <span className={`badge shrink-0 border ${theme.badgeClassName}`}>{props.organizationType}</span>
+              </div>
+              <p className='mt-3 text-base-content/80'>{props.description}</p>
             </div>
-            <p className='mt-3 text-base-content/80'>{props.description}</p>
           </div>
           <div className='w-full'>
             <div className='relative aspect-32/9 w-full'>
@@ -222,11 +228,11 @@ export default function CaseCard(props: CaseCardProps) {
                 }}
               />
               {impactItems.length > 0 ? (
-                <div className='pointer-events-none absolute bottom-3 right-3 z-10 flex w-[36%] flex-wrap justify-end gap-1.5'>
+                <div className='pointer-events-none absolute bottom-5 right-4 z-10 flex w-[38%] flex-wrap justify-end gap-2'>
                   {impactItems.map((item) => (
                     <span
                       key={item}
-                      className='rounded-full border px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm'
+                      className='rounded-full border px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm'
                       style={{
                         background: `color-mix(in srgb, ${theme.accentDeep} 58%, transparent)`,
                         borderColor: `color-mix(in srgb, ${theme.accent} 35%, white 15%)`,
@@ -248,7 +254,7 @@ export default function CaseCard(props: CaseCardProps) {
           </div>
           <div className='px-5 py-5'>
             <div className='rounded-2xl border border-base-300/70 bg-base-100/80 p-4'>
-              <p className='text-sm font-semibold uppercase tracking-[0.18em] text-base-content/55'>Advanced Description</p>
+              <p className='text-sm font-semibold uppercase tracking-[0.18em] text-base-content/55'>{detailsLabel}</p>
               <p className='mt-3 whitespace-pre-line text-base leading-7 text-base-content/80'>{modalDescription}</p>
             </div>
           </div>

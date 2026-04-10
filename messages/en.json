@@ -88,8 +88,121 @@
       }
     }
   },
+  "companiesClients": {
+    "title": "Clients & Allies",
+    "description": "We work with organizations and initiatives across Latin America focused on social development, innovation, and impact, supporting financial structuring, fundraising, and strategic strengthening processes.",
+    "relationshipLabel": "Relationship with GS Capital",
+    "websiteLabel": "Visit site",
+    "items": {
+      "fundemex": {
+        "description": "Organization focused on social development and community strengthening through impact-driven programs.",
+        "relationship": "Strategic ally in development and structuring projects.",
+        "website": "https://www.fundemex.org.mx/"
+      },
+      "aldeasInfantiles": {
+        "description": "International organization working to protect and care for children and young people without parental care or at risk.",
+        "relationship": "Client and ally in financial strengthening and fundraising processes.",
+        "website": "https://www.aldeasinfantiles.org.co/"
+      },
+      "techo": {
+        "description": "Organization present across Latin America working to overcome poverty through housing, infrastructure, and community development.",
+        "relationship": "Strategic ally with direct experience in financial structuring, fundraising, and regional strategy.",
+        "website": "https://www.techo.org"
+      },
+      "agualongo": {
+        "description": "Initiative focused on water access solutions and sustainable development in communities.",
+        "relationship": "Ally in structuring impact-focused projects.",
+        "website": "https://agualongo.com/"
+      },
+      "socialab": {
+        "description": "Social innovation platform that drives solutions to social and environmental challenges across Latin America.",
+        "relationship": "Ally in innovation and impact ecosystems.",
+        "website": "https://colombia.socialab.com/"
+      },
+      "matteria": {
+        "description": "Firm specialized in talent and headhunting for impact organizations in Latin America.",
+        "relationship": "Strategic ally in organizational strengthening and team structuring.",
+        "website": "https://www.matteria.co/"
+      },
+      "territoria": {
+        "description": "Initiative focused on territorial development and project structuring with economic and social impact.",
+        "relationship": "Strategic ally in financial structuring and project development.",
+        "website": "https://www.territoriacolombia.org/"
+      }
+    }
+  },
   "cases": {
-    "title": "Success Cases"
+    "title": "Success Cases",
+    "description": "A sample of engagements where GS Capital has supported impact organizations, territorial initiatives, and growing teams through financial strategy, fundraising, and structured execution.",
+    "detailsLabel": "Case details",
+    "items": {
+      "case1": {
+        "title": "Fundraising optimization and F2F performance",
+        "organizationType": "NGO",
+        "description": "International NGO in Colombia facing inefficient face-to-face fundraising operations, high acquisition costs, and weak performance indicators.",
+        "advancedDescription": "Challenge\nThe organization had a relevant donor base, but faced efficiency challenges in its face-to-face (F2F) channel, with high acquisition costs and limited optimization of key performance indicators.\n\nWhat GS Capital did\nDelivered a full diagnosis of the F2F channel across acquisition, retention, and operations.\nAnalyzed core indicators such as CPA, conversion, and churn.\nDesigned a performance improvement plan and resource optimization approach.\nStructured guidelines to support channel scalability.\n\nResult\nClear opportunities were identified to reduce acquisition costs.\nA management model based on indicators was defined.\nA roadmap was established to improve channel profitability and scale impact.",
+        "impactItems": [
+          "Lower CPA",
+          "KPI model",
+          "Scalable path"
+        ]
+      },
+      "case2": {
+        "title": "Regional financial strategy and fundraising structuring",
+        "organizationType": "NGO",
+        "description": "International NGO in Latin America needing stronger regional financial structure and fundraising capacity across non-standardized country models.",
+        "advancedDescription": "Challenge\nThe organization needed to strengthen its financial structure and fundraising capacity at a regional level, with multiple countries operating under non-standardized models.\n\nWhat GS Capital did\nSupported the structuring of its financial strategy.\nDesigned fundraising guidelines for individual donors, corporate partners, and grants.\nProvided financial planning and revenue projection support.\nConnected regional vision with local execution.\n\nResult\nGreater clarity was achieved in the regional financial model.\nA more strategic fundraising approach was structured.\nA stronger base for organization-wide financial decision-making was created.",
+        "impactItems": [
+          "Regional view",
+          "Fundraising",
+          "Forecasting"
+        ]
+      },
+      "case3": {
+        "title": "Impact project structuring and financial model",
+        "organizationType": "Startup",
+        "description": "Territorial development initiative requiring clear financial structuring to make implementation viable and connect impact with funding sources.",
+        "advancedDescription": "Challenge\nThe project required a clear financial structure to enable implementation and connect its impact proposition with funding sources.\n\nWhat GS Capital did\nBuilt the project's financial model.\nDefined capital needs and revenue structure.\nAligned expected impact with financial viability.\nSupported the narrative for potential funders.\n\nResult\nThe project was financially structured and ready for capital raising.\nRisks, costs, and sustainability became clearer.\nA solid base was built for presentation to allies and investors.",
+        "impactItems": [
+          "Financial model",
+          "Capital",
+          "Sustainability"
+        ]
+      },
+      "case4": {
+        "title": "Financial diagnosis and strategic structuring",
+        "organizationType": "SME",
+        "description": "Growing company or organization dealing with expansion without a clear financial structure to support decisions and long-term sustainability.",
+        "advancedDescription": "Challenge\nThe organization was growing without a clear financial structure, making decision-making and long-term sustainability more difficult.\n\nWhat GS Capital did\nConducted a comprehensive financial diagnosis.\nBuilt a financial model.\nDefined growth scenarios.\nDelivered strategic recommendations for financial organization.\n\nResult\nA clear view of the financial situation was achieved.\nTools were established for informed decision-making.\nA roadmap for structured growth was created.",
+        "impactItems": [
+          "Diagnosis",
+          "Scenarios",
+          "Roadmap"
+        ]
+      }
+    }
+  },
+  "team": {
+    "title": "Our team",
+    "description": "A team that combines strategy, financial rigor, and close support to structure decisions, capital, and growth with an impact-oriented approach.",
+    "items": {
+      "member1": {
+        "name": "Team member 1",
+        "role": "Strategic leadership"
+      },
+      "member2": {
+        "name": "Team member 2",
+        "role": "Financial structuring"
+      },
+      "member3": {
+        "name": "Team member 3",
+        "role": "Fundraising and partnerships"
+      },
+      "member4": {
+        "name": "Team member 4",
+        "role": "Planning and execution"
+      }
+    }
   },
   "contact": {
     "title": "Contact Us",

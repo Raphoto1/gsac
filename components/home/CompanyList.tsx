@@ -9,6 +9,7 @@ export type CompanyListItem = {
   name: string;
   description: string;
   logo: string;
+  website?: string;
 };
 
 type CompanyListProps = {
@@ -33,7 +34,7 @@ function CompanyListHeader({ title, description }: { title: string; description:
     createElement(
       "p",
       {
-        className: "mx-auto mt-3 max-w-2xl text-sm text-base-content/70 md:text-base",
+        className: "mx-auto mt-2 max-w-2xl text-sm text-base-content/70 md:text-base",
       },
       description,
     ),
@@ -50,31 +51,21 @@ export default function CompanyList({ companies, title, description }: CompanyLi
         name: "GSA Financieros S.A.S.",
         description: t("items.gsaFinancieros.description"),
         logo: "https://images.pexels.com/photos/355952/pexels-photo-355952.jpeg",
-      },
-      {
-        name: "Green Energy Solutions",
-        description: t("items.greenEnergySolutions.description"),
-        logo: "https://images.pexels.com/photos/355952/pexels-photo-355952.jpeg",
-      },
-      {
-        name: "HealthPlus",
-        description: t("items.healthPlus.description"),
-        logo: "https://images.pexels.com/photos/355952/pexels-photo-355952.jpeg",
-      },
-      {
-        name: "EduTech",
-        description: t("items.eduTech.description"),
-        logo: "https://images.pexels.com/photos/355952/pexels-photo-355952.jpeg",
+        website: "https://www.gsafinancieros.com/"
       },
     ];
 
   const resolvedTitle = title ?? t("title");
   const resolvedDescription = description ?? t("description");
+  const sectionClassName =
+    resolvedCompanies.length === 1
+      ? "relative overflow-hidden bg-white px-5 py-8 md:px-8 md:py-8"
+      : "relative overflow-hidden bg-white px-5 py-16 md:px-8 md:py-20";
 
   return createElement(
     "section",
     {
-      className: "relative overflow-hidden bg-white px-5 py-20 md:px-8 md:py-28",
+      className: sectionClassName,
     },
     createElement("div", {
       className: "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(13,103,154,0.12),_transparent_40%),linear-gradient(180deg,_rgba(255,255,255,0.96),_rgba(245,250,252,0.98))]",
@@ -83,7 +74,7 @@ export default function CompanyList({ companies, title, description }: CompanyLi
     createElement(
       "div",
       {
-        className: "relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-14",
+        className: "relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-10",
       },
       createElement(CompanyListHeader, { title: resolvedTitle, description: resolvedDescription }),
       createElement(CompanyListThreeScene, { companies: resolvedCompanies }),

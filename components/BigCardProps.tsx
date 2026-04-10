@@ -58,9 +58,11 @@ export default function BigCardProps({
   }, []);
 
   return (
-    <div className="hero min-h-screen bg-base-200 px-4 relative overflow-hidden">
-      <BackgroundRenderer />
-      <div className={["hero-content flex w-full max-w-7xl flex-col gap-8", isImageLeft ? "lg:flex-row" : "lg:flex-row-reverse"].join(" ")}>
+    <div className="hero relative min-h-screen overflow-hidden bg-base-200 px-4">
+      <div className="pointer-events-none absolute inset-y-0 -left-12 -right-12 overflow-hidden md:-left-20 md:-right-20 lg:-left-24 lg:-right-24">
+        <BackgroundRenderer />
+      </div>
+      <div className={["hero-content relative z-10 flex w-full max-w-7xl flex-col gap-8", isImageLeft ? "lg:flex-row" : "lg:flex-row-reverse"].join(" ")}>
         <div
           ref={imageRef}
           className={`w-full max-w-sm rounded-lg shadow-2xl transition-all duration-700 ease-out delay-150 lg:w-1/4 lg:max-w-none ${

@@ -84,7 +84,7 @@
   },
   "companies": {
     "title": "Holding empresarial",
-    "description": "GS Capital opera como parte de un ecosistema de organizaciones y aliados estratégicos que complementan sus capacidades en estructuración financiera, consultoría y ejecución.\n\nEste ecosistema incluye tanto empresas del mismo grupo como organizaciones con las que se han desarrollado proyectos, colaboraciones o procesos estratégicos, permitiendo ofrecer soluciones integrales que conectan estrategia, capital y ejecución.\n\nMás que un portafolio de inversión, se trata de una red de relaciones construidas en torno a confianza, experiencia y trabajo conjunto en distintos contextos de desarrollo a nivel regional.",
+    "description": "GS Capital opera como parte de un ecosistema de organizaciones y aliados estratégicos que complementan sus capacidades en estructuración financiera, consultoría y ejecución. Este ecosistema incluye tanto empresas del mismo grupo como organizaciones con las que se han desarrollado proyectos, colaboraciones o procesos estratégicos, permitiendo ofrecer soluciones integrales que conectan estrategia, capital y ejecución. Más que un portafolio de inversión, se trata de una red de relaciones construidas en torno a confianza, experiencia y trabajo conjunto en distintos contextos de desarrollo a nivel regional.",
     "items": {
       "gsaFinancieros": {
         "description": "Firma especializada en asesoría financiera, cálculo actuarial, liquidación de préstamos y análisis técnico de productos financieros como leasing y crédito en Colombia."
@@ -100,8 +100,121 @@
       }
     }
   },
+  "companiesClients": {
+    "title": "Clientes & Aliados",
+    "description": "Trabajamos con organizaciones e iniciativas que operan en desarrollo social, innovación e impacto en América Latina, acompañando procesos de estructuración financiera, fundraising y fortalecimiento estratégico.",
+    "relationshipLabel": "Relación con GS Capital",
+    "websiteLabel": "Visitar sitio",
+    "items": {
+      "fundemex": {
+        "description": "Organización enfocada en el desarrollo social y fortalecimiento de comunidades a través de programas de impacto.",
+        "relationship": "Aliado estratégico en proyectos de desarrollo y estructuración.",
+        "website": "https://www.fundemex.org.mx/"
+      },
+      "aldeasInfantiles": {
+        "description": "Organización internacional que trabaja en la protección y cuidado de niños, niñas y jóvenes sin cuidado parental o en riesgo.",
+        "relationship": "Cliente y aliado en procesos de fortalecimiento financiero y fundraising.",
+        "website": "https://www.aldeasinfantiles.org.co/"
+      },
+      "techo": {
+        "description": "Organización presente en América Latina que trabaja en la superación de la pobreza a través de vivienda, infraestructura y desarrollo comunitario.",
+        "relationship": "Aliado estratégico y experiencia directa en estructuración financiera, fundraising y estrategia regional.",
+        "website": "https://www.techo.org"
+      },
+      "agualongo": {
+        "description": "Iniciativa enfocada en soluciones de acceso a agua y desarrollo sostenible en comunidades.",
+        "relationship": "Aliado en estructuración de proyectos con enfoque de impacto.",
+        "website": "https://agualongo.com/"
+      },
+      "socialab": {
+        "description": "Plataforma de innovación social que impulsa soluciones a desafíos sociales y ambientales en América Latina.",
+        "relationship": "Aliado en ecosistemas de innovación e impacto.",
+        "website": "https://colombia.socialab.com/"
+      },
+      "matteria": {
+        "description": "Firma especializada en talento y headhunting para organizaciones de impacto en América Latina.",
+        "relationship": "Aliado estratégico en fortalecimiento organizacional y estructuración de equipos.",
+        "website": "https://www.matteria.co/"
+      },
+      "territoria": {
+        "description": "Iniciativa enfocada en el desarrollo territorial y estructuración de proyectos con impacto económico y social.",
+        "relationship": "Aliado estratégico en estructuración financiera y desarrollo de proyectos.",
+        "website": "https://www.territoriacolombia.org/"
+      }
+    }
+  },
   "cases": {
-    "title": "Casos de éxito"
+    "title": "Casos de éxito",
+    "description": "Una muestra de procesos en los que GS Capital ha acompañado organizaciones de impacto, iniciativas territoriales y equipos en crecimiento con enfoque financiero, fundraising y estructuración estratégica.",
+    "detailsLabel": "Detalle del caso",
+    "items": {
+      "case1": {
+        "title": "Optimización de fundraising y performance F2F",
+        "organizationType": "ONG",
+        "description": "ONG internacional en Colombia con desafíos en eficiencia del canal face-to-face, altos costos de adquisición y bajo desempeño en indicadores clave.",
+        "advancedDescription": "Problema / reto\nLa organización contaba con una base relevante de donantes, pero enfrentaba desafíos en la eficiencia del canal face-to-face (F2F), con costos de adquisición elevados y baja optimización en indicadores clave de desempeño.\n\n¿Qué hizo GS Capital?\nDiagnóstico integral del canal F2F (adquisición, retención y operación).\nAnálisis de indicadores clave como CPA, conversión y churn.\nDiseño de un plan de mejora en performance y optimización de recursos.\nEstructuración de lineamientos para escalabilidad del canal.\n\nResultado\nIdentificación de oportunidades claras de reducción de costos de adquisición.\nDefinición de un modelo de gestión basado en indicadores.\nHoja de ruta para mejorar la rentabilidad del canal y escalar su impacto.",
+        "impactItems": [
+          "Menor CPA",
+          "Modelo KPI",
+          "Ruta escalable"
+        ]
+      },
+      "case2": {
+        "title": "Estructuración de estrategia financiera y fundraising regional",
+        "organizationType": "ONG",
+        "description": "ONG internacional en América Latina que necesitaba fortalecer su estructura financiera y su capacidad de recaudo regional bajo modelos no estandarizados.",
+        "advancedDescription": "Problema / reto\nLa organización necesitaba fortalecer su estructura financiera y su capacidad de recaudo a nivel regional, con múltiples países operando bajo modelos no estandarizados.\n\n¿Qué hizo GS Capital?\nAcompañamiento en la estructuración de estrategia financiera.\nDiseño de lineamientos de fundraising para donantes individuales, corporate y grants.\nApoyo en planificación financiera y proyección de ingresos.\nArticulación de visión regional con ejecución local.\n\nResultado\nMayor claridad en el modelo financiero regional.\nEstructuración de un enfoque más estratégico para el fundraising.\nBase para toma de decisiones financieras a nivel organizacional.",
+        "impactItems": [
+          "Visión regional",
+          "Fundraising",
+          "Proyecciones"
+        ]
+      },
+      "case3": {
+        "title": "Estructuración de proyecto de impacto y modelo financiero",
+        "organizationType": "Startup",
+        "description": "Iniciativa de desarrollo territorial que requería una estructuración financiera clara para viabilizar su implementación y conectar impacto con capital.",
+        "advancedDescription": "Problema / reto\nEl proyecto requería una estructuración financiera clara para viabilizar su implementación y conectar su propuesta de impacto con fuentes de financiamiento.\n\n¿Qué hizo GS Capital?\nConstrucción del modelo financiero del proyecto.\nDefinición de necesidades de capital y estructura de ingresos.\nAlineación entre impacto esperado y viabilidad financiera.\nApoyo en narrativa para potenciales financiadores.\n\nResultado\nProyecto estructurado financieramente y listo para búsqueda de capital.\nClaridad en riesgos, costos y sostenibilidad.\nBase sólida para presentación a aliados e inversionistas.",
+        "impactItems": [
+          "Modelo financiero",
+          "Capital",
+          "Sostenibilidad"
+        ]
+      },
+      "case4": {
+        "title": "Diagnóstico financiero y estructuración estratégica",
+        "organizationType": "Pyme",
+        "description": "Empresa u organización en crecimiento que enfrentaba expansión sin una estructura financiera clara para sostener decisiones y crecimiento.",
+        "advancedDescription": "Problema / reto\nLa organización enfrentaba crecimiento sin una estructura financiera clara, dificultando la toma de decisiones y la sostenibilidad en el tiempo.\n\n¿Qué hizo GS Capital?\nDiagnóstico financiero integral.\nConstrucción de modelo financiero.\nDefinición de escenarios de crecimiento.\nRecomendaciones estratégicas para orden financiero.\n\nResultado\nVisibilidad clara de la situación financiera.\nHerramientas para toma de decisiones informadas.\nHoja de ruta para crecimiento estructurado.",
+        "impactItems": [
+          "Diagnóstico",
+          "Escenarios",
+          "Hoja de ruta"
+        ]
+      }
+    }
+  },
+  "team": {
+    "title": "Nuestro equipo",
+    "description": "Un equipo que combina estrategia, rigor financiero y acompañamiento cercano para estructurar decisiones, capital y crecimiento con enfoque de impacto.",
+    "items": {
+      "member1": {
+        "name": "Nombre integrante 1",
+        "role": "Dirección estratégica"
+      },
+      "member2": {
+        "name": "Nombre integrante 2",
+        "role": "Estructuración financiera"
+      },
+      "member3": {
+        "name": "Nombre integrante 3",
+        "role": "Fundraising y alianzas"
+      },
+      "member4": {
+        "name": "Nombre integrante 4",
+        "role": "Planeación y ejecución"
+      }
+    }
   },
   "contact": {
     "title": "Contáctanos",

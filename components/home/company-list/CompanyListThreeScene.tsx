@@ -9,7 +9,13 @@ import CompanyCard from "@/components/CompanyCard";
 type CompanyListItem = {
   name: string;
   description: string;
-  logo: string;
+  logo?: string;
+  relationship?: string;
+  relationshipLabel?: string;
+  website?: string;
+  websiteLabel?: string;
+  caseHref?: string;
+  caseLabel?: string;
 };
 
 type DesktopCardAnchor = {
@@ -73,6 +79,8 @@ type CompanyListThreeSceneProps = {
 
 export default function CompanyListThreeScene({ companies }: CompanyListThreeSceneProps): ReactElement {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isSingleCompanyLayout = companies.length === 1;
+  const useAnchoredDesktopLayout = !isSingleCompanyLayout && companies.length <= desktopCardAnchors.length;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -199,10 +207,12 @@ export default function CompanyListThreeScene({ companies }: CompanyListThreeSce
     resizeObserver.observe(parent);
 
     let animationFrameId = 0;
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
+    timer.connect(document);
 
-    const renderScene = () => {
-      const elapsed = clock.getElapsedTime();
+    const renderScene = (timestamp?: number) => {
+      timer.update(timestamp);
+      const elapsed = timer.getElapsed();
 
       networkGroup.rotation.y = Math.sin(elapsed * 0.18) * 0.08;
       networkGroup.rotation.x = Math.cos(elapsed * 0.14) * 0.025;
@@ -243,6 +253,7 @@ export default function CompanyListThreeScene({ companies }: CompanyListThreeSce
       nodes.forEach(disposeMesh);
       glows.forEach(disposeMesh);
       animatedDots.forEach(disposeMesh);
+      timer.dispose();
       renderer.dispose();
     };
   }, []);
@@ -252,13 +263,17 @@ export default function CompanyListThreeScene({ companies }: CompanyListThreeSce
       "div",
       {
         key: company.name,
-        className: "hidden md:absolute md:block",
-        style: getDesktopCardStyle(desktopCardAnchors[index]),
+        className: isSingleCompanyLayout
+          ? "hidden md:flex md:flex-1 md:items-center md:justify-center md:pt-8"
+          : useAnchoredDesktopLayout
+            ? "hidden md:absolute md:block"
+            : "hidden md:block",
+        style: useAnchoredDesktopLayout ? getDesktopCardStyle(desktopCardAnchors[index]) : undefined,
       },
       element(
         "div",
         {
-          className: "w-[18.25rem]",
+          className: isSingleCompanyLayout || useAnchoredDesktopLayout ? "w-[18.25rem]" : "w-full",
         },
         element(CompanyCard, company),
       ),
@@ -276,33 +291,29 @@ export default function CompanyListThreeScene({ companies }: CompanyListThreeSce
     ),
   );
 
-  return element(
-    "div",
-    {
-      className: "relative overflow-hidden rounded-[2.4rem] border border-sky-100 bg-white/75 shadow-[0_30px_100px_rgba(15,23,42,0.08)] backdrop-blur-sm",
-    },
-    element("canvas", {
-      ref: canvasRef,
-      className: "absolute inset-0 h-full w-full",
-      "aria-hidden": true,
-    }),
-    element("div", {
-      className: "pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,_rgba(255,255,255,0.72),_rgba(255,255,255,0.3)_45%,_rgba(255,255,255,0.82))]",
-      "aria-hidden": true,
-    }),
-    element(
-      "div",
-      {
-        className: "relative z-10 flex min-h-[42rem] flex-col gap-10 px-6 py-12 md:min-h-[44rem] md:px-16 md:py-20",
-      },
-      element(
-        "div",
-        {
-          className: "flex flex-col gap-10 md:hidden",
-        },
-        ...mobileCards,
-      ),
-      ...desktopCards,
-    ),
+  return (
+    <div className="relative overflow-hidden rounded-[2.4rem] border border-sky-100 bg-white/75 shadow-[0_30px_100px_rgba(15,23,42,0.08)] backdrop-blur-sm">
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.72),rgba(255,255,255,0.3)_45%,rgba(255,255,255,0.82))]"
+        aria-hidden
+      />
+      <div
+        className={useAnchoredDesktopLayout
+          ? "relative z-10 flex min-h-168 flex-col gap-10 px-6 py-12 md:min-h-176 md:px-16 md:py-20"
+          : isSingleCompanyLayout
+            ? "relative z-10 flex flex-col gap-8 px-6 py-8 md:min-h-120 md:justify-center md:px-10 md:py-10"
+            : "relative z-10 flex flex-col gap-10 px-6 py-12 md:px-12 md:py-16"}
+      >
+        <div className="flex flex-col gap-10 md:hidden">{mobileCards}</div>
+        {isSingleCompanyLayout ? (
+          desktopCards
+        ) : useAnchoredDesktopLayout ? (
+          desktopCards
+        ) : (
+          <div className="hidden md:grid md:grid-cols-2 md:gap-x-4 md:gap-y-14 xl:grid-cols-3">{desktopCards}</div>
+        )}
+      </div>
+    </div>
   );
 }

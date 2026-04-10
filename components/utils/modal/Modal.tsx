@@ -43,12 +43,12 @@ export default function Modal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-base-content/45 p-4"
+      className="fixed inset-0 z-100 overflow-y-auto bg-base-content/45 p-3 md:flex md:items-center md:justify-center md:p-4"
       role="presentation"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-xl rounded-2xl border border-base-300 bg-base-100 shadow-2xl"
+        className="my-4 w-full max-w-xl overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-2xl md:my-0 md:max-h-[calc(100dvh-2rem)] md:min-h-0"
         role="dialog"
         aria-modal="true"
         aria-label={title ?? "Modal"}
@@ -67,8 +67,7 @@ export default function Modal({
             </button>
           </div>
         )}
-
-        <div className="px-5 py-4">{isLoading ? <Loader label={loadingLabel} /> : children}</div>
+        <div className="px-5 py-4 md:max-h-[calc(100dvh-2rem)] md:overflow-y-auto">{isLoading ? <Loader label={loadingLabel} /> : children}</div>
       </div>
     </div>,
     document.body,
