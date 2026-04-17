@@ -10,7 +10,13 @@ type ContactInfo = {
   description: Localized;
 };
 
-type ContactInfoErrors = Partial<Record<keyof ContactInfo, string>>;
+type ContactField =
+  | keyof ContactInfo
+  | "title.es"
+  | "title.en"
+  | "description.es"
+  | "description.en";
+type ContactInfoErrors = Partial<Record<ContactField, string>>;
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_REGEX = /^\+?[\d\s\-().]{7,20}$/;
@@ -27,7 +33,7 @@ export default function AdminContact() {
   const [errors, setErrors] = useState<ContactInfoErrors>({});
   const [saved, setSaved] = useState(false);
 
-  function validateField(field: keyof ContactInfo, rawValue: string): string {
+  function validateField(field: ContactField, rawValue: string): string {
     const value = rawValue.trim();
 
     switch (field) {
@@ -73,7 +79,7 @@ export default function AdminContact() {
     setSaved(false);
     setErrors((prev) => ({
       ...prev,
-      [name]: validateField(name as keyof ContactInfo, value),
+      [name]: validateField(name as ContactField, value),
     }));
   }
 
