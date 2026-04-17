@@ -121,7 +121,7 @@ export default function CaseCard(props: CaseCardProps) {
               <h2 className='card-title pr-2 text-xl leading-tight md:text-[1.1rem]'>{props.companyName}</h2>
               <span className={`badge shrink-0 border ${theme.badgeClassName}`}>{props.organizationType}</span>
             </div>
-            <p className='mt-2 text-sm leading-7 text-base-content/80 md:leading-6'>{props.description}</p>
+            <p className='mt-2 text-sm leading-7 text-base-content/80 md:leading-6 md:pb-4'>{props.description}</p>
           </div>
         </div>
         <figure>

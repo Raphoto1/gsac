@@ -3,15 +3,10 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import LogoutButton from "@/components/auth/LogoutButton";
-import AdminHome from "@/components/admin/AdminHome";
-import AdminAbout from "@/components/admin/AdminAbout";
-import AdminProducts from "@/components/admin/AdminProducts";
+import AdminPanel from "@/components/admin/AdminPanel";
 import { buildNoIndexMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = buildNoIndexMetadata(
-  "GS Control",
-  "Area privada de administracion de GSAC."
-);
+export const metadata: Metadata = buildNoIndexMetadata("GS Control", "Area privada de administracion de GSAC.");
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -25,13 +20,15 @@ export default async function Page() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold">GS Control</h1>
-          <p className="mt-2 text-base-content/80">Area protegida. Sesion iniciada como {session.user?.email}.</p>
+          <p className="mt-2 text-base-content/80">
+            Área protegida. Sesión iniciada como{" "}
+            <span className="font-medium">{session.user?.email}</span>.
+          </p>
         </div>
         <LogoutButton />
       </div>
-      <AdminHome />
-      <AdminAbout />
-      <AdminProducts />
+
+      <AdminPanel />
     </div>
   );
 }
