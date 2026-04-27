@@ -7,8 +7,10 @@ import AdminProducts from "./AdminProducts";
 import AdminContact from "./AdminContact";
 import ContactAsked from "./ContactAsked";
 import AdminGeneral from "./AdminGeneral";
+import NewsAdmin from "./NewsAdmin";
 
-type Tab = "home" | "about" | "products" | "contact" | "contactAsked" | "general";
+
+type Tab = "home" | "about" | "products" | "contact" | "contactAsked" | "general" | "news";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "home", label: "Inicio" },
@@ -16,6 +18,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "products", label: "Servicios" },
   { id: "contact", label: "Contacto" },
   { id: "contactAsked", label: "Solicitudes de Contacto" },
+  { id: "news", label: "Noticias" },
   { id: "general", label: "Datos Generales" },
 ];
 
@@ -77,6 +80,12 @@ export default function AdminPanel() {
         {activeTab === "general" && (
           <section aria-labelledby='tab-general-title'>
             <AdminGeneral />
+          </section>
+        )}
+
+        {activeTab === "news" && (
+          <section aria-labelledby='tab-news-title'>
+            <NewsAdmin />
           </section>
         )}
       </div>
