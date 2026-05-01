@@ -45,9 +45,9 @@ export default function ProductsList({ products }: ProductsListProps) {
   }, []);
 
   return (
-    <section className="relative w-full overflow-hidden bg-white px-4 py-16">
+    <section className="relative w-full overflow-hidden bg-base-100 px-4 py-16">
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(13,103,154,0.12),transparent_40%),linear-gradient(180deg,rgba(255,255,255,0.96),rgba(245,250,252,0.98))]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(13,103,154,0.12),transparent_40%)]"
         aria-hidden="true"
       />
       <div className="mx-auto w-full max-w-6xl">

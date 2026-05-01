@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "fresh": "rm -rf node_modules .next && npm install"
   },
   "dependencies": {
     "country-flag-icons": "^1.6.15",

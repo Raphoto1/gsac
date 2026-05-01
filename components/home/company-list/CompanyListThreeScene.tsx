@@ -292,10 +292,10 @@ export default function CompanyListThreeScene({ companies }: CompanyListThreeSce
   );
 
   return (
-    <div className="relative overflow-hidden rounded-[2.4rem] border border-sky-100 bg-white/75 shadow-[0_30px_100px_rgba(15,23,42,0.08)] backdrop-blur-sm">
+    <div className="relative overflow-hidden rounded-[2.4rem] border border-base-300 bg-base-100/75 shadow-[0_30px_100px_rgba(15,23,42,0.08)] dark:shadow-[0_30px_100px_rgba(0,0,0,0.3)] backdrop-blur-sm">
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden />
       <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.72),rgba(255,255,255,0.3)_45%,rgba(255,255,255,0.82))]"
+        className="three-scene-overlay pointer-events-none absolute inset-0"
         aria-hidden
       />
       <div

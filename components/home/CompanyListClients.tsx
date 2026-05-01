@@ -123,7 +123,7 @@ export default function CompanyList({ companies, title, description }: CompanyLi
   return createElement(
     "section",
     {
-      className: "relative overflow-hidden bg-white px-5 py-20 md:px-8 md:py-28",
+      className: "relative overflow-hidden bg-base-100 px-5 py-20 md:px-8 md:py-28",
     },
     createElement(
       "div",

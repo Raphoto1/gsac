@@ -59,8 +59,8 @@ export default function CompanyList({ companies, title, description }: CompanyLi
   const resolvedDescription = description ?? t("description");
   const sectionClassName =
     resolvedCompanies.length === 1
-      ? "relative overflow-hidden bg-white px-5 py-8 md:px-8 md:py-8"
-      : "relative overflow-hidden bg-white px-5 py-16 md:px-8 md:py-20";
+      ? "relative overflow-hidden bg-base-100 px-5 py-8 md:px-8 md:py-8"
+      : "relative overflow-hidden bg-base-100 px-5 py-16 md:px-8 md:py-20";
 
   return createElement(
     "section",
@@ -68,7 +68,7 @@ export default function CompanyList({ companies, title, description }: CompanyLi
       className: sectionClassName,
     },
     createElement("div", {
-      className: "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(13,103,154,0.12),_transparent_40%),linear-gradient(180deg,_rgba(255,255,255,0.96),_rgba(245,250,252,0.98))]",
+      className: "pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(13,103,154,0.12),_transparent_40%)]",
       "aria-hidden": true,
     }),
     createElement(

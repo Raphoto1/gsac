@@ -26,6 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
+
 export default function Page() {
   const t = useTranslations("about");
   const values = [
@@ -84,14 +85,14 @@ export default function Page() {
         backgroundVariant={0}
       />
       <ContentCardsSection title={t("values.title")} items={values} />
-      <div className='bg-base-100 px-4 py-16 md:px-8 md:py-20'>
+      <div className='bg-base-200 px-4 py-16 md:px-8 md:py-20'>
         <div className='mx-auto flex w-full max-w-6xl flex-col gap-8'>
           <div className='text-center'>
             <h2 className='text-4xl font-bold'>{t("countries.title")}</h2>
           </div>
           <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-5'>
             {operatingCountries.map(({ name, Flag }) => (
-              <div key={name} className='rounded-3xl border border-base-300 bg-white px-5 py-6 text-center shadow-[0_14px_35px_rgba(15,23,42,0.06)]'>
+              <div key={name} className='rounded-3xl border border-base-300 bg-base-100 px-5 py-6 text-center shadow-[0_14px_35px_rgba(15,23,42,0.06)]'>
                 <div className='mx-auto flex w-full max-w-16 justify-center overflow-hidden rounded-lg shadow-sm ring-1 ring-base-300/70'>
                   <Flag className='h-auto w-full' />
                 </div>

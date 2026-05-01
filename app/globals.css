@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 /* Custom styles can be added here */
 
@@ -110,6 +111,14 @@
 
 .company-card-float {
   animation: company-card-float 5.8s ease-in-out infinite;
+}
+
+.three-scene-overlay {
+  background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.3) 45%, rgba(255,255,255,0.82));
+}
+
+[data-theme="dark"] .three-scene-overlay {
+  background: linear-gradient(180deg, rgba(15,23,42,0.82), rgba(15,23,42,0.42) 45%, rgba(15,23,42,0.88));
 }
 
 .company-network-path {

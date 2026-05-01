@@ -107,15 +107,13 @@ export default function CardBasicProp({
     <div className="relative w-full max-w-96 transform-gpu transition-all duration-500 ease-out">
       <div
         ref={cardRef}
-        className={`company-card-float relative z-10 w-full rounded-4xl bg-white text-base-content shadow-[0_16px_40px_rgba(15,23,42,0.08)] transform-gpu transition-all duration-700 ease-out ${
-          "hover:-translate-y-2 hover:shadow-2xl hover:saturate-110"
-        } ${
+        className={`company-card-float relative z-10 w-full rounded-4xl bg-base-100 text-base-content shadow-[0_16px_40px_rgba(15,23,42,0.08)] transform-gpu transition-all duration-700 ease-out hover:-translate-y-2 hover:shadow-2xl hover:saturate-110 ${
           isVisible ? "translate-y-0 scale-100 opacity-100" : "translate-y-6 scale-[0.98] opacity-0"
         }`}
         style={{ transitionDelay: `${delayIndex * 90}ms` }}
       >
         <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-primary/35 to-transparent" />
-        <div className={`absolute left-1/2 top-1 flex h-22 w-22 -translate-x-1/2 -translate-y-1/3 md:-translate-y-1/2 items-center justify-center rounded-full border-4 border-white shadow-xl ${cardColorClassMap[color]}`}>
+        <div className={`absolute left-1/2 top-1 flex h-22 w-22 -translate-x-1/2 -translate-y-1/3 md:-translate-y-1/2 items-center justify-center rounded-full border-4 border-base-100 shadow-xl ${cardColorClassMap[color]}`}>
           <CardIcon size={28} />
         </div>
 

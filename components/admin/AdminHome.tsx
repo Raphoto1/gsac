@@ -249,7 +249,7 @@ export default function AdminHome() {
       {active === "clients"  && <AdminCompanyListForm defaultItems={DEFAULT_CLIENTS} title="Clientes & Aliados" />}
       {active === "contact"  && (
         <div className="alert">
-          <span className="text-base-content/60">La secciÃ³n de Contacto se configura en la pestaÃ±a <strong>Contacto</strong> del panel principal.</span>
+          <span className="text-base-content/60">La sección de Contacto se configura en la pestaña <strong>Contacto</strong> del panel principal.</span>
         </div>
       )}
     </div>

@@ -27,7 +27,7 @@ function getOrganizationTheme(organizationType: string) {
         triangleWrapClassName: "right-6 top-18",
         triangleOuterClassName: "h-24 w-28",
         triangleInnerClassName: "h-12 w-14",
-        badgeClassName: "border-[#1f6fa8]/30 bg-[#1f6fa8]/10 text-[#153f61]",
+        badgeClassName: "border-[#1f6fa8]/40 bg-[#1f6fa8]/15 text-[#1f6fa8]",
       };
     case "startup":
       return {
@@ -37,7 +37,7 @@ function getOrganizationTheme(organizationType: string) {
         triangleWrapClassName: "right-4 top-16",
         triangleOuterClassName: "h-20 w-24",
         triangleInnerClassName: "h-10 w-12",
-        badgeClassName: "border-[#f08a24]/30 bg-[#f08a24]/10 text-[#9a4f08]",
+        badgeClassName: "border-[#f08a24]/40 bg-[#f08a24]/15 text-[#f08a24]",
       };
     case "ong":
     case "ngo":
@@ -48,7 +48,7 @@ function getOrganizationTheme(organizationType: string) {
         triangleWrapClassName: "right-7 top-20",
         triangleOuterClassName: "h-20 w-24",
         triangleInnerClassName: "h-10 w-12",
-        badgeClassName: "border-[#2f9d57]/30 bg-[#2f9d57]/10 text-[#1f6a3a]",
+        badgeClassName: "border-[#2f9d57]/40 bg-[#2f9d57]/15 text-[#2f9d57]",
       };
     case "pyme":
     case "sme":
@@ -60,7 +60,7 @@ function getOrganizationTheme(organizationType: string) {
         triangleWrapClassName: "right-5 top-17",
         triangleOuterClassName: "h-22 w-26",
         triangleInnerClassName: "h-11 w-13",
-        badgeClassName: "border-[#7a56d6]/30 bg-[#7a56d6]/10 text-[#523599]",
+        badgeClassName: "border-[#7a56d6]/40 bg-[#7a56d6]/15 text-[#7a56d6]",
       };
   }
 }
@@ -88,7 +88,7 @@ export default function CaseCard(props: CaseCardProps) {
         <div
           className='absolute inset-x-0 top-0 h-3'
           style={{
-            background: `linear-gradient(90deg, rgba(255,255,255,0.98) 0%, ${theme.accentSoft} 38%, ${theme.accent} 100%)`,
+            background: `linear-gradient(90deg, transparent 0%, ${theme.accentSoft} 38%, ${theme.accent} 100%)`,
           }}
         />
         <div className={`pointer-events-none absolute z-20 flex flex-col items-center gap-2 ${theme.triangleWrapClassName}`}>
@@ -111,9 +111,9 @@ export default function CaseCard(props: CaseCardProps) {
           />
         </div>
         <div
-          className='card-body relative z-10 overflow-hidden px-4 pb-5 pt-4 md:px-4 md:pb-4 md:pt-3.5'
+          className='card-body relative z-10 overflow-hidden bg-base-100 px-4 pb-5 pt-4 md:px-4 md:pb-4 md:pt-3.5'
           style={{
-            background: `linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 58%, ${theme.accentSoft} 100%)`,
+            backgroundImage: `linear-gradient(180deg, transparent 0%, transparent 58%, ${theme.accentSoft} 100%)`,
           }}
         >
           <div className='pr-26 md:pr-28'>
@@ -183,7 +183,7 @@ export default function CaseCard(props: CaseCardProps) {
           <div
             className='absolute inset-x-0 top-0 h-3'
             style={{
-              background: `linear-gradient(90deg, rgba(255,255,255,0.98) 0%, ${theme.accentSoft} 38%, ${theme.accent} 100%)`,
+              background: `linear-gradient(90deg, transparent 0%, ${theme.accentSoft} 38%, ${theme.accent} 100%)`,
             }}
           />
           <div className={`pointer-events-none absolute z-20 flex flex-col items-center gap-2 ${theme.triangleWrapClassName}`}>
@@ -206,9 +206,9 @@ export default function CaseCard(props: CaseCardProps) {
             />
           </div>
           <div
-            className='relative z-10 overflow-hidden px-5 pb-7 pt-7'
+            className='relative z-10 overflow-hidden bg-base-100 px-5 pb-7 pt-7'
             style={{
-              background: `linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 58%, ${theme.accentSoft} 100%)`,
+              backgroundImage: `linear-gradient(180deg, transparent 0%, transparent 58%, ${theme.accentSoft} 100%)`,
             }}
           >
             <div className='pr-26 md:pr-28'>
