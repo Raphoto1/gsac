@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { sampleNews } from "../news/newsData";
 import NewsCard from "../news/NewsCard";
 import type { NewsItem } from "../news/types";
 import { AdminField } from "./shared/AdminField";
+
+type QuillType = typeof import("quill")["default"];
+type QuillInstance = InstanceType<QuillType>;
 
 type Lang = "es" | "en";
 
@@ -13,6 +16,115 @@ const emptyForm = {
   es: { title: "", category: "", excerpt: "", content: [""] },
   en: { title: "", category: "", excerpt: "", content: [""] },
 };
+
+const quillModules = {
+  toolbar: [
+    [{ header: [2, 3, false] }],
+    ["bold", "italic", "underline", "blockquote"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link"],
+    ["clean"],
+  ],
+};
+
+const quillFormats = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "blockquote",
+  "list",
+  "link",
+];
+
+type QuillEditorProps = {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  modules?: Record<string, unknown>;
+  formats?: string[];
+};
+
+function QuillEditor({ value, onChange, placeholder, modules, formats }: QuillEditorProps) {
+  const hostRef = useRef<HTMLDivElement | null>(null);
+  const quillRef = useRef<QuillInstance | null>(null);
+  const onChangeRef = useRef(onChange);
+  const lastKnownHtmlRef = useRef(value || "");
+
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
+
+  useEffect(() => {
+    if (!hostRef.current || quillRef.current) return;
+
+    let isMounted = true;
+    let cleanup: (() => void) | undefined;
+
+    void (async () => {
+      const { default: Quill } = await import("quill");
+      if (!isMounted || !hostRef.current) return;
+
+      const editorElement = document.createElement("div");
+      hostRef.current.appendChild(editorElement);
+
+      const editor = new Quill(editorElement, {
+        theme: "snow",
+        placeholder,
+        modules,
+        formats,
+      });
+
+      quillRef.current = editor;
+      editor.root.innerHTML = value || "";
+      lastKnownHtmlRef.current = value || "";
+
+      const handleTextChange = (_delta: unknown, _oldDelta: unknown, source: string) => {
+        if (source !== "user") return;
+
+        const currentHtml = editor.root.innerHTML;
+        lastKnownHtmlRef.current = currentHtml;
+        onChangeRef.current(currentHtml);
+      };
+
+      editor.on("text-change", handleTextChange);
+
+      cleanup = () => {
+        editor.off("text-change", handleTextChange);
+        quillRef.current = null;
+        if (hostRef.current) {
+          hostRef.current.innerHTML = "";
+        }
+      };
+    })();
+
+    return () => {
+      isMounted = false;
+      cleanup?.();
+    };
+  }, [formats, modules, placeholder]);
+
+  useEffect(() => {
+    const editor = quillRef.current;
+    if (!editor) return;
+
+    const normalizedValue = value || "";
+    if (normalizedValue !== lastKnownHtmlRef.current && editor.root.innerHTML !== normalizedValue) {
+      editor.root.innerHTML = normalizedValue;
+      lastKnownHtmlRef.current = normalizedValue;
+    }
+  }, [value]);
+
+  return <div ref={hostRef} />;
+}
+
+function isRichTextEmpty(value: string): boolean {
+  const plainText = value
+    .replace(/<(.|\n)*?>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .trim();
+  return plainText.length === 0;
+}
 
 export default function NewsAdmin() {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -63,6 +175,9 @@ export default function NewsAdmin() {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const contentEs = form.es.content.filter((p) => !isRichTextEmpty(p));
+    const contentEn = form.en.content.filter((p) => !isRichTextEmpty(p));
+
     const newItem: NewsItem = {
       id: Date.now(),
       slug: form.slug || form.es.title.toLowerCase().replace(/\s+/g, "-"),
@@ -71,12 +186,12 @@ export default function NewsAdmin() {
       title: form.es.title,
       category: form.es.category,
       excerpt: form.es.excerpt,
-      content: form.es.content.filter((p) => p.trim() !== ""),
+      content: contentEs,
       title_en: form.en.title || undefined,
       category_en: form.en.category || undefined,
       excerpt_en: form.en.excerpt || undefined,
-      content_en: form.en.content.filter((p) => p.trim() !== "").length
-        ? form.en.content.filter((p) => p.trim() !== "")
+      content_en: contentEn.length
+        ? contentEn
         : undefined,
     };
     console.log("Nueva noticia:", newItem);
@@ -208,32 +323,19 @@ export default function NewsAdmin() {
             </p>
             <div className="space-y-2">
               {form[lang].content.map((para, i) => (
-                <div key={i} className="flex gap-2">
-                  <textarea
-                    value={para}
-                    onChange={(e) => handleContentChange(i, e.target.value)}
-                    rows={3}
-                    placeholder={lang === "es" ? `Párrafo ${i + 1}` : `Paragraph ${i + 1}`}
-                    className="textarea w-full flex-1"
-                  />
-                  {form[lang].content.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => removeParagraph(i)}
-                      className="btn btn-sm btn-ghost text-error self-start mt-1"
-                      title="Eliminar párrafo">
-                      ✕
-                    </button>
-                  )}
+                <div key={i} className="flex gap-2 items-start">
+                  <div className="w-full flex-1 rounded-box border border-base-300 bg-base-100">
+                    <QuillEditor
+                      value={para}
+                      onChange={(value) => handleContentChange(i, value)}
+                      modules={quillModules}
+                      formats={quillFormats}
+                      placeholder={lang === "es" ? `Párrafo ${i + 1}` : `Paragraph ${i + 1}`}
+                    />
+                  </div>
                 </div>
               ))}
             </div>
-            <button
-              type="button"
-              onClick={addParagraph}
-              className="btn btn-sm btn-ghost mt-2">
-              + {lang === "es" ? "Agregar párrafo" : "Add paragraph"}
-            </button>
           </div>
 
           <div className="card-actions justify-end pt-2">
