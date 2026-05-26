@@ -1,14 +1,19 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { DEFAULT_HOME_TEAM, type HomeTeamMember } from "@/types/home-team";
 
-type TeamMember = {
-  name: string;
-  role: string;
-  photo: string;
-  linkedin?: string;
-};
+async function readApiResponse<T>(response: Response): Promise<{ data: T | null; rawText: string | null }> {
+  const contentType = response.headers.get("content-type") || "";
+
+  if (contentType.includes("application/json")) {
+    return { data: (await response.json()) as T, rawText: null };
+  }
+
+  return { data: null, rawText: await response.text() };
+}
 
 const cardThemes = [
   {
@@ -33,7 +38,7 @@ const cardThemes = [
   },
 ];
 
-function TeamCard({ member, index }: { member: TeamMember; index: number }) {
+function TeamCard({ member, index }: { member: HomeTeamMember; index: number }) {
   const theme = cardThemes[index % cardThemes.length];
   const cardClasses =
     "relative mx-auto flex h-full w-full max-w-[18.5rem] flex-col overflow-visible rounded-[2rem] border border-base-300/80 bg-base-100 px-5 pb-6 pt-6 text-center shadow-[0_20px_54px_rgba(15,23,42,0.08)] transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_28px_64px_rgba(15,23,42,0.14)]";
@@ -99,25 +104,38 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
 
 export default function Team() {
   const t = useTranslations("team");
-  const members = ["member1", "member2", "member3", "member4"].map((memberKey, index) => {
-    const memberData = t.raw(`items.${memberKey}`) as {
-      name: string;
-      role: string;
-      linkedin?: string;
-    };
+  const [members, setMembers] = useState<HomeTeamMember[]>(DEFAULT_HOME_TEAM);
 
-    return {
-      name: memberData.name,
-      role: memberData.role,
-      linkedin: memberData.linkedin,
-      photo: [
-      "https://images.pexels.com/photos/3777946/pexels-photo-3777946.jpeg",
-      "https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg",
-      "https://images.pexels.com/photos/3760263/pexels-photo-3760263.jpeg",
-      "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg",
-    ][index],
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadTeam() {
+      try {
+        const response = await fetch("/api/page/team", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const { data } = await readApiResponse<{ members?: HomeTeamMember[] }>(response);
+        if (mounted && Array.isArray(data?.members) && data.members.length) {
+          setMembers(data.members);
+        }
+      } catch {
+        // Keep defaults if the API is unavailable.
+      }
+    }
+
+    loadTeam();
+
+    return () => {
+      mounted = false;
     };
-  });
+  }, []);
 
   return (
     <section className="relative overflow-hidden bg-base-100 px-5 py-18 md:px-8 md:py-24">

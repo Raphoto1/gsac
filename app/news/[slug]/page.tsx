@@ -3,20 +3,21 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import NewsShareButtons from "@/components/news/NewsShareButtons";
-import { getNewsBySlug, sampleNews } from "@/components/news/newsData";
+import { getNewsBySlugService, getPublicNewsService } from "@/apiPack/service/news.service";
 import { buildPageMetadata } from "@/lib/seo";
 
 type NewsArticlePageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return sampleNews.map((article) => ({ slug: article.slug }));
+export async function generateStaticParams() {
+  const { news } = await getPublicNewsService();
+  return news.map((article) => ({ slug: article.slug }));
 }
 
 export async function generateMetadata({ params }: NewsArticlePageProps): Promise<Metadata> {
   const [{ slug }, locale, t] = await Promise.all([params, getLocale(), getTranslations("seo")]);
-  const article = getNewsBySlug(slug);
+  const article = await getNewsBySlugService(slug);
 
   if (!article) {
     return {
@@ -29,24 +30,56 @@ export async function generateMetadata({ params }: NewsArticlePageProps): Promis
     };
   }
 
+  const localizedTitle = locale === "en" && article.title_en ? article.title_en : article.title;
+  const localizedExcerpt = locale === "en" && article.excerpt_en ? article.excerpt_en : article.excerpt;
+  const localizedCategory = locale === "en" && article.category_en ? article.category_en : article.category;
+
   return buildPageMetadata({
-    title: article.title,
-    description: article.excerpt,
+    title: localizedTitle,
+    description: localizedExcerpt,
     path: `/news/${article.slug}`,
     locale,
     image: article.imageUrl,
     type: "article",
-    keywords: [article.category, "GSAC", "novedades", "articulo"],
+    keywords: [localizedCategory, "GSAC", "novedades", "articulo"],
   });
 }
 
+function isHtmlContent(content: string): boolean {
+  return /<\s*\w+[^>]*>/.test(content);
+}
+
+function ArticleContentBlock({ content }: { content: string }) {
+  const normalizedContent = content.trim();
+
+  if (!normalizedContent) {
+    return null;
+  }
+
+  if (isHtmlContent(normalizedContent)) {
+    return (
+      <div
+        className="news-article-content"
+        dangerouslySetInnerHTML={{ __html: normalizedContent }}
+      />
+    );
+  }
+
+  return <p className="text-base leading-relaxed text-base-content/85">{normalizedContent}</p>;
+}
+
 export default async function NewsArticlePage({ params }: NewsArticlePageProps) {
-  const { slug } = await params;
-  const article = getNewsBySlug(slug);
+  const [{ slug }, locale] = await Promise.all([params, getLocale()]);
+  const article = await getNewsBySlugService(slug);
 
   if (!article) {
     notFound();
   }
+
+  const localizedTitle = locale === "en" && article.title_en ? article.title_en : article.title;
+  const localizedExcerpt = locale === "en" && article.excerpt_en ? article.excerpt_en : article.excerpt;
+  const localizedCategory = locale === "en" && article.category_en ? article.category_en : article.category;
+  const localizedContent = locale === "en" && article.content_en?.length ? article.content_en : article.content;
 
   return (
     <article className="mx-auto w-full max-w-4xl px-4 pb-16 pt-28 sm:px-6 lg:px-8">
@@ -59,24 +92,22 @@ export default async function NewsArticlePage({ params }: NewsArticlePageProps) 
 
       <header className="mb-8 space-y-4">
         <div className="flex items-center justify-between gap-3 text-sm text-base-content/70">
-          <span className="badge badge-outline">{article.category}</span>
+          <span className="badge badge-outline">{localizedCategory}</span>
           <time>{article.date}</time>
         </div>
 
-        <h1 className="text-3xl font-bold leading-tight text-base-content sm:text-4xl">{article.title}</h1>
-        <p className="text-base leading-relaxed text-base-content/75">{article.excerpt}</p>
-        <NewsShareButtons title={article.title} path={`/news/${article.slug}`} />
+        <h1 className="text-3xl font-bold leading-tight text-base-content sm:text-4xl">{localizedTitle}</h1>
+        <p className="text-base leading-relaxed text-base-content/75">{localizedExcerpt}</p>
+        <NewsShareButtons title={localizedTitle} path={`/news/${article.slug}`} locale={locale === "en" ? "en" : "es"} />
       </header>
 
       {article.imageUrl ? (
-        <img src={article.imageUrl} alt={article.title} className="mb-8 h-72 w-full rounded-3xl object-cover" />
+        <img src={article.imageUrl} alt={localizedTitle} className="mb-8 h-72 w-full rounded-3xl object-cover" />
       ) : null}
 
       <div className="space-y-5">
-        {article.content.map((paragraph) => (
-          <p key={paragraph} className="text-base leading-relaxed text-base-content/85">
-            {paragraph}
-          </p>
+        {localizedContent.map((paragraph, index) => (
+          <ArticleContentBlock key={`${index}-${paragraph.slice(0, 24)}`} content={paragraph} />
         ))}
       </div>
     </article>

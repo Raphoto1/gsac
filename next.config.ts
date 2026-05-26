@@ -18,7 +18,7 @@ const contentSecurityPolicy = `
 	object-src 'none';
 	script-src ${scriptSrc};
 	style-src 'self' 'unsafe-inline';
-	img-src 'self' data: blob: https://images.pexels.com https://www.googletagmanager.com https://www.google-analytics.com;
+	img-src 'self' data: blob: https://images.pexels.com https://*.blob.vercel-storage.com https://*.public.blob.vercel-storage.com https://www.googletagmanager.com https://www.google-analytics.com;
 	font-src 'self' data:;
 	connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com;
 	frame-src 'self';
@@ -64,6 +64,14 @@ const nextConfig: NextConfig = {
 			{
 				protocol: "https",
 				hostname: "images.pexels.com",
+			},
+			{
+				protocol: "https",
+				hostname: "*.blob.vercel-storage.com",
+			},
+			{
+				protocol: "https",
+				hostname: "*.public.blob.vercel-storage.com",
 			},
 		],
 	},

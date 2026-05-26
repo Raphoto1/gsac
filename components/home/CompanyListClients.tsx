@@ -1,27 +1,21 @@
 "use client";
 
-import { createElement } from "react";
+import { createElement, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import type { CompanyListItem, CompanyListProps } from "@/types/company-list";
 
+import { DEFAULT_CLIENTS_ITEMS } from "./company-list/defaults";
 import CompanyListThreeScene from "./company-list/CompanyListThreeScene";
 
-export type CompanyListItem = {
-  name: string;
-  description: string;
-  logo?: string;
-  relationship?: string;
-  relationshipLabel?: string;
-  website?: string;
-  websiteLabel?: string;
-  caseHref?: string;
-  caseLabel?: string;
-};
+async function readApiResponse<T>(response: Response): Promise<{ data: T | null; rawText: string | null }> {
+  const contentType = response.headers.get("content-type") || "";
 
-type CompanyListProps = {
-  companies?: CompanyListItem[];
-  title?: string;
-  description?: string;
-};
+  if (contentType.includes("application/json")) {
+    return { data: (await response.json()) as T, rawText: null };
+  }
+
+  return { data: null, rawText: await response.text() };
+}
 
 function CompanyListHeader({ title, description }: { title: string; description: string }) {
   return createElement(
@@ -48,74 +42,48 @@ function CompanyListHeader({ title, description }: { title: string; description:
 
 export default function CompanyList({ companies, title, description }: CompanyListProps) {
   const t = useTranslations("companiesClients");
+  const [resolvedFromApi, setResolvedFromApi] = useState<CompanyListItem[] | null>(null);
+
+  useEffect(() => {
+    if (companies) {
+      setResolvedFromApi(companies);
+      return;
+    }
+
+    let mounted = true;
+
+    async function loadCompanies() {
+      try {
+        const response = await fetch("/api/page/company-list/clients", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const { data } = await readApiResponse<{ companies?: CompanyListItem[] }>(response);
+        if (mounted && Array.isArray(data?.companies) && data.companies.length) {
+          setResolvedFromApi(data.companies);
+        }
+      } catch {
+        // Keep default values when the API is unavailable.
+      }
+    }
+
+    loadCompanies();
+
+    return () => {
+      mounted = false;
+    };
+  }, [companies]);
 
   const resolvedCompanies: CompanyListItem[] =
+    resolvedFromApi ??
     companies ??
-    [
-      {
-        name: "Fundemex",
-        description: t("items.fundemex.description"),
-        logo: "/img/logos/fundemex.jpg",
-        relationship: t("items.fundemex.relationship"),
-        relationshipLabel: t("relationshipLabel"),
-        website: t("items.fundemex.website"),
-        websiteLabel: t("websiteLabel"),
-      },
-      {
-        name: "Aldeas Infantiles SOS Colombia",
-        description: t("items.aldeasInfantiles.description"),
-        logo: "/img/logos/aldeas-infantiles-sos.png",
-        relationship: t("items.aldeasInfantiles.relationship"),
-        relationshipLabel: t("relationshipLabel"),
-        website: t("items.aldeasInfantiles.website"),
-        websiteLabel: t("websiteLabel"),
-      },
-      {
-        name: "TECHO Internacional",
-        description: t("items.techo.description"),
-        logo: "/img/logos/techo.svg",
-        relationship: t("items.techo.relationship"),
-        relationshipLabel: t("relationshipLabel"),
-        website: t("items.techo.website"),
-        websiteLabel: t("websiteLabel"),
-      },
-      {
-        name: "Agualongo",
-        description: t("items.agualongo.description"),
-        logo: "/img/logos/agualongo.png",
-        relationship: t("items.agualongo.relationship"),
-        relationshipLabel: t("relationshipLabel"),
-        website: t("items.agualongo.website"),
-        websiteLabel: t("websiteLabel"),
-      },
-      {
-        name: "Socialab",
-        description: t("items.socialab.description"),
-        logo: "/img/logos/socialab.png",
-        relationship: t("items.socialab.relationship"),
-        relationshipLabel: t("relationshipLabel"),
-        website: t("items.socialab.website"),
-        websiteLabel: t("websiteLabel"),
-      },
-      {
-        name: "Matteria",
-        description: t("items.matteria.description"),
-        logo: "/img/logos/matteria.png",
-        relationship: t("items.matteria.relationship"),
-        relationshipLabel: t("relationshipLabel"),
-        website: t("items.matteria.website"),
-        websiteLabel: t("websiteLabel"),
-      },
-      {
-        name: "Territoria",
-        description: t("items.territoria.description"),
-        logo: "/img/logos/territoria.png",
-        relationship: t("items.territoria.relationship"),
-        relationshipLabel: t("relationshipLabel"),
-        website: t("items.territoria.website"),
-        websiteLabel: t("websiteLabel"),
-      },
-    ];
+    DEFAULT_CLIENTS_ITEMS;
 
   const resolvedTitle = title ?? t("title");
   const resolvedDescription = description ?? t("description");

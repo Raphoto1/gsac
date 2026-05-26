@@ -1,128 +1,99 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import type { IconType } from "react-icons";
+import {
+  IoBriefcase,
+  IoBusiness,
+  IoConstruct,
+  IoGlobe,
+  IoRocket,
+  IoSettings,
+} from "react-icons/io5";
 import { AdminField } from "./shared/AdminField";
 import AdminCasesForm from "./AdminCasesForm";
+import {
+  DEFAULT_HOME_PRODUCTS_HEADER,
+  HOME_PRODUCT_ICON_OPTIONS,
+  type HomeProductIcon,
+  type HomeProductItem,
+  type HomeProductsHeader,
+} from "@/types/home-products";
 
-// ─── Types ─────────────────────────────────────────────────────────────────────
-
-type IconOption = "business" | "briefcase" | "construct" | "globe" | "rocket" | "settings";
-
-type Localized = { es: string; en: string };
-type ProductItem = {
-  id: number;
-  title: Localized;
-  description: Localized;
-  icon: IconOption;
-  expandTitle: Localized;
-  expandText: Localized;
-  expandImage: string;
+type EditableProductItem = HomeProductItem & {
+  isNew?: boolean;
 };
 
-type HeaderData = {
-  title: Localized;
-  description: Localized;
-  secondaryDescription: Localized;
-  imageUrl: string;
+const PRODUCT_ICON_COMPONENTS: Record<HomeProductIcon, IconType> = {
+  business: IoBusiness,
+  briefcase: IoBriefcase,
+  construct: IoConstruct,
+  globe: IoGlobe,
+  rocket: IoRocket,
+  settings: IoSettings,
 };
 
-// ─── Defaults ─────────────────────────────────────────────────────────────────
+async function readApiResponse<T>(response: Response): Promise<{ data: T | null; rawText: string | null }> {
+  const contentType = response.headers.get("content-type") || "";
 
-const DEFAULT_HEADER: HeaderData = {
-  title: { es: "Nuestros servicios", en: "Our Services" },
-  description: { es: "Explora nuestro catálogo", en: "Explore our catalog" },
-  secondaryDescription: {
-    es: "Integramos soluciones pensadas para mejorar control, eficiencia operativa y capacidad de crecimiento en cada etapa del negocio.",
-    en: "We integrate solutions designed to improve control, operational efficiency, and growth capacity at every stage of the business."
-  },
-  imageUrl: "https://images.pexels.com/photos/7698796/pexels-photo-7698796.jpeg",
-};
+  if (contentType.includes("application/json")) {
+    return { data: (await response.json()) as T, rawText: null };
+  }
 
-const ICON_OPTIONS: IconOption[] = ["briefcase", "rocket", "globe", "construct", "settings", "business"];
+  return { data: null, rawText: await response.text() };
+}
 
-const DEFAULT_PRODUCTS: ProductItem[] = [
-  {
-    id: 1,
-    title: { es: "Estrategia y Planeación Financiera", en: "Financial Strategy & Planning" },
-    description: {
-      es: "Consultoría estratégica para estructurar, ordenar o redefinir el modelo financiero y la ruta de crecimiento.",
-      en: "Strategic consulting to structure, organize, or redefine the financial model and growth path."
-    },
-    icon: "briefcase",
-    expandTitle: { es: "Estrategia y Planeación Financiera", en: "Financial Strategy & Planning" },
-    expandText: {
-      es: "¿Qué es y para quién?\nServicio de consultoría estratégica para organizaciones y empresas que necesitan estructurar, ordenar o redefinir su modelo financiero y su ruta de crecimiento.",
-      en: "What is it and for whom?\nStrategic consulting service for organizations and companies that need to structure, organize, or redefine their financial model and growth path."
-    },
-    expandImage: "https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg",
-  },
-  {
-    id: 2,
-    title: { es: "Estructuración de Modelos de Fundraising", en: "Fundraising Model Structuring" },
-    description: {
-      es: "Diseño y optimización de estrategias de recaudo para fortalecer y diversificar fuentes de financiamiento.",
-      en: "Design and optimization of fundraising strategies to strengthen and diversify funding sources."
-    },
-    icon: "rocket",
-    expandTitle: { es: "Estructuración de Modelos de Fundraising", en: "Fundraising Model Structuring" },
-    expandText: {
-      es: "¿Qué es y para quién?\nDiseño y optimización de estrategias de recaudo para organizaciones que dependen o quieren fortalecer sus fuentes de financiamiento.",
-      en: "What is it and for whom?\nDesign and optimization of fundraising strategies for organizations that depend on or want to strengthen their funding sources."
-    },
-    expandImage: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg",
-  },
-  {
-    id: 3,
-    title: { es: "Estructuración de Proyectos de Inversión", en: "Investment Project Structuring" },
-    description: {
-      es: "Servicio para estructurar proyectos y acceder a financiamiento o inversión con una base financiera sólida.",
-      en: "Service to structure projects and access financing or investment with a solid financial foundation."
-    },
-    icon: "globe",
-    expandTitle: { es: "Estructuración de Proyectos de Inversión", en: "Investment Project Structuring" },
-    expandText: {
-      es: "¿Qué es y para quién?\nServicio dirigido a organizaciones y empresas que necesitan estructurar proyectos para acceder a financiamiento o inversión.",
-      en: "What is it and for whom?\nService aimed at organizations and companies that need to structure projects to access financing or investment."
-    },
-    expandImage: "https://images.pexels.com/photos/4386370/pexels-photo-4386370.jpeg",
-  },
-  {
-    id: 4,
-    title: { es: "Finanzas para el Desarrollo e Inversión de Impacto", en: "Finance for Development & Impact Investment" },
-    description: {
-      es: "Soluciones financieras con enfoque de impacto para organizaciones y actores que operan en contextos de desarrollo.",
-      en: "Financial solutions with an impact focus for organizations and actors operating in development contexts."
-    },
-    icon: "construct",
-    expandTitle: { es: "Finanzas para el Desarrollo e Inversión de Impacto", en: "Finance for Development & Impact Investment" },
-    expandText: {
-      es: "¿Qué es y para quién?\nServicio especializado para organizaciones, empresas y actores que operan en contextos de desarrollo y buscan estructurar soluciones financieras con enfoque de impacto.",
-      en: "What is it and for whom?\nSpecialized service for organizations, companies, and actors operating in development contexts seeking to structure financial solutions with an impact focus."
-    },
-    expandImage: "https://images.pexels.com/photos/6771985/pexels-photo-6771985.jpeg",
-  },
-  {
-    id: 5,
-    title: { es: "Asesoría Financiera Estratégica (CFO externo)", en: "Strategic Financial Advisory (External CFO)" },
-    description: {
-      es: "Acompañamiento continuo para tomar mejores decisiones financieras sin depender de un equipo interno robusto.",
-      en: "Ongoing support to make better financial decisions without relying on a large internal team."
-    },
-    icon: "settings",
-    expandTitle: { es: "Asesoría Financiera Estratégica (CFO externo)", en: "Strategic Financial Advisory (External CFO)" },
-    expandText: {
-      es: "¿Qué es y para quién?\nAcompañamiento continuo para organizaciones y empresas que requieren soporte financiero estratégico sin tener un equipo interno robusto.",
-      en: "What is it and for whom?\nOngoing support for organizations and companies that require strategic financial support without a large internal team."
-    },
-    expandImage: "https://images.pexels.com/photos/3184328/pexels-photo-3184328.jpeg",
-  },
-];
-
-// ─── Header form ───────────────────────────────────────────────────────────────
+function reindexProducts(items: EditableProductItem[]): EditableProductItem[] {
+  return items.map((item, index) => ({ ...item, id: index + 1 }));
+}
 
 function HeaderForm() {
-  const [data, setData] = useState<HeaderData>(DEFAULT_HEADER);
+  const [data, setData] = useState<HomeProductsHeader>(DEFAULT_HOME_PRODUCTS_HEADER);
   const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadHeader() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch("/api/admin/home/products", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("No se pudo cargar el encabezado de productos.");
+        }
+
+        const { data: responseData } = await readApiResponse<{ header?: HomeProductsHeader }>(response);
+        if (mounted && responseData?.header) {
+          setData(responseData.header);
+        }
+      } catch (requestError) {
+        if (mounted) {
+          const message = requestError instanceof Error ? requestError.message : "No se pudo cargar el encabezado de productos.";
+          setError(message);
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadHeader();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -138,19 +109,48 @@ function HeaderForm() {
     } else {
       setData((p) => ({ ...p, [name]: value }));
     }
+
     setSaved(false);
+    setError(null);
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Products – Header:", data);
-    setSaved(true);
-    // TODO: DB
+
+    try {
+      setSaving(true);
+      setSaved(false);
+      setError(null);
+
+      const response = await fetch("/api/admin/home/products", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ header: data }),
+      });
+
+      const { data: responseData, rawText } = await readApiResponse<{ error?: string; header?: HomeProductsHeader }>(response);
+      if (!response.ok) {
+        throw new Error(responseData?.error || (rawText ? `No se pudo guardar el encabezado. (${response.status})` : "No se pudo guardar el encabezado."));
+      }
+
+      if (responseData?.header) {
+        setData(responseData.header);
+      }
+
+      setSaved(true);
+    } catch (requestError) {
+      const message = requestError instanceof Error ? requestError.message : "No se pudo guardar el encabezado.";
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
     <form onSubmit={onSubmit} className="card bg-base-100 shadow-sm">
       <div className="card-body gap-4">
+        {loading && <div className="alert"><span>Cargando encabezado...</span></div>}
+        {error && <div className="alert alert-error"><span>{error}</span></div>}
         {saved && <div className="alert alert-success"><span>Guardado.</span></div>}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <AdminField label="Título (ES)" id="ph-title-es">
@@ -180,20 +180,71 @@ function HeaderForm() {
           </AdminField>
         </div>
         <div className="card-actions justify-end pt-2">
-          <button type="submit" className="btn btn-primary">Guardar</button>
+          <button type="submit" className="btn btn-primary" disabled={saving}>{saving ? "Guardando..." : "Guardar"}</button>
         </div>
       </div>
     </form>
   );
 }
 
-// ─── Products list form ────────────────────────────────────────────────────────
-
 function ProductsListForm() {
-  const [products, setProducts] = useState<ProductItem[]>(DEFAULT_PRODUCTS);
+  const [products, setProducts] = useState<EditableProductItem[]>([]);
   const [saved, setSaved] = useState(false);
+  const [updatedId, setUpdatedId] = useState<number | null>(null);
   const [expandedId, setExpandedId] = useState<number | null>(null);
-  const [nextId, setNextId] = useState(DEFAULT_PRODUCTS.length + 1);
+  const [pendingRemoveId, setPendingRemoveId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [updatingId, setUpdatingId] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadProducts() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch("/api/admin/home/products", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("No se pudieron cargar los servicios.");
+        }
+
+        const { data: responseData } = await readApiResponse<{ products?: HomeProductItem[] }>(response);
+        if (mounted && Array.isArray(responseData?.products)) {
+          const nextProducts = reindexProducts(responseData.products).map((item) => ({ ...item, isNew: false }));
+          setProducts(nextProducts);
+          setExpandedId(nextProducts[0]?.id ?? null);
+        }
+      } catch (requestError) {
+        if (mounted) {
+          const message = requestError instanceof Error ? requestError.message : "No se pudieron cargar los servicios.";
+          setError(message);
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadProducts();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const nextId = useMemo(
+    () => (products.length ? Math.max(...products.map((product) => product.id)) + 1 : 1),
+    [products],
+  );
 
   const onChange = (id: number, e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -215,41 +266,164 @@ function ProductsListForm() {
         return { ...p, [name]: value };
       }
     }));
+
     setSaved(false);
+    setError(null);
   };
 
   const onAdd = () => {
-    const id = nextId;
-    setProducts((p) => [
-      ...p,
-      {
-        id,
-        title: { es: "", en: "" },
-        description: { es: "", en: "" },
-        icon: "briefcase",
-        expandTitle: { es: "", en: "" },
-        expandText: { es: "", en: "" },
-        expandImage: ""
+    const newProduct: EditableProductItem = {
+      id: nextId,
+      title: { es: "", en: "" },
+      description: { es: "", en: "" },
+      icon: "briefcase",
+      expandTitle: { es: "", en: "" },
+      expandText: { es: "", en: "" },
+      expandImage: "",
+      isNew: true,
+    };
+
+    setProducts((previous) => [...previous, newProduct]);
+    setExpandedId(newProduct.id);
+    setSaved(false);
+    setError(null);
+  };
+
+  const onIconPick = (id: number, icon: HomeProductIcon) => {
+    setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, icon } : p)));
+    setSaved(false);
+    setError(null);
+  };
+
+  const requestRemoveService = (id: number) => {
+    setPendingRemoveId(id);
+  };
+
+  const cancelRemoveService = () => {
+    setPendingRemoveId(null);
+  };
+
+  const confirmRemoveService = async () => {
+    if (pendingRemoveId === null) return;
+
+    const removeId = pendingRemoveId;
+    const payloadProducts = reindexProducts(products.filter((item) => item.id !== removeId));
+
+    try {
+      setPendingRemoveId(null);
+      setUpdatingId(removeId);
+      setSaved(false);
+      setUpdatedId(null);
+      setError(null);
+
+      const response = await fetch("/api/admin/home/products", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ products: payloadProducts }),
+      });
+
+      const { data: responseData, rawText } = await readApiResponse<{ error?: string; products?: HomeProductItem[] }>(response);
+      if (!response.ok) {
+        throw new Error(responseData?.error || (rawText ? `No se pudo eliminar el servicio. (${response.status})` : "No se pudo eliminar el servicio."));
       }
-    ]);
-    setNextId((n) => n + 1);
-    setExpandedId(id);
+
+      if (Array.isArray(responseData?.products)) {
+        const nextProducts = reindexProducts(responseData.products).map((item) => ({ ...item, isNew: false }));
+        setProducts(nextProducts);
+        setExpandedId((prevExpandedId) => {
+          if (prevExpandedId === removeId) {
+            return nextProducts[0]?.id ?? null;
+          }
+
+          if (prevExpandedId && !nextProducts.some((item) => item.id === prevExpandedId)) {
+            return nextProducts[0]?.id ?? null;
+          }
+
+          return prevExpandedId;
+        });
+      }
+    } catch (requestError) {
+      const message = requestError instanceof Error ? requestError.message : "No se pudo eliminar el servicio.";
+      setError(message);
+    } finally {
+      setUpdatingId(null);
+    }
   };
 
-  const onRemove = (id: number) => {
-    setProducts((p) => p.filter((item) => item.id !== id));
-    if (expandedId === id) setExpandedId(null);
-  };
-
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Products – List:", products);
-    setSaved(true);
-    // TODO: DB
+
+    try {
+      setSaving(true);
+      setSaved(false);
+      setError(null);
+
+      const payloadProducts = reindexProducts(products);
+      const response = await fetch("/api/admin/home/products", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ products: payloadProducts }),
+      });
+
+      const { data: responseData, rawText } = await readApiResponse<{ error?: string; products?: HomeProductItem[] }>(response);
+
+      if (!response.ok) {
+        throw new Error(responseData?.error || (rawText ? `No se pudo guardar los servicios. (${response.status})` : "No se pudo guardar los servicios."));
+      }
+
+      if (Array.isArray(responseData?.products)) {
+        const nextProducts = reindexProducts(responseData.products).map((item) => ({ ...item, isNew: false }));
+        setProducts(nextProducts);
+        setExpandedId(nextProducts[0]?.id ?? null);
+      }
+
+      setSaved(true);
+      setUpdatedId(null);
+    } catch (requestError) {
+      const message = requestError instanceof Error ? requestError.message : "No se pudo guardar los servicios.";
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const onUpdateService = async (id: number) => {
+    try {
+      setUpdatingId(id);
+      setSaved(false);
+      setUpdatedId(null);
+      setError(null);
+
+      const payloadProducts = reindexProducts(products);
+      const response = await fetch("/api/admin/home/products", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ products: payloadProducts }),
+      });
+
+      const { data: responseData, rawText } = await readApiResponse<{ error?: string; products?: HomeProductItem[] }>(response);
+      if (!response.ok) {
+        throw new Error(responseData?.error || (rawText ? `No se pudo actualizar el servicio. (${response.status})` : "No se pudo actualizar el servicio."));
+      }
+
+      if (Array.isArray(responseData?.products)) {
+        const nextProducts = reindexProducts(responseData.products).map((item) => ({ ...item, isNew: false }));
+        setProducts(nextProducts);
+      }
+
+      setUpdatedId(id);
+    } catch (requestError) {
+      const message = requestError instanceof Error ? requestError.message : "No se pudo actualizar el servicio.";
+      setError(message);
+    } finally {
+      setUpdatingId(null);
+    }
   };
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      {loading && <div className="alert"><span>Cargando servicios...</span></div>}
+      {error && <div className="alert alert-error"><span>{error}</span></div>}
       {saved && <div className="alert alert-success"><span>Guardado.</span></div>}
       {products.map((p, i) => (
         <div key={p.id} className="card bg-base-100 shadow-sm border border-base-300">
@@ -263,10 +437,13 @@ function ProductsListForm() {
                 <span className="font-semibold text-sm">Servicio {i + 1}{p.title?.es ? ` — ${p.title.es}` : ""}</span>
                 <span className="text-base-content/50 text-sm">{expandedId === p.id ? "▲" : "▼"}</span>
               </button>
-              <button type="button" className="btn btn-ghost btn-xs text-error" onClick={() => onRemove(p.id)}>
-                Eliminar
-              </button>
+              <div className="flex items-center gap-2">
+                <button type="button" className="btn btn-ghost btn-xs text-error" onClick={() => requestRemoveService(p.id)} disabled={updatingId === p.id}>
+                  Eliminar
+                </button>
+              </div>
             </div>
+            {updatedId === p.id && <div className="text-success text-xs">Servicio actualizado.</div>}
             {expandedId === p.id && (
               <div className="flex flex-col gap-3 pt-2">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -278,11 +455,34 @@ function ProductsListForm() {
                   </AdminField>
                   <AdminField label="Ícono" id={`ps-icon-${p.id}`}>
                     <select id={`ps-icon-${p.id}`} name="icon" className="select w-full" value={p.icon} onChange={(e) => onChange(p.id, e)}>
-                      {ICON_OPTIONS.map((opt) => (
+                      {HOME_PRODUCT_ICON_OPTIONS.map((opt) => (
                         <option key={opt} value={opt}>{opt}</option>
                       ))}
                     </select>
                   </AdminField>
+                  <div className="rounded-xl border border-base-300 bg-base-200/40 p-3">
+                    <p className="text-xs uppercase tracking-wide text-base-content/70">Preview ícono</p>
+                    <div className="mt-2 flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-content">
+                        {React.createElement(PRODUCT_ICON_COMPONENTS[p.icon], { size: 20 })}
+                      </div>
+                      <span className="text-sm font-medium">{p.icon}</span>
+                    </div>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {HOME_PRODUCT_ICON_OPTIONS.map((iconOption) => (
+                        <button
+                          key={iconOption}
+                          type="button"
+                          className={`btn btn-sm ${p.icon === iconOption ? "btn-primary" : "btn-ghost"}`}
+                          onClick={() => onIconPick(p.id, iconOption)}
+                          aria-label={`Usar ícono ${iconOption}`}
+                          title={iconOption}
+                        >
+                          {React.createElement(PRODUCT_ICON_COMPONENTS[iconOption], { size: 16 })}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <AdminField label="Descripción (ES)" id={`ps-desc-es-${p.id}`}>
@@ -311,6 +511,16 @@ function ProductsListForm() {
                 <AdminField label="Imagen expandida (URL)" id={`ps-eimg-${p.id}`}>
                   <input id={`ps-eimg-${p.id}`} name="expandImage" type="url" className="input w-full" value={p.expandImage} onChange={(e) => onChange(p.id, e)} />
                 </AdminField>
+                <div className="flex justify-start pt-1">
+                  <button
+                    type="button"
+                    className={`btn btn-sm ${p.isNew ? "btn-secondary" : "btn-primary"}`}
+                    onClick={() => onUpdateService(p.id)}
+                    disabled={saving || updatingId === p.id}
+                  >
+                    {updatingId === p.id ? (p.isNew ? "Agregando..." : "Actualizando...") : (p.isNew ? "Agregar" : "Actualizar")}
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -320,13 +530,38 @@ function ProductsListForm() {
         + Agregar servicio
       </button>
       <div className="flex justify-end">
-        <button type="submit" className="btn btn-primary">Guardar servicios</button>
+        <button type="submit" className="btn btn-primary" disabled={saving}>{saving ? "Guardando..." : "Guardar servicios"}</button>
       </div>
+
+      {pendingRemoveId !== null ? (
+        <dialog
+          className="modal modal-open"
+          open
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              cancelRemoveService();
+            }
+          }}
+        >
+          <div className="modal-box" onClick={(event) => event.stopPropagation()}>
+            <h3 className="text-lg font-semibold">Eliminar servicio</h3>
+            <p className="mt-2 text-sm text-base-content/70">
+              Esta accion eliminara el servicio seleccionado. Podras recuperarlo solo volviendolo a crear manualmente.
+            </p>
+            <div className="modal-action">
+              <button type="button" className="btn btn-ghost" onClick={cancelRemoveService}>
+                Cancelar
+              </button>
+              <button type="button" className="btn btn-error" onClick={confirmRemoveService}>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </dialog>
+      ) : null}
     </form>
   );
 }
-
-// ─── Main component ────────────────────────────────────────────────────────────
 
 type Tab = "header" | "services" | "cases";
 

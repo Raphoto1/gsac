@@ -9,12 +9,15 @@ import { LanguageSwitcher } from "@/components/utils/language/LanguageSwitcher";
 import ThemeSwitcher from "@/components/utils/theme/ThemeSwitcher";
 import Image from "next/image";
 
+const NEWS_SECTION_VISIBILITY_EVENT = "gsac:news-section-visibility";
+
 export default function Nav() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isNewsSectionEnabled, setIsNewsSectionEnabled] = useState(true);
   const lastScrollY = useRef(0);
   const pathname = usePathname();
   const t = useTranslations("navigation");
@@ -27,12 +30,12 @@ export default function Nav() {
     { href: "/contact", label: t("contact") },
   ];*/
 
-   const navItems = [
-   { href: "/", label: t("home") },
-   { href: "/about", label: t("about") },
-   { href: "/news", label: t("news") },
-   { href: "/products", label: t("products") },
-   { href: "/contact", label: t("contact") },
+  const navItems = [
+    { href: "/", label: t("home") },
+    { href: "/about", label: t("about") },
+    ...(isNewsSectionEnabled ? [{ href: "/news", label: t("news") }] : []),
+    { href: "/products", label: t("products") },
+    { href: "/contact", label: t("contact") },
   ];
 
   useEffect(() => {
@@ -60,6 +63,59 @@ export default function Nav() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    void (async () => {
+      try {
+        const response = await fetch("/api/page/news/section", { cache: "no-store" });
+        if (!response.ok) {
+          return;
+        }
+
+        const payload = (await response.json()) as { newsEnabled?: boolean };
+        if (!cancelled) {
+          setIsNewsSectionEnabled(payload.newsEnabled !== false);
+        }
+      } catch {
+        if (!cancelled) {
+          setIsNewsSectionEnabled(true);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleVisibilityChanged = () => {
+      void fetch("/api/page/news/section", { cache: "no-store" })
+        .then((response) => {
+          if (!response.ok) {
+            return null;
+          }
+
+          return response.json() as Promise<{ newsEnabled?: boolean }>;
+        })
+        .then((payload) => {
+          if (payload) {
+            setIsNewsSectionEnabled(payload.newsEnabled !== false);
+          }
+        })
+        .catch(() => {
+          setIsNewsSectionEnabled(true);
+        });
+    };
+
+    window.addEventListener(NEWS_SECTION_VISIBILITY_EVENT, handleVisibilityChanged);
+
+    return () => {
+      window.removeEventListener(NEWS_SECTION_VISIBILITY_EVENT, handleVisibilityChanged);
     };
   }, []);
 

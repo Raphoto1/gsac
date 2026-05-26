@@ -1,10 +1,18 @@
 import Link from "next/link";
 import NewsCard from "@/components/news/NewsCard";
-import { sampleNews } from "@/components/news/newsData";
+import { getNewsSectionVisibilityService, getPublicNewsService } from "@/apiPack/service/news.service";
+import { getLocale } from "next-intl/server";
 
-export default function HomeNewsPreview() {
-  const latestNews = sampleNews.slice(0, 3);
-  const hasMoreNews = sampleNews.length > latestNews.length;
+export default async function HomeNewsPreview() {
+  const locale = await getLocale();
+  const { newsEnabled } = await getNewsSectionVisibilityService();
+  if (!newsEnabled) {
+    return null;
+  }
+
+  const { news } = await getPublicNewsService();
+  const latestNews = news.slice(0, 3);
+  const hasMoreNews = news.length > latestNews.length;
 
   return (
     <section className="bg-base-100 px-4 py-16 sm:px-6 lg:px-8">
@@ -19,7 +27,7 @@ export default function HomeNewsPreview() {
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {latestNews.map((news) => (
-            <NewsCard key={news.id} news={news} />
+            <NewsCard key={news.id} news={news} locale={locale === "en" ? "en" : "es"} />
           ))}
         </div>
 

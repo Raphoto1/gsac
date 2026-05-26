@@ -1,7 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, useEffect } from "react";
+import type { ContactInfo } from "@/types/contact";
+import { DEFAULT_CONTACT_INFO } from "@/types/contact";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const REPEATED_CHARACTER_REGEX = /(.)\1{4,}/;
@@ -18,6 +20,7 @@ type ContactFormErrors = Partial<Record<keyof ContactFormValues, string>>;
 export default function Contact() {
   const t = useTranslations("contact");
   const [submitted, setSubmitted] = useState(false);
+  const [contactInfo, setContactInfo] = useState<ContactInfo>(DEFAULT_CONTACT_INFO);
   const [values, setValues] = useState<ContactFormValues>({
     name: "",
     email: "",
@@ -25,6 +28,21 @@ export default function Contact() {
     message: "",
   });
   const [errors, setErrors] = useState<ContactFormErrors>({});
+
+  useEffect(() => {
+    async function fetchContactInfo() {
+      try {
+        const response = await fetch("/api/page/contact");
+        if (response.ok) {
+          const data = await response.json();
+          setContactInfo(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch contact info:", error);
+      }
+    }
+    fetchContactInfo();
+  }, []);
 
   function validateField(field: keyof ContactFormValues, rawValue: string) {
     const value = rawValue.trim();
@@ -136,11 +154,11 @@ export default function Contact() {
           <ul className="space-y-4 text-base-content/80">
             <li>
               <span className="font-semibold">{t("emailLabel")}:</span>{" "}
-              <a href="mailto:info@gsac.com" className="link link-hover">info@gsac.com</a>
+              <a href={`mailto:${contactInfo.email}`} className="link link-hover">{contactInfo.email}</a>
             </li>
             <li>
               <span className="font-semibold">{t("phoneLabel")}:</span>{" "}
-              <a href="tel:+1234567890" className="link link-hover">+1 234 567 890</a>
+              <a href={`tel:${contactInfo.phone}`} className="link link-hover">{contactInfo.phone}</a>
             </li>
           </ul>
         </div>

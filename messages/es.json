@@ -7,8 +7,8 @@
     "contact": "Contacto"
   },
   "home": {
-    "welcome": "Bienvenido",
-    "description": "Tu descripción aquí",
+    "welcome": "Estrategia financiera para crecer con impacto",
+    "description": "Acompañamos a organizaciones, empresas y actores del desarrollo con estructuración financiera, fundraising y proyectos de inversión sostenibles.",
     "impact": {
       "projects": "120+ proyectos",
       "clients": "40+ clientes",
@@ -199,20 +199,20 @@
     "description": "Un equipo que combina estrategia, rigor financiero y acompañamiento cercano para estructurar decisiones, capital y crecimiento con enfoque de impacto.",
     "items": {
       "member1": {
-        "name": "Nombre integrante 1",
-        "role": "Dirección estratégica"
+        "name": "Estrategia / Strategy",
+        "role": "Dirección de crecimiento y ejecución / Growth and execution leadership"
       },
       "member2": {
-        "name": "Nombre integrante 2",
-        "role": "Estructuración financiera"
+        "name": "Estructuración financiera / Financial structuring",
+        "role": "Modelos de sostenibilidad y planeación de capital / Sustainability models and capital planning"
       },
       "member3": {
-        "name": "Nombre integrante 3",
-        "role": "Fundraising y alianzas"
+        "name": "Fundraising y alianzas / Fundraising and partnerships",
+        "role": "Estrategia de donantes, grants y aliados / Donor, grants, and alliance strategy"
       },
       "member4": {
-        "name": "Nombre integrante 4",
-        "role": "Planeación y ejecución"
+        "name": "Proyectos de inversión / Investment projects",
+        "role": "Estructuración de impacto y despliegue / Impact structuring and delivery"
       }
     }
   },

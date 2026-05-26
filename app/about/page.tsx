@@ -1,18 +1,57 @@
 import type { Metadata } from "next";
+import type { ComponentType } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
-import { useTranslations } from "next-intl";
-import { AR, CL, CO, MX, UY } from "country-flag-icons/react/3x2";
+import * as FlagIcons from "country-flag-icons/react/3x2";
 import ContentCardsSection from "@/components/about/ContentCardsSection";
 import BigCardProps from "@/components/BigCardProps";
 import { buildPageMetadata } from "@/lib/seo";
+import type { AboutSectionId, AboutSectionItem } from "@/types/about-sections";
+import { getAboutSectionsOrderService } from "@/apiPack/service/about-sections.service";
+import {
+  ABOUT_COUNTRY_LEGACY_NAME_TO_CODE,
+  ABOUT_COUNTRY_OPTION_BY_CODE,
+  ABOUT_COUNTRY_OPTION_BY_NAME,
+  type AboutCardSectionData,
+  type AboutCardSectionId,
+  type LocalizedText,
+} from "@/types/about-content";
+import { getAboutContentService } from "@/apiPack/service/about-content.service";
 
-const operatingCountries = [
-  { name: "Colombia", Flag: CO },
-  { name: "Mexico", Flag: MX },
-  { name: "Uruguay", Flag: UY },
-  { name: "Argentina", Flag: AR },
-  { name: "Chile", Flag: CL },
-] as const;
+const FLAG_COMPONENTS = FlagIcons as unknown as Record<string, ComponentType<{ className?: string }>>;
+
+function normalizeCountryCode(value: string): string | null {
+  const normalized = value.trim();
+  const uppercase = normalized.toUpperCase();
+
+  if (ABOUT_COUNTRY_OPTION_BY_CODE.has(uppercase)) {
+    return uppercase;
+  }
+
+  const byName = ABOUT_COUNTRY_OPTION_BY_NAME.get(normalized);
+  if (byName) {
+    return byName.code;
+  }
+
+  const legacy = ABOUT_COUNTRY_LEGACY_NAME_TO_CODE[normalized];
+  if (legacy) {
+    return legacy;
+  }
+
+  return null;
+}
+
+const CARD_LAYOUT_BY_ID: Record<AboutCardSectionId, { horizontalOrder: "image-left" | "image-right"; backgroundVariant?: 0 | 1 }> = {
+  intro: { horizontalOrder: "image-left" },
+  mission: { horizontalOrder: "image-right", backgroundVariant: 1 },
+  vision: { horizontalOrder: "image-left", backgroundVariant: 0 },
+  services: { horizontalOrder: "image-right", backgroundVariant: 1 },
+  whyUs: { horizontalOrder: "image-left", backgroundVariant: 0 },
+  experience: { horizontalOrder: "image-right", backgroundVariant: 1 },
+};
+
+function resolveLocalizedText(value: LocalizedText, locale: "es" | "en"): string {
+  return value[locale] || value[locale === "es" ? "en" : "es"];
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const [locale, t] = await Promise.all([getLocale(), getTranslations("seo")]);
@@ -27,102 +66,102 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 
-export default function Page() {
-  const t = useTranslations("about");
-  const values = [
-    {
-      key: "financialRigor",
-      title: t("values.items.financialRigor.title"),
-      description: t("values.items.financialRigor.description"),
-    },
-    {
-      key: "executionFocus",
-      title: t("values.items.executionFocus.title"),
-      description: t("values.items.executionFocus.description"),
-    },
-    {
-      key: "contextUnderstanding",
-      title: t("values.items.contextUnderstanding.title"),
-      description: t("values.items.contextUnderstanding.description"),
-    },
-    {
-      key: "sustainability",
-      title: t("values.items.sustainability.title"),
-      description: t("values.items.sustainability.description"),
-    },
-    {
-      key: "strategyCapitalAlignment",
-      title: t("values.items.strategyCapitalAlignment.title"),
-      description: t("values.items.strategyCapitalAlignment.description"),
-    },
-    {
-      key: "longTermRelationships",
-      title: t("values.items.longTermRelationships.title"),
-      description: t("values.items.longTermRelationships.description"),
-    },
-  ];
+export default async function Page() {
+  const [t, locale, sections, content] = await Promise.all([
+    getTranslations("about"),
+    getLocale(),
+    getAboutSectionsOrderService(),
+    getAboutContentService(),
+  ]);
+  const resolvedLocale = locale === "en" ? "en" : "es";
 
-  return (
-    <div>
+  const visibleSections = [...sections]
+    .filter((section) => section.visible)
+    .sort((a, b) => a.position - b.position);
+
+  const values = content.values.map((item) => ({
+    key: item.key,
+    title: resolveLocalizedText(item.title, resolvedLocale),
+    description: resolveLocalizedText(item.description, resolvedLocale),
+  }));
+
+  function renderCardSection(sectionId: AboutCardSectionId, card: AboutCardSectionData) {
+    const layout = CARD_LAYOUT_BY_ID[sectionId];
+
+    return (
       <BigCardProps
-        title={t("title")}
-        description={t("description")}
-        horizontalOrder='image-left'
-        imageUrl='https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg'
+        title={resolveLocalizedText(card.title, resolvedLocale)}
+        description={resolveLocalizedText(card.description, resolvedLocale)}
+        horizontalOrder={layout.horizontalOrder}
+        imageUrl={card.imageUrl}
+        backgroundVariant={layout.backgroundVariant}
       />
-      <BigCardProps
-        title={t("mission.title")}
-        description={t("mission.description")}
-        horizontalOrder='image-right'
-        imageUrl='https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg'
-        backgroundVariant={1}
-      />
-      <BigCardProps
-        title={t("vision.title")}
-        description={t("vision.description")}
-        horizontalOrder='image-left'
-        imageUrl='https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg'
-        backgroundVariant={0}
-      />
-      <ContentCardsSection title={t("values.title")} items={values} />
-      <div className='bg-base-200 px-4 py-16 md:px-8 md:py-20'>
-        <div className='mx-auto flex w-full max-w-6xl flex-col gap-8'>
-          <div className='text-center'>
-            <h2 className='text-4xl font-bold'>{t("countries.title")}</h2>
-          </div>
-          <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-5'>
-            {operatingCountries.map(({ name, Flag }) => (
-              <div key={name} className='rounded-3xl border border-base-300 bg-base-100 px-5 py-6 text-center shadow-[0_14px_35px_rgba(15,23,42,0.06)]'>
-                <div className='mx-auto flex w-full max-w-16 justify-center overflow-hidden rounded-lg shadow-sm ring-1 ring-base-300/70'>
-                  <Flag className='h-auto w-full' />
+    );
+  }
+
+  function renderSection(section: AboutSectionItem) {
+    const sectionId = section.id as AboutSectionId;
+
+    if (sectionId === "intro") {
+      return renderCardSection(sectionId, content.cards.intro);
+    }
+
+    if (sectionId === "mission") {
+      return renderCardSection(sectionId, content.cards.mission);
+    }
+
+    if (sectionId === "vision") {
+      return renderCardSection(sectionId, content.cards.vision);
+    }
+
+    if (sectionId === "values") {
+      return <ContentCardsSection title={t("values.title")} items={values} />;
+    }
+
+    if (sectionId === "countries") {
+      return (
+        <div className='bg-base-200 px-4 py-16 md:px-8 md:py-20'>
+          <div className='mx-auto flex w-full max-w-6xl flex-col gap-8'>
+            <div className='text-center'>
+              <h2 className='text-4xl font-bold'>{t("countries.title")}</h2>
+            </div>
+            <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-5'>
+              {content.countries.map(({ name }) => {
+                const code = normalizeCountryCode(name);
+                const option = code ? ABOUT_COUNTRY_OPTION_BY_CODE.get(code) : null;
+                const Flag = code ? FLAG_COMPONENTS[code] : undefined;
+
+                return (
+                <div key={name} className='rounded-3xl border border-base-300 bg-base-100 px-5 py-6 text-center shadow-[0_14px_35px_rgba(15,23,42,0.06)]'>
+                  {Flag ? (
+                    <div className='mx-auto flex w-full max-w-16 justify-center overflow-hidden rounded-lg shadow-sm ring-1 ring-base-300/70'>
+                      <Flag className='h-auto w-full' />
+                    </div>
+                  ) : (
+                    <div className='mx-auto flex h-9.5 w-full max-w-16 items-center justify-center rounded-lg bg-base-200 text-xs font-semibold text-base-content/70'>
+                      {name.slice(0, 2).toUpperCase()}
+                    </div>
+                  )}
+                  <p className='mt-3 text-xl font-semibold text-base-content'>{option?.name ?? name}</p>
                 </div>
-                <p className='mt-3 text-xl font-semibold text-base-content'>{name}</p>
-              </div>
-            ))}
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
-      <BigCardProps
-        title={t("services.title")}
-        description={t("services.description")}
-        horizontalOrder='image-right'
-        imageUrl='https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg'
-        backgroundVariant={1}
-      />
-      <BigCardProps
-        title={t("whyUs.title")}
-        description={t("whyUs.description")}
-        horizontalOrder='image-left'
-        imageUrl='https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg'
-        backgroundVariant={0}
-      />
-      <BigCardProps
-        title={t("experience.title")}
-        description={t("experience.description")}
-        horizontalOrder='image-right'
-        imageUrl='https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg'
-        backgroundVariant={1}
-      />
-    </div>
-  );
+      );
+    }
+
+    if (sectionId === "services") {
+      return renderCardSection(sectionId, content.cards.services);
+    }
+
+    if (sectionId === "whyUs") {
+      return renderCardSection(sectionId, content.cards.whyUs);
+    }
+
+    return renderCardSection("experience", content.cards.experience);
+  }
+
+  return <div>{visibleSections.map((section) => <div key={section.id}>{renderSection(section)}</div>)}</div>;
 }

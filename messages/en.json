@@ -7,8 +7,8 @@
     "contact": "Contact"
   },
   "home": {
-    "welcome": "Welcome",
-    "description": "Your description here",
+    "welcome": "Financial strategy for impact-driven growth",
+    "description": "We support organizations, companies, and development actors with financial structuring, fundraising, and sustainable investment projects.",
     "impact": {
       "projects": "120+ projects",
       "clients": "40+ clients",
@@ -199,20 +199,20 @@
     "description": "A team that combines strategy, financial rigor, and close support to structure decisions, capital, and growth with an impact-oriented approach.",
     "items": {
       "member1": {
-        "name": "Team member 1",
-        "role": "Strategic leadership"
+        "name": "Strategy / Estrategia",
+        "role": "Growth and execution leadership / Dirección de crecimiento y ejecución"
       },
       "member2": {
-        "name": "Team member 2",
-        "role": "Financial structuring"
+        "name": "Financial structuring / Estructuración financiera",
+        "role": "Sustainability models and capital planning / Modelos de sostenibilidad y planeación de capital"
       },
       "member3": {
-        "name": "Team member 3",
-        "role": "Fundraising and partnerships"
+        "name": "Fundraising and partnerships / Fundraising y alianzas",
+        "role": "Donor, grants, and alliance strategy / Estrategia de donantes, grants y aliados"
       },
       "member4": {
-        "name": "Team member 4",
-        "role": "Planning and execution"
+        "name": "Investment projects / Proyectos de inversión",
+        "role": "Impact structuring and delivery / Estructuración de impacto y despliegue"
       }
     }
   },

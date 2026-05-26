@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { sampleNews } from "../news/newsData";
 import NewsCard from "../news/NewsCard";
-import type { NewsItem } from "../news/types";
+import type { NewsItem } from "@/types/news";
 import { AdminField } from "./shared/AdminField";
 
 type QuillType = typeof import("quill")["default"];
@@ -9,13 +8,37 @@ type QuillInstance = InstanceType<QuillType>;
 
 type Lang = "es" | "en";
 
+const NEWS_SECTION_VISIBILITY_EVENT = "gsac:news-section-visibility";
+
 const emptyForm = {
   slug: "",
   date: "",
+  isActive: true,
   imageUrl: "",
   es: { title: "", category: "", excerpt: "", content: [""] },
   en: { title: "", category: "", excerpt: "", content: [""] },
 };
+
+function mapNewsToForm(news: NewsItem) {
+  return {
+    slug: news.slug,
+    date: news.date,
+    isActive: news.isActive,
+    imageUrl: news.imageUrl ?? "",
+    es: {
+      title: news.title,
+      category: news.category,
+      excerpt: news.excerpt,
+      content: news.content.length > 0 ? [...news.content] : [""],
+    },
+    en: {
+      title: news.title_en ?? "",
+      category: news.category_en ?? "",
+      excerpt: news.excerpt_en ?? "",
+      content: news.content_en && news.content_en.length > 0 ? [...news.content_en] : [""],
+    },
+  };
+}
 
 const quillModules = {
   toolbar: [
@@ -50,6 +73,7 @@ function QuillEditor({ value, onChange, placeholder, modules, formats }: QuillEd
   const quillRef = useRef<QuillInstance | null>(null);
   const onChangeRef = useRef(onChange);
   const lastKnownHtmlRef = useRef(value || "");
+  const initialConfigRef = useRef({ placeholder, modules, formats });
 
   useEffect(() => {
     onChangeRef.current = onChange;
@@ -70,14 +94,13 @@ function QuillEditor({ value, onChange, placeholder, modules, formats }: QuillEd
 
       const editor = new Quill(editorElement, {
         theme: "snow",
-        placeholder,
-        modules,
-        formats,
+        placeholder: initialConfigRef.current.placeholder,
+        modules: initialConfigRef.current.modules,
+        formats: initialConfigRef.current.formats,
       });
 
       quillRef.current = editor;
-      editor.root.innerHTML = value || "";
-      lastKnownHtmlRef.current = value || "";
+      editor.root.innerHTML = lastKnownHtmlRef.current;
 
       const handleTextChange = (_delta: unknown, _oldDelta: unknown, source: string) => {
         if (source !== "user") return;
@@ -102,7 +125,7 @@ function QuillEditor({ value, onChange, placeholder, modules, formats }: QuillEd
       isMounted = false;
       cleanup?.();
     };
-  }, [formats, modules, placeholder]);
+  }, []);
 
   useEffect(() => {
     const editor = quillRef.current;
@@ -127,15 +150,134 @@ function isRichTextEmpty(value: string): boolean {
 }
 
 export default function NewsAdmin() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [sectionEnabled, setSectionEnabled] = useState(true);
+  const [sectionLoading, setSectionLoading] = useState(false);
+  const [newsList, setNewsList] = useState<NewsItem[]>([]);
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [editingNewsId, setEditingNewsId] = useState<number | null>(null);
   const [form, setForm] = useState(emptyForm);
   const [lang, setLang] = useState<Lang>("es");
-  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    void fetchNews();
+    void fetchSectionVisibility();
+  }, []);
+
+  async function fetchSectionVisibility() {
+    try {
+      setSectionLoading(true);
+      const response = await fetch("/api/admin/news/section", { cache: "no-store" });
+
+      if (!response.ok) {
+        throw new Error("No se pudo cargar el estado de la sección.");
+      }
+
+      const data = (await response.json()) as { newsEnabled?: boolean };
+      const resolvedValue = data.newsEnabled !== false;
+      setSectionEnabled(resolvedValue);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudo cargar el estado de la sección.");
+    } finally {
+      setSectionLoading(false);
+    }
+  }
+
+  async function fetchNews() {
+    try {
+      setLoading(true);
+      setError("");
+      const response = await fetch("/api/admin/news", { cache: "no-store" });
+
+      if (!response.ok) {
+        throw new Error("No se pudieron cargar las noticias");
+      }
+
+      const data = (await response.json()) as { news?: NewsItem[] };
+      setNewsList(Array.isArray(data.news) ? data.news : []);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "No se pudieron cargar las noticias"
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
 
   function handleSharedChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    setSaved(false);
+    const { name, value, type, checked } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+    setSuccess("");
+  }
+
+  async function handleToggleNewsActivation(slug: string, isActive: boolean) {
+    setError("");
+    setSuccess("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/admin/news", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ slug, isActive }),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json()) as { message?: string; error?: string };
+        throw new Error(data.message || data.error || "No se pudo actualizar el estado de la noticia");
+      }
+
+      setSuccess(isActive ? "Noticia activada." : "Noticia desactivada.");
+      await fetchNews();
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "No se pudo actualizar el estado de la noticia"
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleToggleSectionVisibility(nextValue: boolean) {
+    setError("");
+    setSuccess("");
+    setSectionLoading(true);
+
+    try {
+      const response = await fetch("/api/admin/news/section", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ newsEnabled: nextValue }),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json()) as { message?: string; error?: string };
+        throw new Error(data.message || data.error || "No se pudo actualizar la sección de noticias.");
+      }
+
+      setSectionEnabled(nextValue);
+      window.dispatchEvent(
+        new CustomEvent(NEWS_SECTION_VISIBILITY_EVENT, {
+          detail: { newsEnabled: nextValue },
+        })
+      );
+      setSuccess(nextValue ? "Sección de noticias activada." : "Sección de noticias desactivada.");
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "No se pudo actualizar la sección de noticias."
+      );
+    } finally {
+      setSectionLoading(false);
+    }
   }
 
   function handleLangChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -144,7 +286,7 @@ export default function NewsAdmin() {
       ...prev,
       [lang]: { ...prev[lang], [name]: value },
     }));
-    setSaved(false);
+    setSuccess("");
   }
 
   function handleContentChange(index: number, value: string) {
@@ -153,50 +295,82 @@ export default function NewsAdmin() {
       content[index] = value;
       return { ...prev, [lang]: { ...prev[lang], content } };
     });
-    setSaved(false);
+    setSuccess("");
   }
 
-  function addParagraph() {
-    setForm((prev) => ({
-      ...prev,
-      [lang]: { ...prev[lang], content: [...prev[lang].content, ""] },
-    }));
+  function handleEditNews(news: NewsItem) {
+    setError("");
+    setSuccess("");
+    setEditingNewsId(news.id);
+    setForm(mapNewsToForm(news));
+    setLang("es");
   }
 
-  function removeParagraph(index: number) {
-    setForm((prev) => ({
-      ...prev,
-      [lang]: {
-        ...prev[lang],
-        content: prev[lang].content.filter((_, i) => i !== index),
-      },
-    }));
+  function handleCancelEdit() {
+    setEditingNewsId(null);
+    setForm(emptyForm);
+    setLang("es");
+    setError("");
+    setSuccess("Edición cancelada.");
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setError("");
+    setSuccess("");
     const contentEs = form.es.content.filter((p) => !isRichTextEmpty(p));
     const contentEn = form.en.content.filter((p) => !isRichTextEmpty(p));
 
-    const newItem: NewsItem = {
-      id: Date.now(),
-      slug: form.slug || form.es.title.toLowerCase().replace(/\s+/g, "-"),
-      date: form.date,
-      imageUrl: form.imageUrl || undefined,
-      title: form.es.title,
-      category: form.es.category,
-      excerpt: form.es.excerpt,
-      content: contentEs,
-      title_en: form.en.title || undefined,
-      category_en: form.en.category || undefined,
-      excerpt_en: form.en.excerpt || undefined,
-      content_en: contentEn.length
-        ? contentEn
-        : undefined,
-    };
-    console.log("Nueva noticia:", newItem);
-    setForm(emptyForm);
-    setSaved(true);
+    if (contentEs.length === 0) {
+      setError("Debes agregar al menos un párrafo en español.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/admin/news", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          slug: form.slug,
+          date: form.date,
+          isActive: form.isActive,
+          imageUrl: form.imageUrl,
+          es: {
+            title: form.es.title,
+            category: form.es.category,
+            excerpt: form.es.excerpt,
+            content: contentEs,
+          },
+          en: {
+            title: form.en.title,
+            category: form.en.category,
+            excerpt: form.en.excerpt,
+            content: contentEn,
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json()) as { message?: string; error?: string };
+        throw new Error(data.message || data.error || "No se pudo guardar la noticia");
+      }
+
+      const wasEditing = editingNewsId !== null;
+      setEditingNewsId(null);
+      setForm(emptyForm);
+      setSuccess(wasEditing ? "Noticia actualizada correctamente." : "Noticia guardada correctamente.");
+      await fetchNews();
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "No se pudo guardar la noticia"
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   const tabClass = (active: boolean) =>
@@ -206,6 +380,29 @@ export default function NewsAdmin() {
     <div>
       <h2 className="text-2xl font-bold mb-2">Noticias</h2>
       <p className="text-base-content/60 mb-8 text-sm">Administración de noticias del sitio.</p>
+
+      {error && <div className="alert alert-error mb-5"><span>{error}</span></div>}
+      {success && <div className="alert alert-success mb-5"><span>{success}</span></div>}
+
+      <div className="mb-6 rounded-xl border border-base-300 bg-base-100 p-4">
+        <h3 className="font-semibold text-lg">Sección de novedades</h3>
+        <p className="mt-1 text-sm text-base-content/70">
+          Controla si Noticias/Novedades aparece en la navegación pública.
+        </p>
+        <div className="mt-3 flex items-center gap-3">
+          <input
+            type="checkbox"
+            className="toggle toggle-primary"
+            checked={sectionEnabled}
+            disabled={sectionLoading}
+            onChange={(e) => void handleToggleSectionVisibility(e.target.checked)}
+            aria-label="Activar o desactivar sección de novedades"
+          />
+          <span className="text-sm font-medium">
+            {sectionEnabled ? "Sección visible en navegación" : "Sección oculta en navegación"}
+          </span>
+        </div>
+      </div>
 
       {/* Preview dropdown */}
       <div className="mb-8">
@@ -217,19 +414,65 @@ export default function NewsAdmin() {
         </button>
         {previewOpen && (
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {sampleNews.map((news) => (
+            {newsList.map((news) => (
               <NewsCard key={news.id} news={news} />
             ))}
+            {!loading && newsList.length === 0 ? (
+              <p className="text-sm text-base-content/60">No hay noticias guardadas todavía.</p>
+            ) : null}
           </div>
         )}
       </div>
 
+      <div className="mb-8">
+        <h3 className="font-semibold text-lg mb-3">Estado de noticias</h3>
+        <div className="space-y-2">
+          {newsList.map((news) => (
+            <div key={`status-${news.id}`} className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-base-300 bg-base-100 px-4 py-3">
+              <div>
+                <p className="font-medium">{news.title}</p>
+                <p className="text-xs text-base-content/60">/{news.slug}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className={`badge ${news.isActive ? "badge-success" : "badge-ghost"}`}>
+                  {news.isActive ? "Activa" : "Inactiva"}
+                </span>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-outline"
+                  onClick={() => handleEditNews(news)}
+                  disabled={loading}
+                >
+                  Editar
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  onClick={() => void handleToggleNewsActivation(news.slug, !news.isActive)}
+                  disabled={loading}
+                >
+                  {news.isActive ? "Desactivar" : "Activar"}
+                </button>
+              </div>
+            </div>
+          ))}
+          {!loading && newsList.length === 0 ? (
+            <p className="text-sm text-base-content/60">No hay noticias para administrar.</p>
+          ) : null}
+        </div>
+      </div>
+
       {/* Create form */}
-      <h3 className="font-semibold text-lg mb-4">Agregar noticia</h3>
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <h3 className="font-semibold text-lg">{editingNewsId ? "Editar noticia" : "Agregar noticia"}</h3>
+        {editingNewsId ? (
+          <button type="button" className="btn btn-ghost btn-sm" onClick={handleCancelEdit}>
+            Cancelar edición
+          </button>
+        ) : null}
+      </div>
       <form onSubmit={handleSubmit} className="card bg-base-100 shadow-sm">
         <div className="card-body gap-4">
-          {saved && <div className="alert alert-success"><span>Noticia guardada.</span></div>}
-
           {/* Shared fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <AdminField label="Slug (opcional)" id="news-slug">
@@ -262,6 +505,19 @@ export default function NewsAdmin() {
                 placeholder="https://..."
                 className="input w-full"
               />
+            </AdminField>
+            <AdminField label="Estado" id="news-active">
+              <label className="label cursor-pointer justify-start gap-3">
+                <input
+                  id="news-active"
+                  type="checkbox"
+                  name="isActive"
+                  checked={form.isActive}
+                  onChange={handleSharedChange}
+                  className="toggle toggle-primary"
+                />
+                <span className="label-text">{form.isActive ? "Activa" : "Inactiva"}</span>
+              </label>
             </AdminField>
           </div>
 
@@ -339,8 +595,8 @@ export default function NewsAdmin() {
           </div>
 
           <div className="card-actions justify-end pt-2">
-            <button type="submit" className="btn btn-primary">
-              Guardar noticia
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? "Guardando..." : editingNewsId ? "Actualizar noticia" : "Guardar noticia"}
             </button>
           </div>
         </div>

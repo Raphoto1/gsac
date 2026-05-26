@@ -2,21 +2,11 @@
 
 import type { ReactElement } from "react";
 import { createElement, useEffect, useRef } from "react";
+import { useLocale } from "next-intl";
 import * as THREE from "three";
+import { resolveLocalizedText, type CompanyListItem } from "@/types/company-list";
 
 import CompanyCard from "@/components/CompanyCard";
-
-type CompanyListItem = {
-  name: string;
-  description: string;
-  logo?: string;
-  relationship?: string;
-  relationshipLabel?: string;
-  website?: string;
-  websiteLabel?: string;
-  caseHref?: string;
-  caseLabel?: string;
-};
 
 type DesktopCardAnchor = {
   horizontalSide: "left" | "right";
@@ -78,6 +68,7 @@ type CompanyListThreeSceneProps = {
 };
 
 export default function CompanyListThreeScene({ companies }: CompanyListThreeSceneProps): ReactElement {
+  const locale = useLocale() === "es" ? "es" : "en";
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isSingleCompanyLayout = companies.length === 1;
   const useAnchoredDesktopLayout = !isSingleCompanyLayout && companies.length <= desktopCardAnchors.length;
@@ -262,7 +253,7 @@ export default function CompanyListThreeScene({ companies }: CompanyListThreeSce
     element(
       "div",
       {
-        key: company.name,
+        key: company.dbId ?? `${index}-${resolveLocalizedText(company.name, locale)}`,
         className: isSingleCompanyLayout
           ? "hidden md:flex md:flex-1 md:items-center md:justify-center md:pt-8"
           : useAnchoredDesktopLayout
@@ -280,11 +271,11 @@ export default function CompanyListThreeScene({ companies }: CompanyListThreeSce
     ),
   );
 
-  const mobileCards = companies.map((company) =>
+  const mobileCards = companies.map((company, index) =>
     element(
       "div",
       {
-        key: company.name,
+        key: company.dbId ?? `${index}-${resolveLocalizedText(company.name, locale)}`,
         className: "mx-auto w-full max-w-[18.25rem] md:hidden",
       },
       element(CompanyCard, company),

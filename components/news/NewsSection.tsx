@@ -1,7 +1,11 @@
 import NewsCard from "@/components/news/NewsCard";
-import { sampleNews } from "@/components/news/newsData";
+import { getPublicNewsService } from "@/apiPack/service/news.service";
+import { getLocale } from "next-intl/server";
 
-export default function NewsSection() {
+export default async function NewsSection() {
+  const locale = await getLocale();
+  const { news } = await getPublicNewsService();
+
   return (
     <section className="mx-auto w-full max-w-6xl px-4 pb-16 pt-28 sm:px-6 lg:px-8">
       <div className="mb-10 text-center">
@@ -13,8 +17,8 @@ export default function NewsSection() {
       </div>
 
       <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {sampleNews.map((news) => (
-          <NewsCard key={news.id} news={news} />
+        {news.map((news) => (
+          <NewsCard key={news.id} news={news} locale={locale === "en" ? "en" : "es"} />
         ))}
       </div>
     </section>

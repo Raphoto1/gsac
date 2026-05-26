@@ -1,0 +1,360 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum HomeSectionKey {
+  HERO
+  BIGCARD
+  CASES
+  TEAM
+  HOLDINGS
+  CLIENTS
+  CONTACT
+}
+
+enum CompanyListKind {
+  HOLDINGS
+  CLIENTS
+}
+
+enum AboutSectionKey {
+  INTRO
+  MISSION
+  VISION
+  VALUES
+  COUNTRIES
+  SERVICES
+  WHY_US
+  EXPERIENCE
+}
+
+enum AboutCardSectionKey {
+  INTRO
+  MISSION
+  VISION
+  SERVICES
+  WHY_US
+  EXPERIENCE
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  role          UserRole  @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model AdminHomeSectionOrder {
+  id        String         @id @default(cuid())
+  section   HomeSectionKey @unique
+  position  Int            @unique
+  fixed     Boolean        @default(false)
+  visible   Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@map("admin_home_section_order")
+}
+
+model AdminAboutSectionOrder {
+  id        String          @id @default(cuid())
+  section   AboutSectionKey @unique
+  position  Int             @unique
+  fixed     Boolean         @default(false)
+  visible   Boolean         @default(true)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@map("admin_about_section_order")
+}
+
+model AdminAboutCardSection {
+  id            String             @id @default(cuid())
+  section       AboutCardSectionKey @unique
+  titleEs       String
+  titleEn       String
+  descriptionEs String
+  descriptionEn String
+  imageUrl      String
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@map("admin_about_card_sections")
+}
+
+model AdminAboutValueEntry {
+  id            String   @id @default(cuid())
+  position      Int      @unique
+  valueKey      String
+  titleEs       String
+  titleEn       String
+  descriptionEs String
+  descriptionEn String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("admin_about_value_entries")
+}
+
+model AdminAboutCountryEntry {
+  id        String   @id @default(cuid())
+  position  Int      @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admin_about_country_entries")
+}
+
+model HomeBigCard {
+  id           String   @id @default("home_bigcard")
+  titleEs      String
+  titleEn      String
+  descriptionEs String
+  descriptionEn String
+  image        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("home_bigcard")
+}
+
+model HomeHero {
+  id              String   @id @default("home_hero")
+  welcomeEs       String
+  welcomeEn       String
+  descriptionEs   String
+  descriptionEn   String
+  backgroundImage String
+  impact1Es       String
+  impact1En       String
+  impact2Es       String
+  impact2En       String
+  impact3Es       String
+  impact3En       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("home_hero")
+}
+
+model HomeCases {
+  id        String   @id @default("home_cases")
+  items     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("home_cases")
+}
+
+model HomeTeam {
+  id        String   @id @default("home_team")
+  members   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("home_team")
+}
+
+model HomeCaseEntry {
+  id                   String   @id @default(cuid())
+  position             Int      @unique
+  titleEs              String
+  titleEn              String
+  organizationType     String
+  descriptionEs        String
+  descriptionEn        String
+  advancedDescriptionEs String
+  advancedDescriptionEn String
+  impactItemsEs        String
+  impactItemsEn        String
+  image                String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@map("home_case_entries")
+}
+
+model HomeTeamMemberEntry {
+  id         String   @id @default(cuid())
+  position   Int      @unique
+  name       String
+  role       String
+  photo      String
+  linkedin   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("home_team_member_entries")
+}
+
+model HomeProductsHeader {
+  id                     String   @id @default("home_products_header")
+  titleEs                String
+  titleEn                String
+  descriptionEs          String
+  descriptionEn          String
+  secondaryDescriptionEs String
+  secondaryDescriptionEn String
+  imageUrl               String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  @@map("home_products_header")
+}
+
+model HomeProductEntry {
+  id           String   @id @default(cuid())
+  position     Int      @unique
+  titleEs      String
+  titleEn      String
+  descriptionEs String
+  descriptionEn String
+  icon         String
+  expandTitleEs String
+  expandTitleEn String
+  expandTextEs String
+  expandTextEn String
+  expandImageUrl String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("home_product_entries")
+}
+
+model HomeCompanyListEntry {
+  id                String          @id @default(cuid())
+  kind              CompanyListKind
+  position          Int
+  nameEs            String
+  nameEn            String
+  descriptionEs     String
+  descriptionEn     String
+  logo              String?
+  relationshipEs    String?
+  relationshipEn    String?
+  relationshipLabelEs String?
+  relationshipLabelEn String?
+  website           String?
+  websiteLabelEs    String?
+  websiteLabelEn    String?
+  caseHref          String?
+  caseLabelEs       String?
+  caseLabelEn       String?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@unique([kind, position])
+  @@index([kind, position])
+  @@map("home_company_list_entries")
+}
+
+model HomeContactInfo {
+  id            String   @id @default("contact_info")
+  companyName   String
+  nit           String
+  email         String
+  phone         String
+  address       String   @default("")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("home_contact_info")
+}
+
+model HomeGeneralInfo {
+  id            String   @id @default("general_info")
+  companyNameEs String
+  companyNameEn String
+  nit           String
+  taglineEs     String
+  taglineEn     String
+  rightsEs      String
+  rightsEn      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("home_general_info")
+}
+
+model NewsArticle {
+  id         Int      @id @default(autoincrement())
+  slug       String   @unique
+  isActive   Boolean  @default(true)
+  date       String
+  imageUrl   String?
+  titleEs    String
+  titleEn    String   @default("")
+  categoryEs String
+  categoryEn String   @default("")
+  excerptEs  String
+  excerptEn  String   @default("")
+  contentEs  Json
+  contentEn  Json     @default("[]")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([createdAt])
+  @@map("news_articles")
+}
+
+model NewsSectionSettings {
+  id          String   @id @default("news_section")
+  newsEnabled Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("news_section_settings")
+}

@@ -1,108 +1,164 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import * as FlagIcons from "country-flag-icons/react/3x2";
 import { AdminField } from "./shared/AdminField";
 import { AdminListEditor } from "./shared/AdminListEditor";
+import type {
+  AboutSectionId,
+  AboutSectionMeta,
+  AboutSectionOrderResponseItem,
+} from "@/types/about-sections";
+import {
+  ABOUT_SECTION_LABELS,
+  ABOUT_SECTION_IDS,
+} from "@/types/about-sections";
+import { AboutSectionOrderEditor } from "./adminAbout/AboutSectionOrderEditor";
+import {
+  ABOUT_COUNTRY_OPTIONS,
+  ABOUT_COUNTRY_OPTION_BY_CODE,
+  ABOUT_COUNTRY_OPTION_BY_NAME,
+  ABOUT_COUNTRY_LEGACY_NAME_TO_CODE,
+  DEFAULT_ABOUT_CARDS,
+  DEFAULT_ABOUT_COUNTRIES,
+  DEFAULT_ABOUT_VALUES,
+  type AboutCardSectionData,
+  type AboutCardSectionId,
+  type AboutCountryData,
+  type AboutValueData,
+  type LocalizedText,
+} from "@/types/about-content";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
-type Localized = { es: string; en: string };
-type BigCardSection = {
-  title: Localized;
-  description: Localized;
-  imageUrl: string;
-};
-
-type ValueItem = {
+type ValueFormItem = AboutValueData & {
   id: number;
-  key: string;
-  title: Localized;
-  description: Localized;
 };
 
-type CountryItem = {
+type CountryFormItem = AboutCountryData & {
   id: number;
-  name: string;
 };
-
-// ─── Defaults ─────────────────────────────────────────────────────────────────
-
-const DEFAULT_INTRO: BigCardSection = {
-  title: { es: "Acerca de nosotros", en: "About Us" },
-  description: {
-    es: "GS Capital acompaña a organizaciones de impacto en la estructuración, fortalecimiento y ejecución de su estrategia financiera, integrando consultoría especializada, diseño de modelos de sostenibilidad, estructuración de proyectos de inversión y estrategias de fundraising.\n\nEl objetivo es alinear su misión social con una capacidad real de operación, crecimiento y escalabilidad en el tiempo.",
-    en: "GS Capital supports impact organizations in structuring, strengthening, and executing their financial strategy by integrating specialized consulting, sustainability model design, investment project structuring, and fundraising strategies.\n\nThe goal is to align their social mission with a real capacity for operation, growth, and scalability over time."
-  },
-  imageUrl: "https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg",
-};
-
-const DEFAULT_MISSION: BigCardSection = {
-  title: { es: "Misión", en: "Mission" },
-  description: {
-    es: "Acompañar a organizaciones, empresas y actores del ecosistema de desarrollo en la estructuración, fortalecimiento y ejecución de su estrategia financiera, integrando consultoría, fundraising y estructuración de planes de inversión, con el fin de construir modelos sostenibles que permitan crecer, escalar y generar impacto real en el tiempo.",
-    en: "To support organizations, companies, and actors within the development ecosystem in structuring, strengthening, and executing their financial strategy by integrating consulting, fundraising, and investment plan structuring, with the aim of building sustainable models that enable growth, scalability, and real long-term impact."
-  },
-  imageUrl: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg",
-};
-
-const DEFAULT_VISION: BigCardSection = {
-  title: { es: "Visión", en: "Vision" },
-  description: {
-    es: "Ser una firma referente en América Latina en la estructuración de soluciones financieras para organizaciones y empresas que operan en contextos de desarrollo, reconocida por su capacidad de conectar estrategia, inversiones, capital e impacto.",
-    en: "To be a leading firm in Latin America in structuring financial solutions for organizations and companies operating in development contexts, recognized for its ability to connect strategy, investments, capital, and impact, and for transforming the way purpose-driven initiatives are designed, financed, and scaled."
-  },
-  imageUrl: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg",
-};
-
-const DEFAULT_SERVICES: BigCardSection = {
-  title: { es: "¿Qué servicio específico les prestamos?", en: "What specific service do we provide?" },
-  description: {
-    es: "GS Capital presta servicios de consultoría, asesoría y estructuración financiera para ONGs, fundaciones y organizaciones de impacto.",
-    en: "GS Capital provides consulting, advisory, and financial structuring services for NGOs, foundations, and impact organizations."
-  },
-  imageUrl: "https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg",
-};
-
-const DEFAULT_WHY_US: BigCardSection = {
-  title: { es: "¿Por qué elegirnos?", en: "Why choose us?" },
-  description: {
-    es: "GS Capital combina el rigor de una firma financiera con un entendimiento profundo de organizaciones que operan en contextos de desarrollo.",
-    en: "GS Capital combines the rigor of a financial firm with a deep understanding of organizations operating in development contexts."
-  },
-  imageUrl: "https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg",
-};
-
-const DEFAULT_EXPERIENCE: BigCardSection = {
-  title: { es: "Nuestra Experiencia y Origen", en: "Our Experience and Origin" },
-  description: {
-    es: "GS Capital opera como un spin-off de GSA Financieros S.A.S., firma colombiana fundada en 2013 con una trayectoria consolidada en asesoría bancaria y servicios especializados para el sector financiero.",
-    en: "GS Capital operates as a spin-off of GSA Financieros S.A.S., a Colombian firm founded in 2013 with a solid track record in banking advisory and specialized services for the financial sector."
-  },
-  imageUrl: "https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg",
-};
-
-const DEFAULT_VALUES: ValueItem[] = [
-  { id: 1, key: "financialRigor",            title: { es: "Rigor financiero", en: "Financial rigor" },                    description: { es: "Aplicamos estándares técnicos propios de la industria financiera en cada proceso.", en: "We apply technical standards drawn from the financial industry in every process." } },
-  { id: 2, key: "executionFocus",            title: { es: "Enfoque en ejecución", en: "Execution focus" },                description: { es: "No nos limitamos al diagnóstico. Diseñamos soluciones que pueden implementarse en contextos reales.", en: "We do not stop at diagnosis. We design solutions that can be implemented in real contexts." } },
-  { id: 3, key: "contextUnderstanding",      title: { es: "Comprensión del contexto", en: "Contextual understanding" },            description: { es: "Entendemos las dinámicas del sector social, empresarial y de desarrollo.", en: "We understand the dynamics of the social, business, and development sectors." } },
-  { id: 4, key: "sustainability",            title: { es: "Sostenibilidad como principio", en: "Sustainability as a principle" },       description: { es: "Promovemos modelos financieros que aseguren la continuidad de las organizaciones en el tiempo.", en: "We promote financial models that ensure organizations can endure over time." } },
-  { id: 5, key: "strategyCapitalAlignment",  title: { es: "Alineación entre estrategia y capital", en: "Alignment between strategy and capital" }, description: { es: "Conectamos los objetivos estratégicos con estructuras financieras coherentes.", en: "We connect our clients' strategic objectives with coherent financial structures." } },
-  { id: 6, key: "longTermRelationships",     title: { es: "Relaciones de largo plazo", en: "Long-term relationships" },           description: { es: "Construimos relaciones basadas en confianza, confidencialidad y acompañamiento continuo.", en: "We build relationships based on trust, confidentiality, and ongoing support." } },
-];
-
-const DEFAULT_COUNTRIES: CountryItem[] = [
-  { id: 1, name: "Colombia" },
-  { id: 2, name: "Mexico" },
-  { id: 3, name: "Uruguay" },
-  { id: 4, name: "Argentina" },
-  { id: 5, name: "Chile" },
-];
 
 // ─── Shared BigCard section form ───────────────────────────────────────────────
 
-function BigCardSectionForm({ label, defaults }: { label: string; defaults: BigCardSection }) {
-  const [data, setData] = useState<BigCardSection>(defaults);
+function toFormValues(values: AboutValueData[]): ValueFormItem[] {
+  return values.map((value, index) => ({
+    id: index + 1,
+    key: value.key,
+    title: value.title,
+    description: value.description,
+  }));
+}
+
+function toFormCountries(countries: AboutCountryData[]): CountryFormItem[] {
+  return countries.map((country, index) => ({
+    id: index + 1,
+    name: normalizeCountrySelection(country.name),
+  }));
+}
+
+function getDefaultCountryName(usedNames: Set<string>): string {
+  const available = ABOUT_COUNTRY_OPTIONS.find((option) => !usedNames.has(option.code));
+  return available ? available.code : ABOUT_COUNTRY_OPTIONS[0].code;
+}
+
+function normalizeCountrySelection(value: string): string {
+  const normalized = value.trim();
+  const uppercase = normalized.toUpperCase();
+
+  if (ABOUT_COUNTRY_OPTION_BY_CODE.has(uppercase)) {
+    return uppercase;
+  }
+
+  const byName = ABOUT_COUNTRY_OPTION_BY_NAME.get(normalized);
+  if (byName) {
+    return byName.code;
+  }
+
+  const legacy = ABOUT_COUNTRY_LEGACY_NAME_TO_CODE[normalized];
+  if (legacy) {
+    return legacy;
+  }
+
+  return ABOUT_COUNTRY_OPTIONS[0].code;
+}
+
+const FLAG_COMPONENTS = FlagIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>;
+
+function nextFormId<T extends { id: number }>(items: T[]): number {
+  if (!items.length) {
+    return 1;
+  }
+
+  return Math.max(...items.map((item) => item.id)) + 1;
+}
+
+function BigCardSectionForm({ sectionId, defaults }: { sectionId: AboutCardSectionId; defaults: AboutCardSectionData }) {
+  const [data, setData] = useState<AboutCardSectionData>(defaults);
   const [saved, setSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+
+  function setPreviewUrl(nextUrl: string | null) {
+    setImagePreviewUrl((prev) => {
+      if (prev && prev.startsWith("blob:")) {
+        URL.revokeObjectURL(prev);
+      }
+
+      return nextUrl;
+    });
+  }
+
+  useEffect(() => {
+    return () => {
+      if (imagePreviewUrl && imagePreviewUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(imagePreviewUrl);
+      }
+    };
+  }, [imagePreviewUrl]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadSection() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch(`/api/admin/about/cards/${sectionId}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("No se pudo cargar la seccion.");
+        }
+
+        const { data: payload } = await readApiResponse<{ section?: AboutCardSectionData }>(response);
+        if (mounted && payload?.section) {
+          setData(payload.section);
+        }
+      } catch (requestError) {
+        if (mounted) {
+          const message = requestError instanceof Error ? requestError.message : "No se pudo cargar la seccion.";
+          setError(message);
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadSection();
+
+    return () => {
+      mounted = false;
+    };
+  }, [sectionId]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -116,40 +172,133 @@ function BigCardSectionForm({ label, defaults }: { label: string; defaults: BigC
       setData((p) => ({ ...p, [name]: value }));
     }
     setSaved(false);
+    setError(null);
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(`About – ${label}:`, data);
-    setSaved(true);
-    // TODO: DB
+
+    try {
+      setSaving(true);
+      setSaved(false);
+      setError(null);
+
+      const response = await fetch(`/api/admin/about/cards/${sectionId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ section: data }),
+      });
+
+      const { data: payload, rawText } = await readApiResponse<{ error?: string; section?: AboutCardSectionData }>(response);
+
+      if (!response.ok) {
+        throw new Error(payload?.error || (rawText ? `No se pudo guardar la seccion. (${response.status})` : "No se pudo guardar la seccion."));
+      }
+
+      if (payload?.section) {
+        setData(payload.section);
+      }
+
+      setSaved(true);
+    } catch (requestError) {
+      const message = requestError instanceof Error ? requestError.message : "No se pudo guardar la seccion.";
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const onImageFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    try {
+      setSaving(true);
+      setError(null);
+      setSaved(false);
+
+      const localPreview = URL.createObjectURL(file);
+      setPreviewUrl(localPreview);
+
+      const formData = new FormData();
+      formData.set("file", file);
+      formData.set("fileName", `${sectionId}-${file.name}`);
+      if (data.imageUrl) {
+        formData.set("previousImage", data.imageUrl);
+      }
+
+      const response = await fetch(`/api/admin/about/cards/${sectionId}/image`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const { data: payload, rawText } = await readApiResponse<{ error?: string; url?: string }>(response);
+
+      if (!response.ok) {
+        throw new Error(payload?.error || (rawText ? `No se pudo subir la imagen. (${response.status})` : "No se pudo subir la imagen."));
+      }
+
+      if (typeof payload?.url !== "string" || !payload.url) {
+        throw new Error("La subida no devolvio una URL valida.");
+      }
+
+      setData((prev) => ({ ...prev, imageUrl: payload.url }));
+      setPreviewUrl(null);
+    } catch (requestError) {
+      const message = requestError instanceof Error ? requestError.message : "No se pudo subir la imagen.";
+      setError(message);
+    } finally {
+      setSaving(false);
+      e.target.value = "";
+    }
   };
 
   return (
     <form onSubmit={onSubmit} className="card bg-base-100 shadow-sm">
       <div className="card-body gap-4">
+        {loading && <div className="alert"><span>Cargando seccion...</span></div>}
+        {error && <div className="alert alert-error"><span>{error}</span></div>}
         {saved && <div className="alert alert-success"><span>Guardado.</span></div>}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <AdminField label="Título (ES)" id={`${label}-title-es`}>
-            <input id={`${label}-title-es`} name="title.es" type="text" className="input w-full" value={data.title.es} onChange={onChange} required />
+          <AdminField label="Titulo (ES)" id={`${sectionId}-title-es`}>
+            <input id={`${sectionId}-title-es`} name="title.es" type="text" className="input w-full" value={data.title.es} onChange={onChange} required disabled={loading || saving} />
           </AdminField>
-          <AdminField label="Título (EN)" id={`${label}-title-en`}>
-            <input id={`${label}-title-en`} name="title.en" type="text" className="input w-full" value={data.title.en} onChange={onChange} required />
+          <AdminField label="Titulo (EN)" id={`${sectionId}-title-en`}>
+            <input id={`${sectionId}-title-en`} name="title.en" type="text" className="input w-full" value={data.title.en} onChange={onChange} required disabled={loading || saving} />
           </AdminField>
-          <AdminField label="Imagen (URL)" id={`${label}-img`}>
-            <input id={`${label}-img`} name="imageUrl" type="url" className="input w-full" value={data.imageUrl} onChange={onChange} />
+          <AdminField label="Imagen (URL)" id={`${sectionId}-img`}>
+            <div className="flex flex-col gap-2">
+              <input id={`${sectionId}-img`} name="imageUrl" type="url" className="input w-full" value={data.imageUrl} onChange={onChange} disabled={loading || saving} />
+              <input
+                id={`${sectionId}-img-file`}
+                type="file"
+                accept="image/*"
+                className="file-input file-input-bordered w-full"
+                onChange={onImageFileChange}
+                disabled={loading || saving}
+              />
+              {(imagePreviewUrl || data.imageUrl) ? (
+                <img
+                  src={imagePreviewUrl || data.imageUrl}
+                  alt={`Preview ${sectionId}`}
+                  className="h-24 w-auto rounded bg-base-200 p-1 object-cover"
+                />
+              ) : null}
+            </div>
           </AdminField>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <AdminField label="Descripción (ES)" id={`${label}-desc-es`}>
-            <textarea id={`${label}-desc-es`} name="description.es" className="textarea w-full h-40" value={data.description.es} onChange={onChange} required />
+          <AdminField label="Descripcion (ES)" id={`${sectionId}-desc-es`}>
+            <textarea id={`${sectionId}-desc-es`} name="description.es" className="textarea w-full h-40" value={data.description.es} onChange={onChange} required disabled={loading || saving} />
           </AdminField>
-          <AdminField label="Descripción (EN)" id={`${label}-desc-en`}>
-            <textarea id={`${label}-desc-en`} name="description.en" className="textarea w-full h-40" value={data.description.en} onChange={onChange} required />
+          <AdminField label="Descripcion (EN)" id={`${sectionId}-desc-en`}>
+            <textarea id={`${sectionId}-desc-en`} name="description.en" className="textarea w-full h-40" value={data.description.en} onChange={onChange} required disabled={loading || saving} />
           </AdminField>
         </div>
         <div className="card-actions justify-end pt-2">
-          <button type="submit" className="btn btn-primary">Guardar</button>
+          <button type="submit" className="btn btn-primary" disabled={loading || saving}>{saving ? "Guardando..." : "Guardar"}</button>
         </div>
       </div>
     </form>
@@ -159,10 +308,57 @@ function BigCardSectionForm({ label, defaults }: { label: string; defaults: BigC
 // ─── Values form ───────────────────────────────────────────────────────────────
 
 function ValuesForm() {
-  const [values, setValues] = useState<ValueItem[]>(DEFAULT_VALUES);
+  const [values, setValues] = useState<ValueFormItem[]>(toFormValues(DEFAULT_ABOUT_VALUES));
   const [saved, setSaved] = useState(false);
   const [expandedId, setExpandedId] = useState<number | null>(1);
-  const [nextId, setNextId] = useState(DEFAULT_VALUES.length + 1);
+  const [nextId, setNextId] = useState(nextFormId(toFormValues(DEFAULT_ABOUT_VALUES)));
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadValues() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch("/api/admin/about/values", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("No se pudo cargar los valores.");
+        }
+
+        const { data } = await readApiResponse<{ values?: AboutValueData[] }>(response);
+        if (mounted && Array.isArray(data?.values) && data.values.length) {
+          const nextValues = toFormValues(data.values);
+          setValues(nextValues);
+          setNextId(nextFormId(nextValues));
+          setExpandedId(nextValues[0]?.id ?? null);
+        }
+      } catch (requestError) {
+        if (mounted) {
+          const message = requestError instanceof Error ? requestError.message : "No se pudo cargar los valores.";
+          setError(message);
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadValues();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const onChange = (id: number, e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -179,6 +375,7 @@ function ValuesForm() {
       }
     }));
     setSaved(false);
+    setError(null);
   };
 
   const onAdd = () => {
@@ -193,15 +390,47 @@ function ValuesForm() {
     if (expandedId === id) setExpandedId(null);
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("About – Values:", values);
-    setSaved(true);
-    // TODO: DB
+
+    try {
+      setSaving(true);
+      setSaved(false);
+      setError(null);
+
+      const response = await fetch("/api/admin/about/values", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          values: values.map(({ id, ...item }) => item),
+        }),
+      });
+
+      const { data, rawText } = await readApiResponse<{ error?: string; values?: AboutValueData[] }>(response);
+
+      if (!response.ok) {
+        throw new Error(data?.error || (rawText ? `No se pudo guardar los valores. (${response.status})` : "No se pudo guardar los valores."));
+      }
+
+      if (Array.isArray(data?.values) && data.values.length) {
+        const nextValues = toFormValues(data.values);
+        setValues(nextValues);
+        setNextId(nextFormId(nextValues));
+      }
+
+      setSaved(true);
+    } catch (requestError) {
+      const message = requestError instanceof Error ? requestError.message : "No se pudo guardar los valores.";
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      {loading && <div className="alert"><span>Cargando valores...</span></div>}
+      {error && <div className="alert alert-error"><span>{error}</span></div>}
       {saved && <div className="alert alert-success"><span>Guardado.</span></div>}
       {values.map((v, i) => (
         <div key={v.id} className="card bg-base-100 shadow-sm border border-base-300">
@@ -227,18 +456,18 @@ function ValuesForm() {
               <div className="flex flex-col gap-3 pt-2">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <AdminField label="Título (ES)" id={`val-title-es-${v.id}`}>
-                    <input id={`val-title-es-${v.id}`} name="title.es" type="text" className="input w-full" value={v.title.es} onChange={(e) => onChange(v.id, e)} required />
+                    <input id={`val-title-es-${v.id}`} name="title.es" type="text" className="input w-full" value={v.title.es} onChange={(e) => onChange(v.id, e)} required disabled={loading || saving} />
                   </AdminField>
-                  <AdminField label="Título (EN)" id={`val-title-en-${v.id}`}>
-                    <input id={`val-title-en-${v.id}`} name="title.en" type="text" className="input w-full" value={v.title.en} onChange={(e) => onChange(v.id, e)} required />
+                  <AdminField label="Titulo (EN)" id={`val-title-en-${v.id}`}>
+                    <input id={`val-title-en-${v.id}`} name="title.en" type="text" className="input w-full" value={v.title.en} onChange={(e) => onChange(v.id, e)} required disabled={loading || saving} />
                   </AdminField>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <AdminField label="Descripción (ES)" id={`val-desc-es-${v.id}`}>
-                    <textarea id={`val-desc-es-${v.id}`} name="description.es" className="textarea w-full h-24" value={v.description.es} onChange={(e) => onChange(v.id, e)} required />
+                  <AdminField label="Descripcion (ES)" id={`val-desc-es-${v.id}`}>
+                    <textarea id={`val-desc-es-${v.id}`} name="description.es" className="textarea w-full h-24" value={v.description.es} onChange={(e) => onChange(v.id, e)} required disabled={loading || saving} />
                   </AdminField>
-                  <AdminField label="Descripción (EN)" id={`val-desc-en-${v.id}`}>
-                    <textarea id={`val-desc-en-${v.id}`} name="description.en" className="textarea w-full h-24" value={v.description.en} onChange={(e) => onChange(v.id, e)} required />
+                  <AdminField label="Descripcion (EN)" id={`val-desc-en-${v.id}`}>
+                    <textarea id={`val-desc-en-${v.id}`} name="description.en" className="textarea w-full h-24" value={v.description.en} onChange={(e) => onChange(v.id, e)} required disabled={loading || saving} />
                   </AdminField>
                 </div>
               </div>
@@ -246,11 +475,11 @@ function ValuesForm() {
           </div>
         </div>
       ))}
-      <button type="button" className="btn btn-outline btn-sm w-fit" onClick={onAdd}>
+      <button type="button" className="btn btn-outline btn-sm w-fit" onClick={onAdd} disabled={loading || saving}>
         + Agregar valor
       </button>
       <div className="flex justify-end">
-        <button type="submit" className="btn btn-primary">Guardar valores</button>
+        <button type="submit" className="btn btn-primary" disabled={loading || saving}>{saving ? "Guardando..." : "Guardar valores"}</button>
       </div>
     </form>
   );
@@ -259,31 +488,118 @@ function ValuesForm() {
 // ─── Countries form ────────────────────────────────────────────────────────────
 
 function CountriesForm() {
-  const [countries, setCountries] = useState<CountryItem[]>(DEFAULT_COUNTRIES);
+  const [countries, setCountries] = useState<CountryFormItem[]>(toFormCountries(DEFAULT_ABOUT_COUNTRIES));
   const [saved, setSaved] = useState(false);
-  const [nextId, setNextId] = useState(DEFAULT_COUNTRIES.length + 1);
+  const [nextId, setNextId] = useState(nextFormId(toFormCountries(DEFAULT_ABOUT_COUNTRIES)));
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const onChange = (id: number, e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadCountries() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch("/api/admin/about/countries", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("No se pudo cargar los paises.");
+        }
+
+        const { data } = await readApiResponse<{ countries?: AboutCountryData[] }>(response);
+        if (mounted && Array.isArray(data?.countries) && data.countries.length) {
+          const nextCountries = toFormCountries(data.countries);
+          setCountries(nextCountries);
+          setNextId(nextFormId(nextCountries));
+        }
+      } catch (requestError) {
+        if (mounted) {
+          const message = requestError instanceof Error ? requestError.message : "No se pudo cargar los paises.";
+          setError(message);
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadCountries();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const onChange = (id: number, e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setCountries((prev) => prev.map((c) => (c.id === id ? { ...c, [e.target.name]: e.target.value } : c)));
     setSaved(false);
+    setError(null);
+  };
+
+  const setCountryName = (id: number, name: string) => {
+    setCountries((prev) => prev.map((c) => (c.id === id ? { ...c, name: normalizeCountrySelection(name) } : c)));
+    setSaved(false);
+    setError(null);
   };
 
   const onAdd = () => {
-    setCountries((p) => [...p, { id: nextId, name: "" }]);
+    const usedNames = new Set(countries.map((country) => country.name));
+    const nextName = getDefaultCountryName(usedNames);
+    setCountries((p) => [...p, { id: nextId, name: nextName }]);
     setNextId((n) => n + 1);
   };
 
   const onRemove = (id: number) => setCountries((p) => p.filter((c) => c.id !== id));
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("About – Countries:", countries);
-    setSaved(true);
-    // TODO: DB
+
+    try {
+      setSaving(true);
+      setSaved(false);
+      setError(null);
+
+      const response = await fetch("/api/admin/about/countries", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          countries: countries.map(({ id, ...item }) => item),
+        }),
+      });
+
+      const { data, rawText } = await readApiResponse<{ error?: string; countries?: AboutCountryData[] }>(response);
+
+      if (!response.ok) {
+        throw new Error(data?.error || (rawText ? `No se pudo guardar los paises. (${response.status})` : "No se pudo guardar los paises."));
+      }
+
+      if (Array.isArray(data?.countries) && data.countries.length) {
+        const nextCountries = toFormCountries(data.countries);
+        setCountries(nextCountries);
+        setNextId(nextFormId(nextCountries));
+      }
+
+      setSaved(true);
+    } catch (requestError) {
+      const message = requestError instanceof Error ? requestError.message : "No se pudo guardar los paises.";
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      {loading && <div className="alert"><span>Cargando paises...</span></div>}
+      {error && <div className="alert alert-error"><span>{error}</span></div>}
       {saved && <div className="alert alert-success"><span>Guardado.</span></div>}
       <AdminListEditor
         items={countries}
@@ -291,43 +607,243 @@ function CountriesForm() {
         onAdd={onAdd}
         onRemove={onRemove}
         addLabel="+ Agregar país"
-        renderFields={(c) => (
-          <AdminField label="Nombre del país" id={`country-name-${c.id}`}>
-            <input id={`country-name-${c.id}`} name="name" type="text" className="input w-full" value={c.name} onChange={(e) => onChange(c.id, e)} required />
-          </AdminField>
-        )}
+        renderFields={(c) => {
+          const selectedOption = ABOUT_COUNTRY_OPTION_BY_CODE.get(normalizeCountrySelection(c.name)) ?? ABOUT_COUNTRY_OPTIONS[0];
+          const SelectedFlag = FLAG_COMPONENTS[selectedOption.code];
+
+          return (
+            <AdminField label="Nombre del pais" id={`country-name-${c.id}`}>
+              <details className="dropdown w-full">
+                <summary className="btn w-full justify-start gap-3 border-base-300 bg-base-100 text-left">
+                  {SelectedFlag ? (
+                    <SelectedFlag className="h-4 w-6 rounded-sm" />
+                  ) : (
+                    <span className="inline-flex h-4 w-6 items-center justify-center rounded-sm bg-base-200 text-[9px] font-semibold text-base-content/70">
+                      {selectedOption.code}
+                    </span>
+                  )}
+                  <span>{selectedOption.name}</span>
+                </summary>
+                <ul className="menu dropdown-content z-100 mt-1 max-h-72 w-full overflow-y-auto rounded-box border border-base-300 bg-base-100 p-2 shadow-lg">
+                  {ABOUT_COUNTRY_OPTIONS.map((option) => {
+                    const Flag = FLAG_COMPONENTS[option.code];
+
+                    return (
+                      <li key={option.code}>
+                        <button
+                          type="button"
+                          className="justify-start gap-3"
+                          onClick={(event) => {
+                            setCountryName(c.id, option.code);
+                            const details = event.currentTarget.closest("details");
+                            if (details instanceof HTMLDetailsElement) {
+                              details.open = false;
+                            }
+                          }}
+                          disabled={loading || saving}
+                        >
+                          {Flag ? (
+                            <Flag className="h-4 w-6 rounded-sm" />
+                          ) : (
+                            <span className="inline-flex h-4 w-6 items-center justify-center rounded-sm bg-base-200 text-[9px] font-semibold text-base-content/70">
+                              {option.code}
+                            </span>
+                          )}
+                          <span>{option.name}</span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </details>
+            </AdminField>
+          );
+        }}
       />
       <div className="flex justify-end">
-        <button type="submit" className="btn btn-primary">Guardar países</button>
+        <button type="submit" className="btn btn-primary" disabled={loading || saving}>{saving ? "Guardando..." : "Guardar paises"}</button>
       </div>
     </form>
   );
 }
 
-// ─── Main component ────────────────────────────────────────────────────────────
+async function readApiResponse<T>(response: Response): Promise<{ data: T | null; rawText: string | null }> {
+  const contentType = response.headers.get("content-type") || "";
 
-type Tab = "intro" | "mission" | "vision" | "values" | "countries" | "services" | "whyUs" | "experience";
+  if (contentType.includes("application/json")) {
+    return { data: (await response.json()) as T, rawText: null };
+  }
 
-const TABS: { id: Tab; label: string }[] = [
-  { id: "intro",      label: "Intro" },
-  { id: "mission",    label: "Misión" },
-  { id: "vision",     label: "Visión" },
-  { id: "values",     label: "Valores" },
-  { id: "countries",  label: "Países" },
-  { id: "services",   label: "Servicios" },
-  { id: "whyUs",      label: "¿Por qué nosotros?" },
-  { id: "experience", label: "Experiencia" },
-];
+  return { data: null, rawText: await response.text() };
+}
+
+const DEFAULT_ABOUT_ORDER: AboutSectionMeta[] = ABOUT_SECTION_IDS.map((id) => ({
+  id,
+  label: ABOUT_SECTION_LABELS[id],
+  fixed: false,
+  visible: true,
+}));
+
+const CARD_SECTION_DEFAULTS: Record<AboutCardSectionId, AboutCardSectionData> = DEFAULT_ABOUT_CARDS;
 
 export default function AdminAbout() {
-  const [active, setActive] = useState<Tab>("intro");
+  const [active, setActive] = useState<AboutSectionId>("intro");
+  const [sectionOrder, setSectionOrder] = useState<AboutSectionMeta[]>(DEFAULT_ABOUT_ORDER);
+  const [orderSaved, setOrderSaved] = useState(false);
+  const [orderError, setOrderError] = useState<string | null>(null);
+  const [loadingOrder, setLoadingOrder] = useState(true);
+  const [savingOrder, setSavingOrder] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadOrder() {
+      try {
+        setLoadingOrder(true);
+        setOrderError(null);
+
+        const response = await fetch("/api/admin/about/sections", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("No se pudo cargar el orden de secciones de About.");
+        }
+
+        const { data } = await readApiResponse<{ sections?: AboutSectionOrderResponseItem[] }>(response);
+        if (!data || !Array.isArray(data.sections)) {
+          throw new Error("La respuesta del servidor no es válida.");
+        }
+
+        const ordered = [...data.sections]
+          .sort((a, b) => a.position - b.position)
+          .map((section) => ({
+            id: section.id,
+            label: section.label,
+            fixed: section.fixed,
+            visible: section.visible,
+          }));
+
+        if (mounted && ordered.length) {
+          setSectionOrder(ordered);
+        }
+      } catch (error) {
+        if (mounted) {
+          const message = error instanceof Error ? error.message : "No se pudo cargar el orden de secciones de About.";
+          setOrderError(message);
+        }
+      } finally {
+        if (mounted) {
+          setLoadingOrder(false);
+        }
+      }
+    }
+
+    loadOrder();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  function moveSection(index: number, dir: -1 | 1) {
+    setSectionOrder((prev) => {
+      const next = [...prev];
+      const target = index + dir;
+      if (target < 0 || target >= next.length) return prev;
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
+    setOrderSaved(false);
+  }
+
+  function toggleSectionVisible(id: AboutSectionId) {
+    setSectionOrder((prev) => prev.map((section) => (
+      section.id === id ? { ...section, visible: !section.visible } : section
+    )));
+    setOrderSaved(false);
+  }
+
+  async function saveOrder() {
+    try {
+      setSavingOrder(true);
+      setOrderSaved(false);
+      setOrderError(null);
+
+      const orderedSections = sectionOrder.map((section, index) => ({
+        id: section.id,
+        visible: section.visible,
+        position: index + 1,
+      }));
+
+      const response = await fetch("/api/admin/about/sections", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sections: orderedSections }),
+      });
+
+      const { data, rawText } = await readApiResponse<{ error?: string; sections?: AboutSectionOrderResponseItem[] }>(response);
+
+      if (!response.ok) {
+        throw new Error(data?.error || (rawText ? `No se pudo guardar el orden de secciones de About. (${response.status})` : "No se pudo guardar el orden de secciones de About."));
+      }
+
+      if (!data) {
+        throw new Error("El servidor devolvió una respuesta no válida al guardar secciones de About.");
+      }
+
+      if (Array.isArray(data.sections)) {
+        const ordered = [...data.sections]
+          .sort((a, b) => a.position - b.position)
+          .map((section) => ({
+            id: section.id,
+            label: section.label,
+            fixed: section.fixed,
+            visible: section.visible,
+          }));
+
+        if (ordered.length) {
+          setSectionOrder(ordered);
+        }
+      }
+
+      setOrderSaved(true);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "No se pudo guardar el orden de secciones de About.";
+      setOrderError(message);
+    } finally {
+      setSavingOrder(false);
+    }
+  }
+
+  const allTabs = sectionOrder;
+
+  useEffect(() => {
+    if (!allTabs.some((tab) => tab.id === active)) {
+      setActive("intro");
+    }
+  }, [active, allTabs]);
 
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">Secciones del About</h2>
 
+      {loadingOrder && <div className="alert mb-4"><span>Cargando orden de secciones...</span></div>}
+      {orderError && <div className="alert alert-error mb-4"><span>{orderError}</span></div>}
+      {orderSaved && <div className="alert alert-success mb-4"><span>Orden guardado.</span></div>}
+
+      <AboutSectionOrderEditor
+        order={sectionOrder}
+        onMove={moveSection}
+        onToggleVisible={toggleSectionVisible}
+        onSave={saveOrder}
+        isSaving={savingOrder}
+      />
+
       <div role="tablist" className="tabs tabs-border mb-8 flex-wrap">
-        {TABS.map((t) => (
+        {allTabs.map((t) => (
           <button
             key={t.id}
             role="tab"
@@ -340,14 +856,14 @@ export default function AdminAbout() {
         ))}
       </div>
 
-      {active === "intro"      && <BigCardSectionForm label="intro"      defaults={DEFAULT_INTRO} />}
-      {active === "mission"    && <BigCardSectionForm label="mission"    defaults={DEFAULT_MISSION} />}
-      {active === "vision"     && <BigCardSectionForm label="vision"     defaults={DEFAULT_VISION} />}
+      {active === "intro"      && <BigCardSectionForm sectionId="intro"      defaults={CARD_SECTION_DEFAULTS.intro} />}
+      {active === "mission"    && <BigCardSectionForm sectionId="mission"    defaults={CARD_SECTION_DEFAULTS.mission} />}
+      {active === "vision"     && <BigCardSectionForm sectionId="vision"     defaults={CARD_SECTION_DEFAULTS.vision} />}
       {active === "values"     && <ValuesForm />}
       {active === "countries"  && <CountriesForm />}
-      {active === "services"   && <BigCardSectionForm label="services"   defaults={DEFAULT_SERVICES} />}
-      {active === "whyUs"      && <BigCardSectionForm label="whyUs"      defaults={DEFAULT_WHY_US} />}
-      {active === "experience" && <BigCardSectionForm label="experience" defaults={DEFAULT_EXPERIENCE} />}
+      {active === "services"   && <BigCardSectionForm sectionId="services"   defaults={CARD_SECTION_DEFAULTS.services} />}
+      {active === "whyUs"      && <BigCardSectionForm sectionId="whyUs"      defaults={CARD_SECTION_DEFAULTS.whyUs} />}
+      {active === "experience" && <BigCardSectionForm sectionId="experience" defaults={CARD_SECTION_DEFAULTS.experience} />}
     </div>
   );
 }

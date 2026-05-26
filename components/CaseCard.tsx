@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { useState } from "react";
 import Modal from "@/components/utils/modal/Modal";
 import { trackEvent } from "@/components/utils/analytics/GoogleAnalytics";
@@ -13,6 +14,7 @@ type CaseCardProps = {
   impactItems?: string[];
   image: string;
   className?: string;
+  style?: CSSProperties;
   detailsLabel?: string;
 };
 
@@ -84,7 +86,7 @@ export default function CaseCard(props: CaseCardProps) {
 
   return (
     <>
-      <div className={`card relative w-full overflow-hidden border border-base-300/70 bg-base-100 shadow-sm ${cardClassName}`}>
+      <div className={`card relative w-full overflow-hidden border border-base-300/70 bg-base-100 shadow-sm ${cardClassName}`} style={props.style}>
         <div
           className='absolute inset-x-0 top-0 h-3'
           style={{
@@ -139,9 +141,9 @@ export default function CaseCard(props: CaseCardProps) {
             />
             {impactItems.length > 0 ? (
               <div className='pointer-events-none absolute bottom-5 right-4 z-10 flex w-[38%] flex-wrap justify-end gap-2'>
-                {impactItems.map((item) => (
+                {impactItems.map((item, index) => (
                   <span
-                    key={item}
+                    key={`${item}-${index}`}
                     className='rounded-full border px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm'
                     style={{
                       background: `color-mix(in srgb, ${theme.accentDeep} 58%, transparent)`,
@@ -229,9 +231,9 @@ export default function CaseCard(props: CaseCardProps) {
               />
               {impactItems.length > 0 ? (
                 <div className='pointer-events-none absolute bottom-5 right-4 z-10 flex w-[38%] flex-wrap justify-end gap-2'>
-                  {impactItems.map((item) => (
+                  {impactItems.map((item, index) => (
                     <span
-                      key={item}
+                      key={`${item}-${index}`}
                       className='rounded-full border px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm'
                       style={{
                         background: `color-mix(in srgb, ${theme.accentDeep} 58%, transparent)`,

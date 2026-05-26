@@ -1,22 +1,21 @@
 "use client";
 
-import { createElement } from "react";
+import { createElement, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import type { CompanyListItem, CompanyListProps } from "@/types/company-list";
 
+import { DEFAULT_HOLDINGS_ITEMS } from "./company-list/defaults";
 import CompanyListThreeScene from "./company-list/CompanyListThreeScene";
 
-export type CompanyListItem = {
-  name: string;
-  description: string;
-  logo: string;
-  website?: string;
-};
+async function readApiResponse<T>(response: Response): Promise<{ data: T | null; rawText: string | null }> {
+  const contentType = response.headers.get("content-type") || "";
 
-type CompanyListProps = {
-  companies?: CompanyListItem[];
-  title?: string;
-  description?: string;
-};
+  if (contentType.includes("application/json")) {
+    return { data: (await response.json()) as T, rawText: null };
+  }
+
+  return { data: null, rawText: await response.text() };
+}
 
 function CompanyListHeader({ title, description }: { title: string; description: string }) {
   return createElement(
@@ -43,17 +42,48 @@ function CompanyListHeader({ title, description }: { title: string; description:
 
 export default function CompanyList({ companies, title, description }: CompanyListProps) {
   const t = useTranslations("companies");
+  const [resolvedFromApi, setResolvedFromApi] = useState<CompanyListItem[] | null>(null);
+
+  useEffect(() => {
+    if (companies) {
+      setResolvedFromApi(companies);
+      return;
+    }
+
+    let mounted = true;
+
+    async function loadCompanies() {
+      try {
+        const response = await fetch("/api/page/company-list/holdings", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const { data } = await readApiResponse<{ companies?: CompanyListItem[] }>(response);
+        if (mounted && Array.isArray(data?.companies) && data.companies.length) {
+          setResolvedFromApi(data.companies);
+        }
+      } catch {
+        // Keep default values when the API is unavailable.
+      }
+    }
+
+    loadCompanies();
+
+    return () => {
+      mounted = false;
+    };
+  }, [companies]);
 
   const resolvedCompanies: CompanyListItem[] =
+    resolvedFromApi ??
     companies ??
-    [
-      {
-        name: "GSA Financieros S.A.S.",
-        description: t("items.gsaFinancieros.description"),
-        logo: "https://images.pexels.com/photos/355952/pexels-photo-355952.jpeg",
-        website: "https://www.gsafinancieros.com/"
-      },
-    ];
+    DEFAULT_HOLDINGS_ITEMS;
 
   const resolvedTitle = title ?? t("title");
   const resolvedDescription = description ?? t("description");

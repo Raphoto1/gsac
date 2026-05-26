@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import NewsSection from "@/components/news/NewsSection";
+import { getNewsSectionVisibilityService } from "@/apiPack/service/news.service";
 import { buildPageMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -15,6 +17,11 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-export default function Page() {
+export default async function Page() {
+  const { newsEnabled } = await getNewsSectionVisibilityService();
+  if (!newsEnabled) {
+    notFound();
+  }
+
   return <NewsSection />;
 }
