@@ -1,4 +1,3 @@
-import { AboutCardSectionKey } from "@prisma/client";
 import {
   ABOUT_COUNTRY_LEGACY_NAME_TO_CODE,
   ABOUT_COUNTRY_OPTION_BY_CODE,
@@ -15,22 +14,24 @@ import {
   type LocalizedText,
 } from "@/types/about-content";
 import {
+  ABOUT_CARD_SECTION_KEYS,
   getAboutCardSectionFromDb,
   getAboutCountryEntriesFromDb,
   getAboutValueEntriesFromDb,
   replaceAboutCountryEntriesInDb,
   replaceAboutValueEntriesInDb,
   upsertAboutCardSectionInDb,
+  type AboutCardSectionKey,
   type AboutCardSectionRecord,
 } from "../dao/about-content.dao";
 
 const CARD_KEY_BY_ID: Record<AboutCardSectionId, AboutCardSectionKey> = {
-  intro: AboutCardSectionKey.INTRO,
-  mission: AboutCardSectionKey.MISSION,
-  vision: AboutCardSectionKey.VISION,
-  services: AboutCardSectionKey.SERVICES,
-  whyUs: AboutCardSectionKey.WHY_US,
-  experience: AboutCardSectionKey.EXPERIENCE,
+  intro: ABOUT_CARD_SECTION_KEYS.INTRO,
+  mission: ABOUT_CARD_SECTION_KEYS.MISSION,
+  vision: ABOUT_CARD_SECTION_KEYS.VISION,
+  services: ABOUT_CARD_SECTION_KEYS.SERVICES,
+  whyUs: ABOUT_CARD_SECTION_KEYS.WHY_US,
+  experience: ABOUT_CARD_SECTION_KEYS.EXPERIENCE,
 };
 
 const VALID_COUNTRY_CODES = new Set(ABOUT_COUNTRY_OPTIONS.map((option) => option.code));

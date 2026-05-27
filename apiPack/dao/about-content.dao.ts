@@ -1,5 +1,15 @@
-import { AboutCardSectionKey } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+
+export const ABOUT_CARD_SECTION_KEYS = {
+  INTRO: "INTRO",
+  MISSION: "MISSION",
+  VISION: "VISION",
+  SERVICES: "SERVICES",
+  WHY_US: "WHY_US",
+  EXPERIENCE: "EXPERIENCE",
+} as const;
+
+export type AboutCardSectionKey = (typeof ABOUT_CARD_SECTION_KEYS)[keyof typeof ABOUT_CARD_SECTION_KEYS];
 
 export type AboutCardSectionRecord = {
   section: AboutCardSectionKey;
