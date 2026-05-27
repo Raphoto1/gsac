@@ -1,5 +1,16 @@
-import { HomeSectionKey } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+
+export const HOME_SECTION_KEYS = {
+	HERO: "HERO",
+	BIGCARD: "BIGCARD",
+	CASES: "CASES",
+	TEAM: "TEAM",
+	HOLDINGS: "HOLDINGS",
+	CLIENTS: "CLIENTS",
+	CONTACT: "CONTACT",
+} as const;
+
+export type HomeSectionKey = (typeof HOME_SECTION_KEYS)[keyof typeof HOME_SECTION_KEYS];
 
 export type HomeSectionOrderRecord = {
 	section: HomeSectionKey;
@@ -9,8 +20,8 @@ export type HomeSectionOrderRecord = {
 };
 
 const FIXED_SECTIONS = new Set<HomeSectionKey>([
-	HomeSectionKey.HERO,
-	HomeSectionKey.CONTACT,
+	HOME_SECTION_KEYS.HERO,
+	HOME_SECTION_KEYS.CONTACT,
 ]);
 
 export async function getHomeSectionOrderFromDb(): Promise<HomeSectionOrderRecord[]> {

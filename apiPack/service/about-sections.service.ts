@@ -1,7 +1,8 @@
-import { AboutSectionKey } from "@prisma/client";
 import {
+  ABOUT_SECTION_KEYS,
   getAboutSectionOrderFromDb,
   replaceAboutSectionOrderInDb,
+  type AboutSectionKey,
   type AboutSectionOrderRecord,
 } from "../dao/about-sections.dao";
 import {
@@ -33,14 +34,14 @@ const SECTION_META_BY_KEY: Record<
 };
 
 const SECTION_KEY_BY_ID: Record<AboutSectionId, AboutSectionKey> = {
-  intro: AboutSectionKey.INTRO,
-  mission: AboutSectionKey.MISSION,
-  vision: AboutSectionKey.VISION,
-  values: AboutSectionKey.VALUES,
-  countries: AboutSectionKey.COUNTRIES,
-  services: AboutSectionKey.SERVICES,
-  whyUs: AboutSectionKey.WHY_US,
-  experience: AboutSectionKey.EXPERIENCE,
+  intro: ABOUT_SECTION_KEYS.INTRO,
+  mission: ABOUT_SECTION_KEYS.MISSION,
+  vision: ABOUT_SECTION_KEYS.VISION,
+  values: ABOUT_SECTION_KEYS.VALUES,
+  countries: ABOUT_SECTION_KEYS.COUNTRIES,
+  services: ABOUT_SECTION_KEYS.SERVICES,
+  whyUs: ABOUT_SECTION_KEYS.WHY_US,
+  experience: ABOUT_SECTION_KEYS.EXPERIENCE,
 };
 
 const ALL_SECTION_IDS: AboutSectionId[] = [...ABOUT_SECTION_IDS];

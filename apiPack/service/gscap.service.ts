@@ -1,7 +1,8 @@
-import { HomeSectionKey } from "@prisma/client";
 import {
+	HOME_SECTION_KEYS,
 	getHomeSectionOrderFromDb,
 	replaceHomeSectionOrderInDb,
+	type HomeSectionKey,
 	type HomeSectionOrderRecord,
 } from "../dao/gscap.dao";
 import {
@@ -32,13 +33,13 @@ const SECTION_META_BY_KEY: Record<
 };
 
 const SECTION_KEY_BY_ID: Record<SectionId, HomeSectionKey> = {
-	hero: HomeSectionKey.HERO,
-	bigcard: HomeSectionKey.BIGCARD,
-	cases: HomeSectionKey.CASES,
-	team: HomeSectionKey.TEAM,
-	holdings: HomeSectionKey.HOLDINGS,
-	clients: HomeSectionKey.CLIENTS,
-	contact: HomeSectionKey.CONTACT,
+	hero: HOME_SECTION_KEYS.HERO,
+	bigcard: HOME_SECTION_KEYS.BIGCARD,
+	cases: HOME_SECTION_KEYS.CASES,
+	team: HOME_SECTION_KEYS.TEAM,
+	holdings: HOME_SECTION_KEYS.HOLDINGS,
+	clients: HOME_SECTION_KEYS.CLIENTS,
+	contact: HOME_SECTION_KEYS.CONTACT,
 };
 
 const ALL_SECTION_IDS: SectionId[] = [...HOME_SECTION_IDS];
