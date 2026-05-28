@@ -3,7 +3,7 @@ import React from "react";
 export type Priority = "normal" | "urgent";
 
 export type ContactRequest = {
-  id: number;
+  id: string;
   name: string;
   email: string;
   company: string;
@@ -11,19 +11,20 @@ export type ContactRequest = {
   date: string;
   attended: boolean;
   priority: Priority;
+  resendId: string;
 };
 
 type Props = {
   rows: ContactRequest[];
-  expandedId: number | null;
-  onToggleExpand: (id: number) => void;
+  expandedId: string | null;
+  onToggleExpand: (id: string) => void;
   emptyMessage: string;
   borderClass?: string;
   headClass?: string;
   showPriority?: boolean;
-  onMarkAttended?: (id: number) => void;
-  onMarkUrgent?: (id: number) => void;
-  onDelete?: (id: number) => void;
+  onMarkAttended?: (id: string) => void;
+  onMarkUrgent?: (id: string) => void;
+  onDelete?: (id: string) => void;
 };
 
 export default function TableForAskedContact({

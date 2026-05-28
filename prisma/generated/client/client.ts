@@ -151,3 +151,8 @@ export type NewsArticle = Prisma.NewsArticleModel
  * 
  */
 export type NewsSectionSettings = Prisma.NewsSectionSettingsModel
+/**
+ * Model ContactSubmission
+ * 
+ */
+export type ContactSubmission = Prisma.ContactSubmissionModel

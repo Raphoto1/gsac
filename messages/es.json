@@ -230,6 +230,7 @@
     "submitButton": "Enviar mensaje",
     "phoneLabel": "Teléfono",
     "successMessage": "¡Gracias! Tu mensaje ha sido enviado. Nos pondremos en contacto pronto.",
+      "submitError": "Algo salió mal. Por favor intenta de nuevo o contáctanos directamente.",
     "validation": {
       "nameRequired": "Ingresa tu nombre.",
       "nameMinLength": "El nombre debe tener al menos 2 caracteres.",

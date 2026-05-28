@@ -359,3 +359,18 @@ model NewsSectionSettings {
 
   @@map("news_section_settings")
 }
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  company   String   @default("")
+  message   String
+  resendId  String   @default("")
+  priority  String   @default("normal")
+  attended  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("contact_submissions")
+}

@@ -72,7 +72,8 @@ export const ModelName = {
   HomeContactInfo: 'HomeContactInfo',
   HomeGeneralInfo: 'HomeGeneralInfo',
   NewsArticle: 'NewsArticle',
-  NewsSectionSettings: 'NewsSectionSettings'
+  NewsSectionSettings: 'NewsSectionSettings',
+  ContactSubmission: 'ContactSubmission'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -419,6 +420,21 @@ export const NewsSectionSettingsScalarFieldEnum = {
 } as const
 
 export type NewsSectionSettingsScalarFieldEnum = (typeof NewsSectionSettingsScalarFieldEnum)[keyof typeof NewsSectionSettingsScalarFieldEnum]
+
+
+export const ContactSubmissionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  company: 'company',
+  message: 'message',
+  resendId: 'resendId',
+  priority: 'priority',
+  attended: 'attended',
+  createdAt: 'createdAt'
+} as const
+
+export type ContactSubmissionScalarFieldEnum = (typeof ContactSubmissionScalarFieldEnum)[keyof typeof ContactSubmissionScalarFieldEnum]
 
 
 export const SortOrder = {
