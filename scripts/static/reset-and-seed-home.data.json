@@ -1,0 +1,608 @@
+{
+  "blobCleanup": {
+    "defaultPrefixes": [
+      "home/company-list/",
+      "about/cards/"
+    ]
+  },
+  "contactInfo": {
+    "companyName": "GS Capital S.A.S.",
+    "nit": "123456789-0",
+    "email": "info@gsac.com",
+    "phone": "+1 234 567 890",
+    "address": ""
+  },
+  "generalInfo": {
+    "companyNameEs": "GS Capital S.A.S.",
+    "companyNameEn": "GS Capital S.A.S.",
+    "nit": "123456789-0",
+    "taglineEs": "Operado por GSA Financieros",
+    "taglineEn": "Operated by GSA Financieros",
+    "rightsEs": "Todos los derechos reservados",
+    "rightsEn": "All rights reserved"
+  },
+  "homeHero": {
+    "id": "home_hero",
+    "welcomeEs": "Estrategia financiera para crecer con impacto",
+    "welcomeEn": "Financial strategy for impact-driven growth",
+    "descriptionEs": "Acompañamos a organizaciones, empresas y actores del desarrollo con estructuración financiera, fundraising y proyectos de inversión sostenibles.",
+    "descriptionEn": "We support organizations, companies, and development actors with financial structuring, fundraising, and sustainable investment projects.",
+    "backgroundImage": "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg",
+    "impact1Es": "120+ proyectos",
+    "impact1En": "120+ projects",
+    "impact2Es": "40+ clientes",
+    "impact2En": "40+ clients",
+    "impact3Es": "12 sectores",
+    "impact3En": "12 industries"
+  },
+  "homeBigCard": {
+    "id": "home_bigcard",
+    "titleEs": "Nuestro Enfoque",
+    "titleEn": "Our Approach",
+    "descriptionEs": "GS Capital acompaña a organizaciones de impacto en la estructuración, fortalecimiento y ejecución de su estrategia financiera, integrando consultoría especializada, diseño de modelos de sostenibilidad, estructuración de proyectos de inversión y estrategias de fundraising.\n\nEl objetivo es alinear su misión social con una capacidad real de operación, crecimiento y escalabilidad en el tiempo.",
+    "descriptionEn": "GS Capital supports impact organizations in structuring, strengthening, and executing their financial strategy by integrating specialized consulting, sustainability model design, investment project structuring, and fundraising strategies.\n\nThe goal is to align their social mission with a real capacity for operation, growth, and scalability over time.",
+    "image": "https://images.pexels.com/photos/3184423/pexels-photo-3184423.jpeg"
+  },
+  "homeProductsHeader": {
+    "id": "home_products_header",
+    "titleEs": "Nuestros servicios",
+    "titleEn": "Our Services",
+    "descriptionEs": "Explora nuestro catalogo",
+    "descriptionEn": "Explore our catalog",
+    "secondaryDescriptionEs": "Integramos soluciones pensadas para mejorar control, eficiencia operativa y capacidad de crecimiento en cada etapa del negocio.",
+    "secondaryDescriptionEn": "We integrate solutions designed to improve control, operational efficiency, and growth capacity at every stage of the business.",
+    "imageUrl": "https://images.pexels.com/photos/7698796/pexels-photo-7698796.jpeg"
+  },
+  "defaultSectionOrder": [
+    {
+      "section": "HERO",
+      "position": 1,
+      "fixed": true,
+      "visible": true
+    },
+    {
+      "section": "BIGCARD",
+      "position": 2,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "CASES",
+      "position": 3,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "TEAM",
+      "position": 4,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "HOLDINGS",
+      "position": 5,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "CLIENTS",
+      "position": 6,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "CONTACT",
+      "position": 7,
+      "fixed": true,
+      "visible": true
+    }
+  ],
+  "caseEntries": [
+    {
+      "position": 1,
+      "titleEs": "Optimización de fundraising y performance F2F",
+      "titleEn": "Fundraising optimization and F2F performance",
+      "organizationType": "ONG",
+      "descriptionEs": "ONG internacional en Colombia con desafíos en eficiencia del canal face-to-face, altos costos de adquisición y bajo desempeño en indicadores clave.",
+      "descriptionEn": "International NGO in Colombia facing inefficient face-to-face fundraising operations, high acquisition costs, and weak performance indicators.",
+      "advancedDescriptionEs": "Problema / reto\nLa organización contaba con una base relevante de donantes, pero enfrentaba desafíos en la eficiencia del canal face-to-face (F2F), con costos de adquisición elevados y baja optimización en indicadores clave de desempeño.\n\n¿Qué hizo GS Capital?\nDiagnóstico integral del canal F2F (adquisición, retención y operación).\nAnálisis de indicadores clave como CPA, conversión y churn.\nDiseño de un plan de mejora en performance y optimización de recursos.\nEstructuración de lineamientos para escalabilidad del canal.\n\nResultado\nIdentificación de oportunidades claras de reducción de costos de adquisición.\nDefinición de un modelo de gestión basado en indicadores.\nHoja de ruta para mejorar la rentabilidad del canal y escalar su impacto.",
+      "advancedDescriptionEn": "Challenge\nThe organization had a relevant donor base, but faced efficiency challenges in its face-to-face (F2F) channel, with high acquisition costs and limited optimization of key performance indicators.\n\nWhat GS Capital did\nDelivered a full diagnosis of the F2F channel across acquisition, retention, and operations.\nAnalyzed core indicators such as CPA, conversion, and churn.\nDesigned a performance improvement plan and resource optimization approach.\nStructured guidelines to support channel scalability.\n\nResult\nClear opportunities were identified to reduce acquisition costs.\nA management model based on indicators was defined.\nA roadmap was established to improve channel profitability and scale impact.",
+      "impactItemsEs": "Menor CPA, Modelo KPI, Ruta escalable",
+      "impactItemsEn": "Lower CPA, KPI model, Scalable path",
+      "image": "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg"
+    },
+    {
+      "position": 2,
+      "titleEs": "Estructuración de estrategia financiera y fundraising regional",
+      "titleEn": "Regional financial strategy and fundraising structuring",
+      "organizationType": "ONG",
+      "descriptionEs": "ONG internacional en América Latina que necesitaba fortalecer su estructura financiera y su capacidad de recaudo regional bajo modelos no estandarizados.",
+      "descriptionEn": "International NGO in Latin America needing stronger regional financial structure and fundraising capacity across non-standardized country models.",
+      "advancedDescriptionEs": "Problema / reto\nLa organización necesitaba fortalecer su estructura financiera y su capacidad de recaudo a nivel regional, con múltiples países operando bajo modelos no estandarizados.\n\n¿Qué hizo GS Capital?\nAcompañamiento en la estructuración de estrategia financiera.\nDiseño de lineamientos de fundraising para donantes individuales, corporate y grants.\nApoyo en planificación financiera y proyección de ingresos.\nArticulación de visión regional con ejecución local.\n\nResultado\nMayor claridad en el modelo financiero regional.\nEstructuración de un enfoque más estratégico para el fundraising.\nBase para toma de decisiones financieras a nivel organizacional.",
+      "advancedDescriptionEn": "Challenge\nThe organization needed to strengthen its financial structure and fundraising capacity at a regional level, with multiple countries operating under non-standardized models.\n\nWhat GS Capital did\nSupported the structuring of its financial strategy.\nDesigned fundraising guidelines for individual donors, corporate partners, and grants.\nProvided financial planning and revenue projection support.\nConnected regional vision with local execution.\n\nResult\nGreater clarity was achieved in the regional financial model.\nA more strategic fundraising approach was structured.\nA stronger base for organization-wide financial decision-making was created.",
+      "impactItemsEs": "Visión regional, Fundraising, Proyecciones",
+      "impactItemsEn": "Regional view, Fundraising, Forecasting",
+      "image": "https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg"
+    },
+    {
+      "position": 3,
+      "titleEs": "Estructuración de proyecto de impacto y modelo financiero",
+      "titleEn": "Impact project structuring and financial model",
+      "organizationType": "Startup",
+      "descriptionEs": "Iniciativa de desarrollo territorial que requería una estructuración financiera clara para viabilizar su implementación y conectar impacto con capital.",
+      "descriptionEn": "Territorial development initiative requiring clear financial structuring to make implementation viable and connect impact with funding sources.",
+      "advancedDescriptionEs": "Problema / reto\nEl proyecto requería una estructuración financiera clara para viabilizar su implementación y conectar su propuesta de impacto con fuentes de financiamiento.\n\n¿Qué hizo GS Capital?\nConstrucción del modelo financiero del proyecto.\nDefinición de necesidades de capital y estructura de ingresos.\nAlineación entre impacto esperado y viabilidad financiera.\nApoyo en narrativa para potenciales financiadores.\n\nResultado\nProyecto estructurado financieramente y listo para búsqueda de capital.\nClaridad en riesgos, costos y sostenibilidad.\nBase sólida para presentación a aliados e inversionistas.",
+      "advancedDescriptionEn": "Challenge\nThe project required a clear financial structure to enable implementation and connect its impact proposition with funding sources.\n\nWhat GS Capital did\nBuilt the project's financial model.\nDefined capital needs and revenue structure.\nAligned expected impact with financial viability.\nSupported the narrative for potential funders.\n\nResult\nThe project was financially structured and ready for capital raising.\nRisks, costs, and sustainability became clearer.\nA solid base was built for presentation to allies and investors.",
+      "impactItemsEs": "Modelo financiero, Capital, Sostenibilidad",
+      "impactItemsEn": "Financial model, Capital, Sustainability",
+      "image": "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg"
+    },
+    {
+      "position": 4,
+      "titleEs": "Diagnóstico financiero y estructuración estratégica",
+      "titleEn": "Financial diagnosis and strategic structuring",
+      "organizationType": "Pyme",
+      "descriptionEs": "Empresa u organización en crecimiento que enfrentaba expansión sin una estructura financiera clara para sostener decisiones y crecimiento.",
+      "descriptionEn": "Growing company or organization dealing with expansion without a clear financial structure to support decisions and long-term sustainability.",
+      "advancedDescriptionEs": "Problema / reto\nLa organización enfrentaba crecimiento sin una estructura financiera clara, dificultando la toma de decisiones y la sostenibilidad en el tiempo.\n\n¿Qué hizo GS Capital?\nDiagnóstico financiero integral.\nConstrucción de modelo financiero.\nDefinición de escenarios de crecimiento.\nRecomendaciones estratégicas para orden financiero.\n\nResultado\nVisibilidad clara de la situación financiera.\nHerramientas para toma de decisiones informadas.\nHoja de ruta para crecimiento estructurado.",
+      "advancedDescriptionEn": "Challenge\nThe organization was growing without a clear financial structure, making decision-making and long-term sustainability more difficult.\n\nWhat GS Capital did\nConducted a comprehensive financial diagnosis.\nBuilt a financial model.\nDefined growth scenarios.\nDelivered strategic recommendations for financial organization.\n\nResult\nA clear view of the financial situation was achieved.\nTools were established for informed decision-making.\nA roadmap for structured growth was created.",
+      "impactItemsEs": "Diagnóstico, Escenarios, Hoja de ruta",
+      "impactItemsEn": "Diagnosis, Scenarios, Roadmap",
+      "image": "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg"
+    }
+  ],
+  "homeProductEntries": [
+    {
+      "position": 1,
+      "titleEs": "Estrategia y Planeacion Financiera",
+      "titleEn": "Financial Strategy & Planning",
+      "descriptionEs": "Consultoria estrategica para estructurar, ordenar o redefinir el modelo financiero y la ruta de crecimiento.",
+      "descriptionEn": "Strategic consulting to structure, organize, or redefine the financial model and growth path.",
+      "icon": "briefcase",
+      "expandTitleEs": "Estrategia y Planeacion Financiera",
+      "expandTitleEn": "Financial Strategy & Planning",
+      "expandTextEs": "Que es y para quien?\nServicio de consultoria estrategica para organizaciones y empresas que necesitan estructurar, ordenar o redefinir su modelo financiero y su ruta de crecimiento.",
+      "expandTextEn": "What is it and for whom?\nStrategic consulting service for organizations and companies that need to structure, organize, or redefine their financial model and growth path.",
+      "expandImageUrl": "https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg"
+    },
+    {
+      "position": 2,
+      "titleEs": "Estructuracion de Modelos de Fundraising",
+      "titleEn": "Fundraising Model Structuring",
+      "descriptionEs": "Diseno y optimizacion de estrategias de recaudo para fortalecer y diversificar fuentes de financiamiento.",
+      "descriptionEn": "Design and optimization of fundraising strategies to strengthen and diversify funding sources.",
+      "icon": "rocket",
+      "expandTitleEs": "Estructuracion de Modelos de Fundraising",
+      "expandTitleEn": "Fundraising Model Structuring",
+      "expandTextEs": "Que es y para quien?\nDiseno y optimizacion de estrategias de recaudo para organizaciones que dependen o quieren fortalecer sus fuentes de financiamiento.",
+      "expandTextEn": "What is it and for whom?\nDesign and optimization of fundraising strategies for organizations that depend on or want to strengthen their funding sources.",
+      "expandImageUrl": "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg"
+    },
+    {
+      "position": 3,
+      "titleEs": "Estructuracion de Proyectos de Inversion",
+      "titleEn": "Investment Project Structuring",
+      "descriptionEs": "Servicio para estructurar proyectos y acceder a financiamiento o inversion con una base financiera solida.",
+      "descriptionEn": "Service to structure projects and access financing or investment with a solid financial foundation.",
+      "icon": "globe",
+      "expandTitleEs": "Estructuracion de Proyectos de Inversion",
+      "expandTitleEn": "Investment Project Structuring",
+      "expandTextEs": "Que es y para quien?\nServicio dirigido a organizaciones y empresas que necesitan estructurar proyectos para acceder a financiamiento o inversion.",
+      "expandTextEn": "What is it and for whom?\nService aimed at organizations and companies that need to structure projects to access financing or investment.",
+      "expandImageUrl": "https://images.pexels.com/photos/4386370/pexels-photo-4386370.jpeg"
+    },
+    {
+      "position": 4,
+      "titleEs": "Finanzas para el Desarrollo e Inversion de Impacto",
+      "titleEn": "Finance for Development & Impact Investment",
+      "descriptionEs": "Soluciones financieras con enfoque de impacto para organizaciones y actores que operan en contextos de desarrollo.",
+      "descriptionEn": "Financial solutions with an impact focus for organizations and actors operating in development contexts.",
+      "icon": "construct",
+      "expandTitleEs": "Finanzas para el Desarrollo e Inversion de Impacto",
+      "expandTitleEn": "Finance for Development & Impact Investment",
+      "expandTextEs": "Que es y para quien?\nServicio especializado para organizaciones, empresas y actores que operan en contextos de desarrollo y buscan estructurar soluciones financieras con enfoque de impacto.",
+      "expandTextEn": "What is it and for whom?\nSpecialized service for organizations, companies, and actors operating in development contexts seeking to structure financial solutions with an impact focus.",
+      "expandImageUrl": "https://images.pexels.com/photos/6771985/pexels-photo-6771985.jpeg"
+    },
+    {
+      "position": 5,
+      "titleEs": "Asesoria Financiera Estrategica (CFO externo)",
+      "titleEn": "Strategic Financial Advisory (External CFO)",
+      "descriptionEs": "Acompanamiento continuo para tomar mejores decisiones financieras sin depender de un equipo interno robusto.",
+      "descriptionEn": "Ongoing support to make better financial decisions without relying on a large internal team.",
+      "icon": "settings",
+      "expandTitleEs": "Asesoria Financiera Estrategica (CFO externo)",
+      "expandTitleEn": "Strategic Financial Advisory (External CFO)",
+      "expandTextEs": "Que es y para quien?\nAcompanamiento continuo para organizaciones y empresas que requieren soporte financiero estrategico sin tener un equipo interno robusto.",
+      "expandTextEn": "What is it and for whom?\nOngoing support for organizations and companies that require strategic financial guidance without a large internal team.",
+      "expandImageUrl": "https://images.pexels.com/photos/3184328/pexels-photo-3184328.jpeg"
+    }
+  ],
+  "homeTeamMembers": [
+    {
+      "position": 1,
+      "name": "Estrategia / Strategy",
+      "role": "Dirección de crecimiento y ejecución / Growth and execution leadership",
+      "photo": "https://images.pexels.com/photos/3777946/pexels-photo-3777946.jpeg",
+      "linkedin": null
+    },
+    {
+      "position": 2,
+      "name": "Estructuración financiera / Financial structuring",
+      "role": "Modelos de sostenibilidad y planeación de capital / Sustainability models and capital planning",
+      "photo": "https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg",
+      "linkedin": null
+    },
+    {
+      "position": 3,
+      "name": "Fundraising y alianzas / Fundraising and partnerships",
+      "role": "Estrategia de donantes, grants y aliados / Donor, grants, and alliance strategy",
+      "photo": "https://images.pexels.com/photos/3760263/pexels-photo-3760263.jpeg",
+      "linkedin": null
+    },
+    {
+      "position": 4,
+      "name": "Proyectos de inversión / Investment projects",
+      "role": "Estructuración de impacto y despliegue / Impact structuring and delivery",
+      "photo": "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg",
+      "linkedin": null
+    }
+  ],
+  "companyListItems": [
+    {
+      "kind": "HOLDINGS",
+      "position": 1,
+      "nameEs": "GSA Financieros S.A.S.",
+      "nameEn": "GSA Financieros S.A.S.",
+      "descriptionEs": "Firma especializada en asesoria financiera, calculo actuarial, liquidacion de prestamos y analisis tecnico de productos financieros.",
+      "descriptionEn": "A firm specialized in financial advisory, actuarial calculations, loan settlements, and technical analysis of financial products.",
+      "logo": "https://images.pexels.com/photos/355952/pexels-photo-355952.jpeg",
+      "relationshipEs": null,
+      "relationshipEn": null,
+      "relationshipLabelEs": null,
+      "relationshipLabelEn": null,
+      "website": "https://www.gsafinancieros.com/",
+      "websiteLabelEs": null,
+      "websiteLabelEn": null,
+      "caseHref": null,
+      "caseLabelEs": null,
+      "caseLabelEn": null
+    },
+    {
+      "kind": "CLIENTS",
+      "position": 1,
+      "nameEs": "Fundemex",
+      "nameEn": "Fundemex",
+      "descriptionEs": "Organización enfocada en el desarrollo social y fortalecimiento de comunidades a través de programas de impacto.",
+      "descriptionEn": "Organization focused on social development and community strengthening through impact-driven programs.",
+      "logo": "/img/logos/fundemex.jpg",
+      "relationshipEs": "Aliado estratégico en proyectos de desarrollo y estructuración.",
+      "relationshipEn": "Strategic ally in development and structuring projects.",
+      "relationshipLabelEs": "Relación con GS Capital",
+      "relationshipLabelEn": "Relationship with GS Capital",
+      "website": "https://www.fundemex.org.mx/",
+      "websiteLabelEs": "Visitar sitio",
+      "websiteLabelEn": "Visit site",
+      "caseHref": null,
+      "caseLabelEs": null,
+      "caseLabelEn": null
+    },
+    {
+      "kind": "CLIENTS",
+      "position": 2,
+      "nameEs": "Aldeas Infantiles SOS Colombia",
+      "nameEn": "Aldeas Infantiles SOS Colombia",
+      "descriptionEs": "Organización internacional que trabaja en la protección y cuidado de niños, niñas y jóvenes sin cuidado parental o en riesgo.",
+      "descriptionEn": "International organization working to protect and care for children and young people without parental care or at risk.",
+      "logo": "/img/logos/aldeas-infantiles-sos.png",
+      "relationshipEs": "Cliente y aliado en procesos de fortalecimiento financiero y fundraising.",
+      "relationshipEn": "Client and ally in financial strengthening and fundraising processes.",
+      "relationshipLabelEs": "Relación con GS Capital",
+      "relationshipLabelEn": "Relationship with GS Capital",
+      "website": "https://www.aldeasinfantiles.org.co/",
+      "websiteLabelEs": "Visitar sitio",
+      "websiteLabelEn": "Visit site",
+      "caseHref": null,
+      "caseLabelEs": null,
+      "caseLabelEn": null
+    },
+    {
+      "kind": "CLIENTS",
+      "position": 3,
+      "nameEs": "TECHO Internacional",
+      "nameEn": "TECHO International",
+      "descriptionEs": "Organización presente en América Latina que trabaja en la superación de la pobreza a través de vivienda, infraestructura y desarrollo comunitario.",
+      "descriptionEn": "Organization present across Latin America working to overcome poverty through housing, infrastructure, and community development.",
+      "logo": "/img/logos/techo.svg",
+      "relationshipEs": "Aliado estratégico y experiencia directa en estructuración financiera, fundraising y estrategia regional.",
+      "relationshipEn": "Strategic ally with direct experience in financial structuring, fundraising, and regional strategy.",
+      "relationshipLabelEs": "Relación con GS Capital",
+      "relationshipLabelEn": "Relationship with GS Capital",
+      "website": "https://www.techo.org",
+      "websiteLabelEs": "Visitar sitio",
+      "websiteLabelEn": "Visit site",
+      "caseHref": null,
+      "caseLabelEs": null,
+      "caseLabelEn": null
+    },
+    {
+      "kind": "CLIENTS",
+      "position": 4,
+      "nameEs": "Agualongo",
+      "nameEn": "Agualongo",
+      "descriptionEs": "Iniciativa enfocada en soluciones de acceso a agua y desarrollo sostenible en comunidades.",
+      "descriptionEn": "Initiative focused on water access solutions and sustainable development in communities.",
+      "logo": "/img/logos/agualongo.png",
+      "relationshipEs": "Aliado en estructuración de proyectos con enfoque de impacto.",
+      "relationshipEn": "Ally in structuring impact-focused projects.",
+      "relationshipLabelEs": "Relación con GS Capital",
+      "relationshipLabelEn": "Relationship with GS Capital",
+      "website": "https://agualongo.com/",
+      "websiteLabelEs": "Visitar sitio",
+      "websiteLabelEn": "Visit site",
+      "caseHref": null,
+      "caseLabelEs": null,
+      "caseLabelEn": null
+    },
+    {
+      "kind": "CLIENTS",
+      "position": 5,
+      "nameEs": "Socialab",
+      "nameEn": "Socialab",
+      "descriptionEs": "Plataforma de innovación social que impulsa soluciones a desafíos sociales y ambientales en América Latina.",
+      "descriptionEn": "Social innovation platform that drives solutions to social and environmental challenges across Latin America.",
+      "logo": "/img/logos/socialab.png",
+      "relationshipEs": "Aliado en ecosistemas de innovación e impacto.",
+      "relationshipEn": "Ally in innovation and impact ecosystems.",
+      "relationshipLabelEs": "Relación con GS Capital",
+      "relationshipLabelEn": "Relationship with GS Capital",
+      "website": "https://colombia.socialab.com/",
+      "websiteLabelEs": "Visitar sitio",
+      "websiteLabelEn": "Visit site",
+      "caseHref": null,
+      "caseLabelEs": null,
+      "caseLabelEn": null
+    },
+    {
+      "kind": "CLIENTS",
+      "position": 6,
+      "nameEs": "Matteria",
+      "nameEn": "Matteria",
+      "descriptionEs": "Firma especializada en talento y headhunting para organizaciones de impacto en América Latina.",
+      "descriptionEn": "Firm specialized in talent and headhunting for impact organizations in Latin America.",
+      "logo": "/img/logos/matteria.png",
+      "relationshipEs": "Aliado estratégico en fortalecimiento organizacional y estructuración de equipos.",
+      "relationshipEn": "Strategic ally in organizational strengthening and team structuring.",
+      "relationshipLabelEs": "Relación con GS Capital",
+      "relationshipLabelEn": "Relationship with GS Capital",
+      "website": "https://www.matteria.co/",
+      "websiteLabelEs": "Visitar sitio",
+      "websiteLabelEn": "Visit site",
+      "caseHref": null,
+      "caseLabelEs": null,
+      "caseLabelEn": null
+    },
+    {
+      "kind": "CLIENTS",
+      "position": 7,
+      "nameEs": "Territoria",
+      "nameEn": "Territoria",
+      "descriptionEs": "Iniciativa enfocada en el desarrollo territorial y estructuración de proyectos con impacto económico y social.",
+      "descriptionEn": "Initiative focused on territorial development and project structuring with economic and social impact.",
+      "logo": "/img/logos/territoria.png",
+      "relationshipEs": "Aliado estratégico en estructuración financiera y desarrollo de proyectos.",
+      "relationshipEn": "Strategic ally in financial structuring and project development.",
+      "relationshipLabelEs": "Relación con GS Capital",
+      "relationshipLabelEn": "Relationship with GS Capital",
+      "website": "https://www.territoriacolombia.org/",
+      "websiteLabelEs": "Visitar sitio",
+      "websiteLabelEn": "Visit site",
+      "caseHref": null,
+      "caseLabelEs": null,
+      "caseLabelEn": null
+    }
+  ],
+  "aboutSectionOrder": [
+    {
+      "section": "INTRO",
+      "position": 1,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "MISSION",
+      "position": 2,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "VISION",
+      "position": 3,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "VALUES",
+      "position": 4,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "COUNTRIES",
+      "position": 5,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "SERVICES",
+      "position": 6,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "WHY_US",
+      "position": 7,
+      "fixed": false,
+      "visible": true
+    },
+    {
+      "section": "EXPERIENCE",
+      "position": 8,
+      "fixed": false,
+      "visible": true
+    }
+  ],
+  "aboutCardSections": [
+    {
+      "section": "INTRO",
+      "titleEs": "Acerca de nosotros",
+      "titleEn": "About Us",
+      "descriptionEs": "GS Capital acompana a organizaciones de impacto en la estructuracion, fortalecimiento y ejecucion de su estrategia financiera, integrando consultoria especializada, diseno de modelos de sostenibilidad, estructuracion de proyectos de inversion y estrategias de fundraising.",
+      "descriptionEn": "GS Capital supports impact organizations in structuring, strengthening, and executing their financial strategy by integrating specialized consulting, sustainability model design, investment project structuring, and fundraising strategies.",
+      "imageUrl": "https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg"
+    },
+    {
+      "section": "MISSION",
+      "titleEs": "Mision",
+      "titleEn": "Mission",
+      "descriptionEs": "Acompanhar a organizaciones, empresas y actores del ecosistema de desarrollo en la estructuracion, fortalecimiento y ejecucion de su estrategia financiera.",
+      "descriptionEn": "To support organizations, companies, and actors within the development ecosystem in structuring, strengthening, and executing their financial strategy.",
+      "imageUrl": "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg"
+    },
+    {
+      "section": "VISION",
+      "titleEs": "Vision",
+      "titleEn": "Vision",
+      "descriptionEs": "Ser una firma referente en America Latina en la estructuracion de soluciones financieras para organizaciones y empresas que operan en contextos de desarrollo.",
+      "descriptionEn": "To be a leading firm in Latin America in structuring financial solutions for organizations and companies operating in development contexts.",
+      "imageUrl": "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg"
+    },
+    {
+      "section": "SERVICES",
+      "titleEs": "Que servicio especifico les prestamos?",
+      "titleEn": "What specific service do we provide?",
+      "descriptionEs": "GS Capital presta servicios de consultoria, asesoria y estructuracion financiera para ONGs, fundaciones y organizaciones de impacto.",
+      "descriptionEn": "GS Capital provides consulting, advisory, and financial structuring services for NGOs, foundations, and impact organizations.",
+      "imageUrl": "https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg"
+    },
+    {
+      "section": "WHY_US",
+      "titleEs": "Por que elegirnos?",
+      "titleEn": "Why choose us?",
+      "descriptionEs": "GS Capital combina el rigor de una firma financiera con un entendimiento profundo de organizaciones que operan en contextos de desarrollo.",
+      "descriptionEn": "GS Capital combines the rigor of a financial firm with a deep understanding of organizations operating in development contexts.",
+      "imageUrl": "https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg"
+    },
+    {
+      "section": "EXPERIENCE",
+      "titleEs": "Nuestra Experiencia y Origen",
+      "titleEn": "Our Experience and Origin",
+      "descriptionEs": "GS Capital opera como un spin-off de GSA Financieros S.A.S., firma colombiana fundada en 2013 con una trayectoria consolidada en asesoria bancaria.",
+      "descriptionEn": "GS Capital operates as a spin-off of GSA Financieros S.A.S., a Colombian firm founded in 2013 with a solid track record in banking advisory.",
+      "imageUrl": "https://images.pexels.com/photos/48195/document-agreement-documents-sign-48195.jpeg"
+    }
+  ],
+  "aboutValues": [
+    {
+      "valueKey": "financialRigor",
+      "titleEs": "Rigor financiero",
+      "titleEn": "Financial rigor",
+      "descriptionEs": "Aplicamos estandares tecnicos propios de la industria financiera en cada proceso.",
+      "descriptionEn": "We apply technical standards drawn from the financial industry in every process."
+    },
+    {
+      "valueKey": "executionFocus",
+      "titleEs": "Enfoque en ejecucion",
+      "titleEn": "Execution focus",
+      "descriptionEs": "No nos limitamos al diagnostico. Disenamos soluciones que pueden implementarse en contextos reales.",
+      "descriptionEn": "We do not stop at diagnosis. We design solutions that can be implemented in real contexts."
+    },
+    {
+      "valueKey": "sustainability",
+      "titleEs": "Sostenibilidad como principio",
+      "titleEn": "Sustainability as a principle",
+      "descriptionEs": "Promovemos modelos financieros que aseguren la continuidad de las organizaciones en el tiempo.",
+      "descriptionEn": "We promote financial models that ensure organizations can endure over time."
+    },
+    {
+      "valueKey": "strategyCapitalAlignment",
+      "titleEs": "Alineacion entre estrategia y capital",
+      "titleEn": "Alignment between strategy and capital",
+      "descriptionEs": "Conectamos los objetivos estrategicos con estructuras financieras coherentes.",
+      "descriptionEn": "We connect strategic objectives with coherent financial structures."
+    }
+  ],
+  "aboutCountries": [
+    "CO",
+    "MX",
+    "UY",
+    "AR",
+    "CL"
+  ],
+  "newsSectionSettings": {
+    "id": "news_section",
+    "newsEnabled": true
+  },
+  "newsArticles": [
+    {
+      "slug": "solucion-control-financiero-pymes",
+      "isActive": true,
+      "date": "15 marzo 2026",
+      "imageUrl": "https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "titleEs": "Lanzamos una nueva solucion de control financiero para pymes",
+      "titleEn": "We launched a new financial control solution for SMEs",
+      "categoryEs": "Producto",
+      "categoryEn": "Product",
+      "excerptEs": "Presentamos una herramienta enfocada en flujo de caja, proyecciones y alertas para decisiones mas rapidas.",
+      "excerptEn": "We introduced a tool focused on cash flow, forecasts, and alerts for faster decisions.",
+      "contentEs": [
+        "Control financiero en un solo lugar.",
+        "Flujo de caja actualizado, alertas y proyecciones."
+      ],
+      "contentEn": [
+        "Financial control in one place.",
+        "Updated cash flow, alerts, and forecasting."
+      ]
+    },
+    {
+      "slug": "encuentro-innovacion-empresarial",
+      "isActive": true,
+      "date": "2 marzo 2026",
+      "imageUrl": null,
+      "titleEs": "GSAC participa en encuentro regional de innovacion empresarial",
+      "titleEn": "GSAC joins a regional business innovation meeting",
+      "categoryEs": "Eventos",
+      "categoryEn": "Events",
+      "excerptEs": "Compartimos casos practicos sobre implementacion tecnologica y optimizacion de procesos en distintos sectores.",
+      "excerptEn": "We shared practical cases on technology implementation and process optimization.",
+      "contentEs": [
+        "Presentamos una charla de transformacion digital orientada a resultados.",
+        "Mostramos experiencias reales con clientes en automatizacion."
+      ],
+      "contentEn": [
+        "We presented a digital transformation talk focused on measurable outcomes.",
+        "We showed real client automation experiences."
+      ]
+    },
+    {
+      "slug": "alianza-estrategica-consultoria",
+      "isActive": true,
+      "date": "21 febrero 2026",
+      "imageUrl": "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "titleEs": "Nueva alianza estrategica para fortalecer servicios de consultoria",
+      "titleEn": "New strategic alliance to strengthen consulting services",
+      "categoryEs": "Alianzas",
+      "categoryEn": "Partnerships",
+      "excerptEs": "Firmamos un acuerdo para ampliar capacidades en analisis financiero y acompanamiento operativo.",
+      "excerptEn": "We signed an agreement to expand capabilities in financial analysis and operational support.",
+      "contentEs": [
+        "La alianza incorpora especialistas en planeacion y control de gestion.",
+        "El trabajo conjunto busca acelerar la ejecucion de mejoras."
+      ],
+      "contentEn": [
+        "The alliance adds specialists in planning and management control.",
+        "The collaboration aims to accelerate improvement execution."
+      ]
+    }
+  ]
+}

@@ -11,12 +11,17 @@
     "start": "next start",
     "postinstall": "prisma generate",
     "lint": "eslint",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:pages": "vitest run app/",
+    "test:db": "vitest run apiPack/service/contact-submission.service.test.ts",
     "fresh": "rm -rf node_modules .next && npm install",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio",
-    "db:reset-seed-home": "node scripts/reset-and-seed-home.cjs"
+    "db:reset-seed-home": "node scripts/reset-and-seed-home.cjs",
+    "db:reset-seed-home:with-blob-clean": "node scripts/reset-and-seed-home.cjs --clean-blob"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
@@ -46,6 +51,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
     "tailwindcss": "^4.2.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }

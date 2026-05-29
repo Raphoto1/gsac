@@ -16,6 +16,34 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Testing
+
+This project uses Vitest for unit testing.
+
+Run tests in watch mode:
+
+```bash
+npm run test
+```
+
+Run tests once:
+
+```bash
+npm run test:run
+```
+
+Run page-level tests:
+
+```bash
+npm run test:pages
+```
+
+Run DB upload service tests:
+
+```bash
+npm run test:db
+```
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
@@ -38,6 +66,26 @@ Tracked events:
 - `page_view`: Sent on every route change in the App Router.
 - `view_success_cases_section`: Sent when the success cases section enters the viewport.
 - `open_success_case`: Sent when a user opens a success case modal.
+
+## Reset and Seed (Migration Helper)
+
+This project includes a maintenance seed that recreates editable home/about/news data from the current repository content.
+
+1. Run database reset + seed (safe default, does not delete Blob files):
+
+```bash
+npm run db:reset-seed-home
+```
+
+2. Run database reset + seed and clean Blob files (opt-in):
+
+```bash
+npm run db:reset-seed-home:with-blob-clean
+```
+
+Blob cleanup is scoped to configurable prefixes (`home/company-list/`, `about/cards/` by default).
+
+All seed content (home/about/news/contact/general and blob cleanup prefixes) is defined in `scripts/static/reset-and-seed-home.data.json`.
 
 ## Security Headers
 
