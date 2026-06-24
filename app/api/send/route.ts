@@ -9,7 +9,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const FROM_EMAIL =
-    process.env.RESEND_FROM_EMAIL ?? "noreply@gsac.com.co";
+    process.env.RESEND_FROM_EMAIL ?? "noreply@grupogscapital.com";
 
 export async function POST(request: Request) {
     try {
