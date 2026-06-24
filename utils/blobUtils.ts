@@ -1,7 +1,7 @@
 import "server-only";
 
 import { del, put, type PutBlobResult } from "@vercel/blob";
-//blob extras
+
 const DEFAULT_MAX_IMAGE_SIZE_MB = 8;
 const ALLOWED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif", "image/avif", "image/svg+xml"]);
 
