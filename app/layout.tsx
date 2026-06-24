@@ -8,6 +8,7 @@ import Nav from "@/components/nav/Nav";
 import Footer from "@/components/footer/Footer";
 import { siteConfig } from "@/lib/seo";
 import "./globals.css";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -117,6 +118,7 @@ export default async function RootLayout({
   return (
     <html data-theme="light">
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-full overflow-x-hidden antialiased`}>
+        <SpeedInsights />
         <SessionProvider>
           <NextIntlClientProvider messages={messages}>
             <div className="flex min-h-full flex-col overflow-x-hidden">
