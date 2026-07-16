@@ -149,10 +149,10 @@ export default function BigCardForm() {
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <AdminField label="Descripción (español)" id="bc-desc-es">
-            <textarea id="bc-desc-es" name="description" data-lang="es" className="textarea h-28 w-full" value={data.description.es} onChange={onChange} required />
+            <textarea id="bc-desc-es" name="description" data-lang="es" className="textarea w-full" rows={2} value={data.description.es} onChange={onChange} required />
           </AdminField>
           <AdminField label="Descripción (inglés)" id="bc-desc-en">
-            <textarea id="bc-desc-en" name="description" data-lang="en" className="textarea h-28 w-full" value={data.description.en} onChange={onChange} required />
+            <textarea id="bc-desc-en" name="description" data-lang="en" className="textarea w-full" rows={2} value={data.description.en} onChange={onChange} required />
           </AdminField>
         </div>
         <div className="card-actions justify-end pt-2">

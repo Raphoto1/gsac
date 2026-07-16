@@ -27,6 +27,14 @@ function normalizeRequiredText(value: unknown, field: string): string {
   return normalized;
 }
 
+function normalizeOptionalText(value: unknown, field: string): string {
+  if (typeof value !== "string") {
+    throw new GeneralValidationError(field, `${field} debe ser texto.`);
+  }
+
+  return value.trim();
+}
+
 function isPrismaTableMissingError(error: unknown): boolean {
   if (!error || typeof error !== "object") {
     return false;
@@ -79,8 +87,8 @@ export async function updateGeneralInfoService(payload: unknown): Promise<Genera
     },
     nit: normalizeRequiredText(data.nit, "nit"),
     tagline: {
-      es: normalizeRequiredText(data.tagline?.es, "tagline.es"),
-      en: normalizeRequiredText(data.tagline?.en, "tagline.en"),
+      es: normalizeOptionalText(data.tagline?.es, "tagline.es"),
+      en: normalizeOptionalText(data.tagline?.en, "tagline.en"),
     },
     rights: {
       es: normalizeRequiredText(data.rights?.es, "rights.es"),

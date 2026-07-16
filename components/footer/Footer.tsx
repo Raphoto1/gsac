@@ -17,7 +17,9 @@ export default async function Footer() {
         <p className="text-lg font-semibold">
           {generalInfo.companyName[currentLocale]} NIT: {generalInfo.nit}
         </p>
-        <p>{generalInfo.tagline[currentLocale] || footer("tagline")}</p>
+        {generalInfo.tagline[currentLocale] && (
+          <p>{generalInfo.tagline[currentLocale]}</p>
+        )}
         <p className="text-sm opacity-70">
           Copyright {new Date().getFullYear()} - {generalInfo.rights[currentLocale] || footer("rights")}
         </p>

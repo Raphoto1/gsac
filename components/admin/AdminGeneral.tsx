@@ -11,6 +11,7 @@ import { DEFAULT_GENERAL_INFO } from "@/types/general";
 
 function FooterForm() {
   const [data, setData] = useState<GeneralInfo>(DEFAULT_GENERAL_INFO);
+  const [taglineEnabled, setTaglineEnabled] = useState(false);
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -31,6 +32,7 @@ function FooterForm() {
 
       const result = (await response.json()) as GeneralInfo;
       setData(result);
+      setTaglineEnabled(!!(result.tagline.es || result.tagline.en));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to fetch general info");
     } finally {
@@ -73,7 +75,9 @@ function FooterForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(
+          taglineEnabled ? data : { ...data, tagline: { es: "", en: "" } }
+        ),
       });
 
       const payload = (await response.json()) as GeneralInfo & {
@@ -120,12 +124,29 @@ function FooterForm() {
           <AdminField label="NIT" id="ft-nit">
             <input id="ft-nit" name="nit" type="text" className="input w-full" value={data.nit} onChange={onChange} />
           </AdminField>
-          <AdminField label="Tagline (español)" id="ft-tagline-es">
-            <input id="ft-tagline-es" name="tagline" data-lang="es" type="text" className="input w-full" value={data.tagline.es} onChange={onChange} />
-          </AdminField>
-          <AdminField label="Tagline (inglés)" id="ft-tagline-en">
-            <input id="ft-tagline-en" name="tagline" data-lang="en" type="text" className="input w-full" value={data.tagline.en} onChange={onChange} />
-          </AdminField>
+          <div className="sm:col-span-2 flex items-center gap-3">
+            <input
+              id="ft-tagline-toggle"
+              type="checkbox"
+              className="toggle toggle-primary"
+              checked={taglineEnabled}
+              onChange={(e) => {
+                setTaglineEnabled(e.target.checked);
+                setSaved(false);
+              }}
+            />
+            <label htmlFor="ft-tagline-toggle" className="text-sm font-medium">Mostrar tagline</label>
+          </div>
+          {taglineEnabled && (
+            <>
+              <AdminField label="Tagline (español)" id="ft-tagline-es">
+                <input id="ft-tagline-es" name="tagline" data-lang="es" type="text" className="input w-full" value={data.tagline.es} onChange={onChange} />
+              </AdminField>
+              <AdminField label="Tagline (inglés)" id="ft-tagline-en">
+                <input id="ft-tagline-en" name="tagline" data-lang="en" type="text" className="input w-full" value={data.tagline.en} onChange={onChange} />
+              </AdminField>
+            </>
+          )}
           <AdminField label="Texto de derechos (español)" id="ft-rights-es">
             <input id="ft-rights-es" name="rights" data-lang="es" type="text" className="input w-full" value={data.rights.es} onChange={onChange} />
           </AdminField>
