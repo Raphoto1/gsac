@@ -23,13 +23,6 @@ export default function Nav() {
   const t = useTranslations("navigation");
   const isHomePage = pathname === "/";
 
-  /*const navItems = [
-    { href: "/", label: t("home") },
-    { href: "/products", label: t("products") },
-    { href: "/about", label: t("about") },
-    { href: "/contact", label: t("contact") },
-  ];*/
-
   const navItems = [
     { href: "/", label: t("home") },
     { href: "/about", label: t("about") },

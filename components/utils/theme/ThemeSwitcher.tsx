@@ -16,11 +16,8 @@ export default function ThemeSwitcher() {
 
 	useEffect(() => {
 		const storedTheme = localStorage.getItem("theme");
-		const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-			? "dark"
-			: "light";
 		const initialTheme =
-			storedTheme === "dark" || storedTheme === "light" ? storedTheme : preferredTheme;
+			storedTheme === "dark" || storedTheme === "light" ? storedTheme : "light";
 
 		applyTheme(initialTheme);
 	}, []);

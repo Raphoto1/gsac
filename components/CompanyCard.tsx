@@ -35,11 +35,11 @@ export default function CompanyCard({
   const initials = getInitials(resolvedName);
 
   return (
-    <article className="company-card-float group relative mx-auto flex w-full max-w-[18rem] flex-col items-center rounded-4xl border border-base-300 bg-base-100 px-5 pb-5 pt-18 text-center shadow-[0_16px_40px_rgba(15,23,42,0.08)] transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_24px_56px_rgba(15,23,42,0.14)]">
+    <article className="company-card-float group relative mx-auto flex w-full max-w-[18rem] flex-col items-center rounded-4xl border border-base-300 bg-base-100/98 px-5 pb-5 pt-18 text-center shadow-[0_16px_40px_rgba(15,23,42,0.08)] transition-transform duration-300 hover:-translate-y-2 hover:shadow-[0_24px_56px_rgba(15,23,42,0.14)]">
       <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-primary/35 to-transparent" />
       <div className="pointer-events-none absolute left-1/2 top-0 h-20 w-32 -translate-x-1/2 -translate-y-1/3 rounded-full bg-primary/12 blur-2xl transition-transform duration-300 group-hover:scale-110" />
 
-      <figure className="absolute left-1/2 top-0 flex h-20 w-42 -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-[1.75rem] border border-base-300 bg-base-100 px-4 py-3 shadow-xl">
+      <figure className="absolute left-1/2 top-0 flex h-20 w-42 -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-[1.75rem] border border-base-300/80 bg-white px-4 py-3 shadow-xl">
         {hasLogo && !logoFailed ? (
           <img
             src={logo}
@@ -59,11 +59,11 @@ export default function CompanyCard({
 
       <div className="relative z-10 flex flex-col items-center text-center">
         <h2 className="text-lg font-semibold text-base-content">{resolvedName}</h2>
-        <p className="mt-2 text-sm leading-relaxed text-base-content/75">{resolvedDescription}</p>
+        <p className="mt-2 text-sm leading-relaxed text-base-content/90">{resolvedDescription}</p>
         {resolvedRelationship ? (
-          <div className="mt-4 w-full rounded-2xl border border-base-300 bg-base-200/60 px-3 py-2 text-left">
-            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-primary/80">{resolvedRelationshipLabel}</p>
-            <p className="mt-1 text-sm leading-relaxed text-base-content/80">{resolvedRelationship}</p>
+          <div className="mt-4 w-full rounded-2xl border border-base-300 bg-base-100 px-3 py-2 text-left">
+            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-base-content/80">{resolvedRelationshipLabel}</p>
+            <p className="mt-1 text-sm leading-relaxed text-base-content/90">{resolvedRelationship}</p>
           </div>
         ) : null}
 
