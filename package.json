@@ -20,6 +20,7 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio",
+    "db:backup": "node scripts/backup-db.cjs",
     "db:reset-seed-home": "node scripts/reset-and-seed-home.cjs",
     "db:reset-seed-home:with-blob-clean": "node scripts/reset-and-seed-home.cjs --clean-blob"
   },
