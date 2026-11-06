@@ -242,6 +242,7 @@ model HomeTeamMemberEntry {
 }
 
 model HomeProductsHeader {
+  sections               Json     @default("{\"header\":true,\"services\":true,\"cases\":true}")
   id                     String   @id @default("home_products_header")
   titleEs                String
   titleEn                String
@@ -257,6 +258,7 @@ model HomeProductsHeader {
 }
 
 model HomeProductEntry {
+  visible      Boolean  @default(true)
   id           String   @id @default(cuid())
   position     Int      @unique
   titleEs      String

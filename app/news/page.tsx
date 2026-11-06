@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: t("newsDescription"),
     path: "/news",
     locale,
-    keywords: ["novedades GSAC", "noticias empresariales", "actualizaciones", "consultoria"],
+    keywords: ["novedades GS Capital", "inversión de impacto", "actualizaciones", "consultoría financiera"],
   });
 }
 

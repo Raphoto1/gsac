@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import type { HomeProductItem, HomeProductsHeader } from "@/types/home-products";
+import { DEFAULT_PRODUCTS_SECTIONS, type ProductsSections, type HomeProductItem, type HomeProductsHeader } from "@/types/home-products";
 
 export type HomeProductsRecord = {
   header: HomeProductsHeader | null;
@@ -7,6 +7,7 @@ export type HomeProductsRecord = {
 };
 
 type HomeProductHeaderRow = {
+  sections: unknown;
   titleEs: string;
   titleEn: string;
   descriptionEs: string;
@@ -17,6 +18,7 @@ type HomeProductHeaderRow = {
 };
 
 type HomeProductEntryRow = {
+  visible: boolean;
   position: number;
   titleEs: string;
   titleEn: string;
@@ -34,6 +36,7 @@ const HOME_PRODUCTS_HEADER_ID = "home_products_header";
 
 function mapHeaderRowToData(row: HomeProductHeaderRow): HomeProductsHeader {
   return {
+    sections: { ...DEFAULT_PRODUCTS_SECTIONS, ...(row.sections as ProductsSections) },
     title: { es: row.titleEs, en: row.titleEn },
     description: { es: row.descriptionEs, en: row.descriptionEn },
     secondaryDescription: { es: row.secondaryDescriptionEs, en: row.secondaryDescriptionEn },
@@ -43,6 +46,7 @@ function mapHeaderRowToData(row: HomeProductHeaderRow): HomeProductsHeader {
 
 function mapHeaderDataToRow(header: HomeProductsHeader) {
   return {
+    sections: header.sections ?? DEFAULT_PRODUCTS_SECTIONS,
     titleEs: header.title.es,
     titleEn: header.title.en,
     descriptionEs: header.description.es,
@@ -56,6 +60,7 @@ function mapHeaderDataToRow(header: HomeProductsHeader) {
 function mapProductRowToData(row: HomeProductEntryRow): HomeProductItem {
   return {
     id: row.position,
+    visible: row.visible,
     title: { es: row.titleEs, en: row.titleEn },
     description: { es: row.descriptionEs, en: row.descriptionEn },
     icon: row.icon as HomeProductItem["icon"],
@@ -68,6 +73,7 @@ function mapProductRowToData(row: HomeProductEntryRow): HomeProductItem {
 function mapProductDataToRow(product: HomeProductItem, index: number) {
   return {
     position: index + 1,
+    visible: product.visible ?? true,
     titleEs: product.title.es,
     titleEn: product.title.en,
     descriptionEs: product.description.es,
@@ -86,6 +92,7 @@ export async function getHomeProductsFromDb(): Promise<HomeProductsRecord> {
     prisma.homeProductsHeader.findUnique({
       where: { id: HOME_PRODUCTS_HEADER_ID },
       select: {
+        sections: true,
         titleEs: true,
         titleEn: true,
         descriptionEs: true,
@@ -98,6 +105,7 @@ export async function getHomeProductsFromDb(): Promise<HomeProductsRecord> {
     prisma.homeProductEntry.findMany({
       orderBy: { position: "asc" },
       select: {
+        visible: true,
         position: true,
         titleEs: true,
         titleEn: true,

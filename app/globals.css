@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "quill/dist/quill.snow.css";
-@plugin "daisyui";
+/* Unused join utility emits selectors incompatible with Turbopack in DaisyUI 5.7.50. */
+@plugin "daisyui" {
+  exclude: join;
+}
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 /* Custom styles can be added here */

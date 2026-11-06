@@ -35,10 +35,10 @@ function normalizeSiteUrl(rawSiteUrl?: string) {
 }
 
 export const siteConfig = {
-  name: "GSAC",
+  name: "GS Capital",
   siteUrl: normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL),
   defaultDescription:
-    "GSAC impulsa empresas con consultoria, soluciones operativas y acompanamiento estrategico para crecimiento sostenible.",
+    "GS Capital acompaña a empresas y organizaciones de impacto con consultoría financiera, fundraising y estructuración de proyectos de inversión sostenibles.",
   defaultOgImage: "/img/logos/Logo.png",
   locales: ["es", "en"] as const,
 };

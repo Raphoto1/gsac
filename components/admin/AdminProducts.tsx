@@ -14,6 +14,8 @@ import { AdminField } from "./shared/AdminField";
 import AdminCasesForm from "./AdminCasesForm";
 import {
   DEFAULT_HOME_PRODUCTS_HEADER,
+  DEFAULT_PRODUCTS_SECTIONS,
+  type ProductsSections,
   HOME_PRODUCT_ICON_OPTIONS,
   type HomeProductIcon,
   type HomeProductItem,
@@ -422,6 +424,7 @@ function ProductsListForm() {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      <p className="text-sm text-base-content/70">Desactiva un servicio para ocultarlo sin borrarlo. Pulsa Guardar servicios para aplicar los cambios.</p>
       {loading && <div className="alert"><span>Cargando servicios...</span></div>}
       {error && <div className="alert alert-error"><span>{error}</span></div>}
       {saved && <div className="alert alert-success"><span>Guardado.</span></div>}
@@ -438,6 +441,19 @@ function ProductsListForm() {
                 <span className="text-base-content/50 text-sm">{expandedId === p.id ? "▲" : "▼"}</span>
               </button>
               <div className="flex items-center gap-2">
+                <span className={`badge badge-sm ${p.visible !== false ? "badge-success badge-outline" : "badge-ghost"}`}>
+                  {p.visible !== false ? "visible" : "oculto"}
+                </span>
+                <button type="button" className="btn btn-ghost btn-xs"
+                  disabled={loading || saving || updatingId !== null}
+                  aria-label={`${p.visible !== false ? "Ocultar" : "Mostrar"} ${p.title.es || `Servicio ${i + 1}`}`}
+                  onClick={() => {
+                    setProducts((items) => items.map((item) => item.id === p.id ? { ...item, visible: item.visible === false } : item));
+                    setSaved(false);
+                    setUpdatedId(null);
+                  }}>
+                  {p.visible !== false ? "Ocultar" : "Mostrar"}
+                </button>
                 <button type="button" className="btn btn-ghost btn-xs text-error" onClick={() => requestRemoveService(p.id)} disabled={updatingId === p.id}>
                   Eliminar
                 </button>
@@ -563,6 +579,88 @@ function ProductsListForm() {
   );
 }
 
+function SectionsVisibilityForm() {
+  const [sections, setSections] = useState<ProductsSections>(DEFAULT_PRODUCTS_SECTIONS);
+  const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let mounted = true;
+    async function load() {
+      try {
+        const response = await fetch("/api/admin/home/products", { cache: "no-store" });
+        const { data } = await readApiResponse<{ header?: HomeProductsHeader }>(response);
+        if (!response.ok || !data?.header) throw new Error("No se pudo cargar la visibilidad.");
+        if (mounted) { setSections(data.header.sections ?? DEFAULT_PRODUCTS_SECTIONS); setLoaded(true); }
+      } catch {
+        if (mounted) setError("No se pudo cargar la visibilidad. Recarga para reintentar.");
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
+    void load();
+    return () => { mounted = false; };
+  }, []);
+
+  async function save(event: React.FormEvent) {
+    event.preventDefault();
+    setSaving(true);
+    setMessage("");
+    setError("");
+    try {
+      const response = await fetch("/api/admin/home/products", {
+        method: "PUT", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sections }),
+      });
+      const { data } = await readApiResponse<{ error?: string }>(response);
+      if (!response.ok) throw new Error(data?.error || "No se pudo guardar la visibilidad.");
+      setMessage("Visibilidad guardada.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "No se pudo guardar.");
+    } finally { setSaving(false); }
+  }
+
+  return (
+    <form onSubmit={save} className="card mb-8 border border-base-300 bg-base-100 shadow-sm">
+      <div className="card-body gap-3 py-4">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h3 className="font-semibold">Visibilidad de secciones</h3>
+          <button type="submit" className="btn btn-primary btn-sm" disabled={!loaded || saving}>
+            {saving ? "Guardando..." : "Guardar visibilidad"}
+          </button>
+        </div>
+        {loading && <p role="status">Cargando...</p>}
+        {error && <div role="alert" className="alert alert-error"><span>{error}</span></div>}
+        {message && <div role="status" className="alert alert-success"><span>{message}</span></div>}
+        <ol className="mt-1 flex flex-col gap-2">
+          {TABS.map((section, index) => (
+            <li key={section.id} className="flex items-center justify-between gap-3 rounded-lg border border-base-300 bg-base-100 px-4 py-2">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="w-5 text-right font-mono text-xs text-base-content/40">{index + 1}</span>
+                <span className="text-sm font-medium">{section.label}</span>
+                <span className={`badge badge-sm ${sections[section.id] ? "badge-success badge-outline" : "badge-ghost"}`}>
+                  {sections[section.id] ? "visible" : "oculta"}
+                </span>
+              </div>
+              <button type="button" className="btn btn-ghost btn-xs" disabled={!loaded || saving}
+                aria-label={`${sections[section.id] ? "Ocultar" : "Mostrar"} ${section.label}`}
+                onClick={() => {
+                  setSections((prev) => ({ ...prev, [section.id]: !prev[section.id] }));
+                  setMessage("");
+                }}>
+                {sections[section.id] ? "Ocultar" : "Mostrar"}
+              </button>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </form>
+  );
+}
+
 type Tab = "header" | "services" | "cases";
 
 const TABS: { id: Tab; label: string }[] = [
@@ -578,6 +676,7 @@ export default function AdminProducts() {
     <div>
       <h2 className="text-2xl font-bold mb-6">Secciones de Servicios</h2>
 
+      <SectionsVisibilityForm />
       <div role="tablist" className="tabs tabs-border mb-8 flex-wrap">
         {TABS.map((t) => (
           <button

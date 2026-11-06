@@ -64,3 +64,18 @@ describe("app products page", () => {
     expect(view).toBeTruthy();
   });
 });
+
+
+it("hides disabled blocks and does not restore default services when all are inactive", async () => {
+  const { getLocale } = await import("next-intl/server");
+  const { getHomeProductsService } = await import("@/apiPack/service/products.service");
+  const { DEFAULT_HOME_PRODUCTS, DEFAULT_HOME_PRODUCTS_HEADER } = await import("@/types/home-products");
+  vi.mocked(getLocale).mockResolvedValue("es");
+  vi.mocked(getHomeProductsService).mockResolvedValue({
+    header: { ...DEFAULT_HOME_PRODUCTS_HEADER, sections: { header: false, services: true, cases: false } },
+    products: DEFAULT_HOME_PRODUCTS.map(p => ({ ...p, visible: false })),
+  });
+  const page = await import("./page");
+  const view = await page.default();
+  expect(view.props.children.filter(Boolean)).toHaveLength(0);
+});

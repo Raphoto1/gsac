@@ -6,7 +6,7 @@ import LogoutButton from "@/components/auth/LogoutButton";
 import AdminPanel from "@/components/admin/AdminPanel";
 import { buildNoIndexMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = buildNoIndexMetadata("GS Control", "Area privada de administracion de GSAC.");
+export const metadata: Metadata = buildNoIndexMetadata("GS Control", "Area privada de administracion de GS Capital.");
 
 export default async function Page() {
   const session = await getServerSession(authOptions);

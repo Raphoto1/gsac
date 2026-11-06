@@ -8,6 +8,7 @@ import { buildPageMetadata } from "@/lib/seo";
 import { getHomeProductsService } from "@/apiPack/service/products.service";
 import {
   DEFAULT_HOME_PRODUCTS,
+  DEFAULT_PRODUCTS_SECTIONS,
   DEFAULT_HOME_PRODUCTS_HEADER,
   type HomeProductItem,
   type HomeProductsHeader,
@@ -21,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: t("productsDescription"),
     path: "/products",
     locale,
-    keywords: ["productos GSAC", "soluciones empresariales", "catalogo de soluciones", "consultoria"],
+    keywords: ["servicios GS Capital", "estructuración financiera", "fundraising", "consultoría financiera"],
   });
 }
 
@@ -45,7 +46,7 @@ export default async function Page() {
   const safeLocale: "es" | "en" = locale === "en" ? "en" : "es";
 
   let header: HomeProductsHeader = DEFAULT_HOME_PRODUCTS_HEADER;
-  let products: HomeProductItem[] = [];
+  let products: HomeProductItem[] = DEFAULT_HOME_PRODUCTS;
 
   try {
     const response = await getHomeProductsService();
@@ -56,7 +57,7 @@ export default async function Page() {
   }
 
   const productsForRender = mapProductsForLocale(
-    products.length ? products : DEFAULT_HOME_PRODUCTS,
+    products.filter((product) => product.visible !== false),
     safeLocale,
   );
 
@@ -72,21 +73,23 @@ export default async function Page() {
       description: "Una red de servicios y productos pensada para operar en conjunto, con el mismo lenguaje visual del ecosistema de empresas.",
     };
 
+  const sections = header.sections ?? DEFAULT_PRODUCTS_SECTIONS;
+
   return (
     <div className="flex flex-col justify-center items-center min-w-full">
-      <BigCardProps
+      {sections.header && <BigCardProps
         title={resolveLocalized(header.title, safeLocale)}
         description={resolveLocalized(header.description, safeLocale)}
         secondaryDescription={resolveLocalized(header.secondaryDescription, safeLocale)}
         imageUrl={header.imageUrl}
-      />
-      <ProductsList
+      />}
+      {sections.services && productsForRender.length > 0 && <ProductsList
         products={productsForRender}
         sectionLabel={productsSectionTexts.label}
         sectionTitle={productsSectionTexts.title}
         sectionDescription={productsSectionTexts.description}
-      />
-      <Cases />
+      />}
+      {sections.cases && <Cases />}
     </div>
   );
 }

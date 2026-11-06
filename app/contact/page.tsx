@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: t("contactDescription"),
     path: "/contact",
     locale,
-    keywords: ["contacto GSAC", "consultoria empresarial", "asesoria", "solicitar informacion"],
+    keywords: ["contacto GS Capital", "consultoría financiera", "asesoría financiera", "solicitar información"],
   });
 }
 

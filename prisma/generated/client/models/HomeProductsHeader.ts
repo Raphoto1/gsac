@@ -51,6 +51,7 @@ export type HomeProductsHeaderMaxAggregateOutputType = {
 }
 
 export type HomeProductsHeaderCountAggregateOutputType = {
+  sections: number
   id: number
   titleEs: number
   titleEn: number
@@ -92,6 +93,7 @@ export type HomeProductsHeaderMaxAggregateInputType = {
 }
 
 export type HomeProductsHeaderCountAggregateInputType = {
+  sections?: true
   id?: true
   titleEs?: true
   titleEn?: true
@@ -178,6 +180,7 @@ export type HomeProductsHeaderGroupByArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 export type HomeProductsHeaderGroupByOutputType = {
+  sections: runtime.JsonValue
   id: string
   titleEs: string
   titleEn: string
@@ -212,6 +215,7 @@ export type HomeProductsHeaderWhereInput = {
   AND?: Prisma.HomeProductsHeaderWhereInput | Prisma.HomeProductsHeaderWhereInput[]
   OR?: Prisma.HomeProductsHeaderWhereInput[]
   NOT?: Prisma.HomeProductsHeaderWhereInput | Prisma.HomeProductsHeaderWhereInput[]
+  sections?: Prisma.JsonFilter<"HomeProductsHeader">
   id?: Prisma.StringFilter<"HomeProductsHeader"> | string
   titleEs?: Prisma.StringFilter<"HomeProductsHeader"> | string
   titleEn?: Prisma.StringFilter<"HomeProductsHeader"> | string
@@ -225,6 +229,7 @@ export type HomeProductsHeaderWhereInput = {
 }
 
 export type HomeProductsHeaderOrderByWithRelationInput = {
+  sections?: Prisma.SortOrder
   id?: Prisma.SortOrder
   titleEs?: Prisma.SortOrder
   titleEn?: Prisma.SortOrder
@@ -242,6 +247,7 @@ export type HomeProductsHeaderWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.HomeProductsHeaderWhereInput | Prisma.HomeProductsHeaderWhereInput[]
   OR?: Prisma.HomeProductsHeaderWhereInput[]
   NOT?: Prisma.HomeProductsHeaderWhereInput | Prisma.HomeProductsHeaderWhereInput[]
+  sections?: Prisma.JsonFilter<"HomeProductsHeader">
   titleEs?: Prisma.StringFilter<"HomeProductsHeader"> | string
   titleEn?: Prisma.StringFilter<"HomeProductsHeader"> | string
   descriptionEs?: Prisma.StringFilter<"HomeProductsHeader"> | string
@@ -254,6 +260,7 @@ export type HomeProductsHeaderWhereUniqueInput = Prisma.AtLeast<{
 }, "id">
 
 export type HomeProductsHeaderOrderByWithAggregationInput = {
+  sections?: Prisma.SortOrder
   id?: Prisma.SortOrder
   titleEs?: Prisma.SortOrder
   titleEn?: Prisma.SortOrder
@@ -273,6 +280,7 @@ export type HomeProductsHeaderScalarWhereWithAggregatesInput = {
   AND?: Prisma.HomeProductsHeaderScalarWhereWithAggregatesInput | Prisma.HomeProductsHeaderScalarWhereWithAggregatesInput[]
   OR?: Prisma.HomeProductsHeaderScalarWhereWithAggregatesInput[]
   NOT?: Prisma.HomeProductsHeaderScalarWhereWithAggregatesInput | Prisma.HomeProductsHeaderScalarWhereWithAggregatesInput[]
+  sections?: Prisma.JsonWithAggregatesFilter<"HomeProductsHeader">
   id?: Prisma.StringWithAggregatesFilter<"HomeProductsHeader"> | string
   titleEs?: Prisma.StringWithAggregatesFilter<"HomeProductsHeader"> | string
   titleEn?: Prisma.StringWithAggregatesFilter<"HomeProductsHeader"> | string
@@ -286,6 +294,7 @@ export type HomeProductsHeaderScalarWhereWithAggregatesInput = {
 }
 
 export type HomeProductsHeaderCreateInput = {
+  sections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   id?: string
   titleEs: string
   titleEn: string
@@ -299,6 +308,7 @@ export type HomeProductsHeaderCreateInput = {
 }
 
 export type HomeProductsHeaderUncheckedCreateInput = {
+  sections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   id?: string
   titleEs: string
   titleEn: string
@@ -312,6 +322,7 @@ export type HomeProductsHeaderUncheckedCreateInput = {
 }
 
 export type HomeProductsHeaderUpdateInput = {
+  sections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   id?: Prisma.StringFieldUpdateOperationsInput | string
   titleEs?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
@@ -325,6 +336,7 @@ export type HomeProductsHeaderUpdateInput = {
 }
 
 export type HomeProductsHeaderUncheckedUpdateInput = {
+  sections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   id?: Prisma.StringFieldUpdateOperationsInput | string
   titleEs?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
@@ -338,6 +350,7 @@ export type HomeProductsHeaderUncheckedUpdateInput = {
 }
 
 export type HomeProductsHeaderCreateManyInput = {
+  sections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   id?: string
   titleEs: string
   titleEn: string
@@ -351,6 +364,7 @@ export type HomeProductsHeaderCreateManyInput = {
 }
 
 export type HomeProductsHeaderUpdateManyMutationInput = {
+  sections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   id?: Prisma.StringFieldUpdateOperationsInput | string
   titleEs?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
@@ -364,6 +378,7 @@ export type HomeProductsHeaderUpdateManyMutationInput = {
 }
 
 export type HomeProductsHeaderUncheckedUpdateManyInput = {
+  sections?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   id?: Prisma.StringFieldUpdateOperationsInput | string
   titleEs?: Prisma.StringFieldUpdateOperationsInput | string
   titleEn?: Prisma.StringFieldUpdateOperationsInput | string
@@ -377,6 +392,7 @@ export type HomeProductsHeaderUncheckedUpdateManyInput = {
 }
 
 export type HomeProductsHeaderCountOrderByAggregateInput = {
+  sections?: Prisma.SortOrder
   id?: Prisma.SortOrder
   titleEs?: Prisma.SortOrder
   titleEn?: Prisma.SortOrder
@@ -418,6 +434,7 @@ export type HomeProductsHeaderMinOrderByAggregateInput = {
 
 
 export type HomeProductsHeaderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  sections?: boolean
   id?: boolean
   titleEs?: boolean
   titleEn?: boolean
@@ -431,6 +448,7 @@ export type HomeProductsHeaderSelect<ExtArgs extends runtime.Types.Extensions.In
 }, ExtArgs["result"]["homeProductsHeader"]>
 
 export type HomeProductsHeaderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  sections?: boolean
   id?: boolean
   titleEs?: boolean
   titleEn?: boolean
@@ -444,6 +462,7 @@ export type HomeProductsHeaderSelectCreateManyAndReturn<ExtArgs extends runtime.
 }, ExtArgs["result"]["homeProductsHeader"]>
 
 export type HomeProductsHeaderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  sections?: boolean
   id?: boolean
   titleEs?: boolean
   titleEn?: boolean
@@ -457,6 +476,7 @@ export type HomeProductsHeaderSelectUpdateManyAndReturn<ExtArgs extends runtime.
 }, ExtArgs["result"]["homeProductsHeader"]>
 
 export type HomeProductsHeaderSelectScalar = {
+  sections?: boolean
   id?: boolean
   titleEs?: boolean
   titleEn?: boolean
@@ -469,12 +489,13 @@ export type HomeProductsHeaderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type HomeProductsHeaderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "titleEs" | "titleEn" | "descriptionEs" | "descriptionEn" | "secondaryDescriptionEs" | "secondaryDescriptionEn" | "imageUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["homeProductsHeader"]>
+export type HomeProductsHeaderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"sections" | "id" | "titleEs" | "titleEn" | "descriptionEs" | "descriptionEn" | "secondaryDescriptionEs" | "secondaryDescriptionEn" | "imageUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["homeProductsHeader"]>
 
 export type $HomeProductsHeaderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "HomeProductsHeader"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
+    sections: runtime.JsonValue
     id: string
     titleEs: string
     titleEn: string
@@ -568,8 +589,8 @@ export interface HomeProductsHeaderDelegate<ExtArgs extends runtime.Types.Extens
    * // Get first 10 HomeProductsHeaders
    * const homeProductsHeaders = await prisma.homeProductsHeader.findMany({ take: 10 })
    * 
-   * // Only select the `id`
-   * const homeProductsHeaderWithIdOnly = await prisma.homeProductsHeader.findMany({ select: { id: true } })
+   * // Only select the `sections`
+   * const homeProductsHeaderWithSectionsOnly = await prisma.homeProductsHeader.findMany({ select: { sections: true } })
    * 
    */
   findMany<T extends HomeProductsHeaderFindManyArgs>(args?: Prisma.SelectSubset<T, HomeProductsHeaderFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HomeProductsHeaderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -613,9 +634,9 @@ export interface HomeProductsHeaderDelegate<ExtArgs extends runtime.Types.Extens
    *   ]
    * })
    * 
-   * // Create many HomeProductsHeaders and only return the `id`
-   * const homeProductsHeaderWithIdOnly = await prisma.homeProductsHeader.createManyAndReturn({
-   *   select: { id: true },
+   * // Create many HomeProductsHeaders and only return the `sections`
+   * const homeProductsHeaderWithSectionsOnly = await prisma.homeProductsHeader.createManyAndReturn({
+   *   select: { sections: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -704,9 +725,9 @@ export interface HomeProductsHeaderDelegate<ExtArgs extends runtime.Types.Extens
    *   ]
    * })
    * 
-   * // Update zero or more HomeProductsHeaders and only return the `id`
-   * const homeProductsHeaderWithIdOnly = await prisma.homeProductsHeader.updateManyAndReturn({
-   *   select: { id: true },
+   * // Update zero or more HomeProductsHeaders and only return the `sections`
+   * const homeProductsHeaderWithSectionsOnly = await prisma.homeProductsHeader.updateManyAndReturn({
+   *   select: { sections: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -908,6 +929,7 @@ export interface Prisma__HomeProductsHeaderClient<T, Null = never, ExtArgs exten
  * Fields of the HomeProductsHeader model
  */
 export interface HomeProductsHeaderFieldRefs {
+  readonly sections: Prisma.FieldRef<"HomeProductsHeader", 'Json'>
   readonly id: Prisma.FieldRef<"HomeProductsHeader", 'String'>
   readonly titleEs: Prisma.FieldRef<"HomeProductsHeader", 'String'>
   readonly titleEn: Prisma.FieldRef<"HomeProductsHeader", 'String'>

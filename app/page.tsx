@@ -12,10 +12,10 @@ export async function generateMetadata(): Promise<Metadata> {
     path: "/",
     locale,
     keywords: [
-      "consultoria empresarial",
-      "soluciones operativas",
-      "estrategia de crecimiento",
-      "GSAC",
+      "consultoría financiera",
+      "fundraising",
+      "modelos de sostenibilidad",
+      "GS Capital",
     ],
   });
 }

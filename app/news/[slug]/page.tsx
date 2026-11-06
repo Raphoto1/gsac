@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: NewsArticlePageProps): Promis
     locale,
     image: article.imageUrl,
     type: "article",
-    keywords: [localizedCategory, "GSAC", "novedades", "articulo"],
+    keywords: [localizedCategory, "GS Capital", "novedades", "articulo"],
   });
 }
 

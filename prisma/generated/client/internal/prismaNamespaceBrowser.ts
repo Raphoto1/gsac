@@ -300,6 +300,7 @@ export type HomeTeamMemberEntryScalarFieldEnum = (typeof HomeTeamMemberEntryScal
 
 
 export const HomeProductsHeaderScalarFieldEnum = {
+  sections: 'sections',
   id: 'id',
   titleEs: 'titleEs',
   titleEn: 'titleEn',
@@ -316,6 +317,7 @@ export type HomeProductsHeaderScalarFieldEnum = (typeof HomeProductsHeaderScalar
 
 
 export const HomeProductEntryScalarFieldEnum = {
+  visible: 'visible',
   id: 'id',
   position: 'position',
   titleEs: 'titleEs',

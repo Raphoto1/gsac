@@ -35,6 +35,7 @@ export type HomeProductEntrySumAggregateOutputType = {
 }
 
 export type HomeProductEntryMinAggregateOutputType = {
+  visible: boolean | null
   id: string | null
   position: number | null
   titleEs: string | null
@@ -52,6 +53,7 @@ export type HomeProductEntryMinAggregateOutputType = {
 }
 
 export type HomeProductEntryMaxAggregateOutputType = {
+  visible: boolean | null
   id: string | null
   position: number | null
   titleEs: string | null
@@ -69,6 +71,7 @@ export type HomeProductEntryMaxAggregateOutputType = {
 }
 
 export type HomeProductEntryCountAggregateOutputType = {
+  visible: number
   id: number
   position: number
   titleEs: number
@@ -96,6 +99,7 @@ export type HomeProductEntrySumAggregateInputType = {
 }
 
 export type HomeProductEntryMinAggregateInputType = {
+  visible?: true
   id?: true
   position?: true
   titleEs?: true
@@ -113,6 +117,7 @@ export type HomeProductEntryMinAggregateInputType = {
 }
 
 export type HomeProductEntryMaxAggregateInputType = {
+  visible?: true
   id?: true
   position?: true
   titleEs?: true
@@ -130,6 +135,7 @@ export type HomeProductEntryMaxAggregateInputType = {
 }
 
 export type HomeProductEntryCountAggregateInputType = {
+  visible?: true
   id?: true
   position?: true
   titleEs?: true
@@ -234,6 +240,7 @@ export type HomeProductEntryGroupByArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 export type HomeProductEntryGroupByOutputType = {
+  visible: boolean
   id: string
   position: number
   titleEs: string
@@ -274,6 +281,7 @@ export type HomeProductEntryWhereInput = {
   AND?: Prisma.HomeProductEntryWhereInput | Prisma.HomeProductEntryWhereInput[]
   OR?: Prisma.HomeProductEntryWhereInput[]
   NOT?: Prisma.HomeProductEntryWhereInput | Prisma.HomeProductEntryWhereInput[]
+  visible?: Prisma.BoolFilter<"HomeProductEntry"> | boolean
   id?: Prisma.StringFilter<"HomeProductEntry"> | string
   position?: Prisma.IntFilter<"HomeProductEntry"> | number
   titleEs?: Prisma.StringFilter<"HomeProductEntry"> | string
@@ -291,6 +299,7 @@ export type HomeProductEntryWhereInput = {
 }
 
 export type HomeProductEntryOrderByWithRelationInput = {
+  visible?: Prisma.SortOrder
   id?: Prisma.SortOrder
   position?: Prisma.SortOrder
   titleEs?: Prisma.SortOrder
@@ -313,6 +322,7 @@ export type HomeProductEntryWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.HomeProductEntryWhereInput | Prisma.HomeProductEntryWhereInput[]
   OR?: Prisma.HomeProductEntryWhereInput[]
   NOT?: Prisma.HomeProductEntryWhereInput | Prisma.HomeProductEntryWhereInput[]
+  visible?: Prisma.BoolFilter<"HomeProductEntry"> | boolean
   titleEs?: Prisma.StringFilter<"HomeProductEntry"> | string
   titleEn?: Prisma.StringFilter<"HomeProductEntry"> | string
   descriptionEs?: Prisma.StringFilter<"HomeProductEntry"> | string
@@ -328,6 +338,7 @@ export type HomeProductEntryWhereUniqueInput = Prisma.AtLeast<{
 }, "id" | "position">
 
 export type HomeProductEntryOrderByWithAggregationInput = {
+  visible?: Prisma.SortOrder
   id?: Prisma.SortOrder
   position?: Prisma.SortOrder
   titleEs?: Prisma.SortOrder
@@ -353,6 +364,7 @@ export type HomeProductEntryScalarWhereWithAggregatesInput = {
   AND?: Prisma.HomeProductEntryScalarWhereWithAggregatesInput | Prisma.HomeProductEntryScalarWhereWithAggregatesInput[]
   OR?: Prisma.HomeProductEntryScalarWhereWithAggregatesInput[]
   NOT?: Prisma.HomeProductEntryScalarWhereWithAggregatesInput | Prisma.HomeProductEntryScalarWhereWithAggregatesInput[]
+  visible?: Prisma.BoolWithAggregatesFilter<"HomeProductEntry"> | boolean
   id?: Prisma.StringWithAggregatesFilter<"HomeProductEntry"> | string
   position?: Prisma.IntWithAggregatesFilter<"HomeProductEntry"> | number
   titleEs?: Prisma.StringWithAggregatesFilter<"HomeProductEntry"> | string
@@ -370,6 +382,7 @@ export type HomeProductEntryScalarWhereWithAggregatesInput = {
 }
 
 export type HomeProductEntryCreateInput = {
+  visible?: boolean
   id?: string
   position: number
   titleEs: string
@@ -387,6 +400,7 @@ export type HomeProductEntryCreateInput = {
 }
 
 export type HomeProductEntryUncheckedCreateInput = {
+  visible?: boolean
   id?: string
   position: number
   titleEs: string
@@ -404,6 +418,7 @@ export type HomeProductEntryUncheckedCreateInput = {
 }
 
 export type HomeProductEntryUpdateInput = {
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   id?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   titleEs?: Prisma.StringFieldUpdateOperationsInput | string
@@ -421,6 +436,7 @@ export type HomeProductEntryUpdateInput = {
 }
 
 export type HomeProductEntryUncheckedUpdateInput = {
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   id?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   titleEs?: Prisma.StringFieldUpdateOperationsInput | string
@@ -438,6 +454,7 @@ export type HomeProductEntryUncheckedUpdateInput = {
 }
 
 export type HomeProductEntryCreateManyInput = {
+  visible?: boolean
   id?: string
   position: number
   titleEs: string
@@ -455,6 +472,7 @@ export type HomeProductEntryCreateManyInput = {
 }
 
 export type HomeProductEntryUpdateManyMutationInput = {
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   id?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   titleEs?: Prisma.StringFieldUpdateOperationsInput | string
@@ -472,6 +490,7 @@ export type HomeProductEntryUpdateManyMutationInput = {
 }
 
 export type HomeProductEntryUncheckedUpdateManyInput = {
+  visible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   id?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
   titleEs?: Prisma.StringFieldUpdateOperationsInput | string
@@ -489,6 +508,7 @@ export type HomeProductEntryUncheckedUpdateManyInput = {
 }
 
 export type HomeProductEntryCountOrderByAggregateInput = {
+  visible?: Prisma.SortOrder
   id?: Prisma.SortOrder
   position?: Prisma.SortOrder
   titleEs?: Prisma.SortOrder
@@ -510,6 +530,7 @@ export type HomeProductEntryAvgOrderByAggregateInput = {
 }
 
 export type HomeProductEntryMaxOrderByAggregateInput = {
+  visible?: Prisma.SortOrder
   id?: Prisma.SortOrder
   position?: Prisma.SortOrder
   titleEs?: Prisma.SortOrder
@@ -527,6 +548,7 @@ export type HomeProductEntryMaxOrderByAggregateInput = {
 }
 
 export type HomeProductEntryMinOrderByAggregateInput = {
+  visible?: Prisma.SortOrder
   id?: Prisma.SortOrder
   position?: Prisma.SortOrder
   titleEs?: Prisma.SortOrder
@@ -550,6 +572,7 @@ export type HomeProductEntrySumOrderByAggregateInput = {
 
 
 export type HomeProductEntrySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  visible?: boolean
   id?: boolean
   position?: boolean
   titleEs?: boolean
@@ -567,6 +590,7 @@ export type HomeProductEntrySelect<ExtArgs extends runtime.Types.Extensions.Inte
 }, ExtArgs["result"]["homeProductEntry"]>
 
 export type HomeProductEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  visible?: boolean
   id?: boolean
   position?: boolean
   titleEs?: boolean
@@ -584,6 +608,7 @@ export type HomeProductEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Ty
 }, ExtArgs["result"]["homeProductEntry"]>
 
 export type HomeProductEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  visible?: boolean
   id?: boolean
   position?: boolean
   titleEs?: boolean
@@ -601,6 +626,7 @@ export type HomeProductEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
 }, ExtArgs["result"]["homeProductEntry"]>
 
 export type HomeProductEntrySelectScalar = {
+  visible?: boolean
   id?: boolean
   position?: boolean
   titleEs?: boolean
@@ -617,12 +643,13 @@ export type HomeProductEntrySelectScalar = {
   updatedAt?: boolean
 }
 
-export type HomeProductEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "position" | "titleEs" | "titleEn" | "descriptionEs" | "descriptionEn" | "icon" | "expandTitleEs" | "expandTitleEn" | "expandTextEs" | "expandTextEn" | "expandImageUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["homeProductEntry"]>
+export type HomeProductEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"visible" | "id" | "position" | "titleEs" | "titleEn" | "descriptionEs" | "descriptionEn" | "icon" | "expandTitleEs" | "expandTitleEn" | "expandTextEs" | "expandTextEn" | "expandImageUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["homeProductEntry"]>
 
 export type $HomeProductEntryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "HomeProductEntry"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
+    visible: boolean
     id: string
     position: number
     titleEs: string
@@ -720,8 +747,8 @@ export interface HomeProductEntryDelegate<ExtArgs extends runtime.Types.Extensio
    * // Get first 10 HomeProductEntries
    * const homeProductEntries = await prisma.homeProductEntry.findMany({ take: 10 })
    * 
-   * // Only select the `id`
-   * const homeProductEntryWithIdOnly = await prisma.homeProductEntry.findMany({ select: { id: true } })
+   * // Only select the `visible`
+   * const homeProductEntryWithVisibleOnly = await prisma.homeProductEntry.findMany({ select: { visible: true } })
    * 
    */
   findMany<T extends HomeProductEntryFindManyArgs>(args?: Prisma.SelectSubset<T, HomeProductEntryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HomeProductEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -765,9 +792,9 @@ export interface HomeProductEntryDelegate<ExtArgs extends runtime.Types.Extensio
    *   ]
    * })
    * 
-   * // Create many HomeProductEntries and only return the `id`
-   * const homeProductEntryWithIdOnly = await prisma.homeProductEntry.createManyAndReturn({
-   *   select: { id: true },
+   * // Create many HomeProductEntries and only return the `visible`
+   * const homeProductEntryWithVisibleOnly = await prisma.homeProductEntry.createManyAndReturn({
+   *   select: { visible: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -856,9 +883,9 @@ export interface HomeProductEntryDelegate<ExtArgs extends runtime.Types.Extensio
    *   ]
    * })
    * 
-   * // Update zero or more HomeProductEntries and only return the `id`
-   * const homeProductEntryWithIdOnly = await prisma.homeProductEntry.updateManyAndReturn({
-   *   select: { id: true },
+   * // Update zero or more HomeProductEntries and only return the `visible`
+   * const homeProductEntryWithVisibleOnly = await prisma.homeProductEntry.updateManyAndReturn({
+   *   select: { visible: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -1060,6 +1087,7 @@ export interface Prisma__HomeProductEntryClient<T, Null = never, ExtArgs extends
  * Fields of the HomeProductEntry model
  */
 export interface HomeProductEntryFieldRefs {
+  readonly visible: Prisma.FieldRef<"HomeProductEntry", 'Boolean'>
   readonly id: Prisma.FieldRef<"HomeProductEntry", 'String'>
   readonly position: Prisma.FieldRef<"HomeProductEntry", 'Int'>
   readonly titleEs: Prisma.FieldRef<"HomeProductEntry", 'String'>

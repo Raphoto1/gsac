@@ -61,7 +61,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: t("aboutDescription"),
     path: "/about",
     locale,
-    keywords: ["sobre GSAC", "consultoria", "equipo", "servicios empresariales"],
+    keywords: ["sobre GS Capital", "consultoría financiera", "equipo", "finanzas para el desarrollo"],
   });
 }
 

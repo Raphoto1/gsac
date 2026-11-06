@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.9.1
- * Query Engine version: e922089b7d7502aff4249d5da3420f6fa55fc6ad
+ * Prisma Client JS version: 7.10.1
+ * Query Engine version: d1b3f377ca835d73fd50954a5e22128b9ebdd6b8
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.9.1",
-  engine: "e922089b7d7502aff4249d5da3420f6fa55fc6ad"
+  client: "7.10.1",
+  engine: "d1b3f377ca835d73fd50954a5e22128b9ebdd6b8"
 }
 
 /**
@@ -2388,6 +2388,7 @@ export type HomeTeamMemberEntryScalarFieldEnum = (typeof HomeTeamMemberEntryScal
 
 
 export const HomeProductsHeaderScalarFieldEnum = {
+  sections: 'sections',
   id: 'id',
   titleEs: 'titleEs',
   titleEn: 'titleEn',
@@ -2404,6 +2405,7 @@ export type HomeProductsHeaderScalarFieldEnum = (typeof HomeProductsHeaderScalar
 
 
 export const HomeProductEntryScalarFieldEnum = {
+  visible: 'visible',
   id: 'id',
   position: 'position',
   titleEs: 'titleEs',

@@ -1,5 +1,7 @@
 import {
   DEFAULT_HOME_PRODUCTS_HEADER,
+  DEFAULT_PRODUCTS_SECTIONS,
+  type ProductsSections,
   HOME_PRODUCT_ICON_OPTIONS,
   type HomeProductIcon,
   type HomeProductItem,
@@ -11,6 +13,7 @@ import { getHomeProductsFromDb, upsertHomeProductsInDb, type HomeProductsRecord 
 type ProductsPayload = {
   header?: unknown;
   products?: unknown;
+  sections?: unknown;
 };
 
 export class ProductsValidationError extends Error {
@@ -64,6 +67,15 @@ function normalizeLocalizedTextOptional(value: unknown, fallback: { es: string; 
   };
 }
 
+function parseSections(value: unknown): ProductsSections {
+  if (!value || typeof value !== "object" ||
+      !Object.keys(DEFAULT_PRODUCTS_SECTIONS).every((key) => typeof (value as Record<string, unknown>)[key] === "boolean")) {
+    throw new ProductsValidationError("Las secciones deben incluir header, services y cases como booleanos.");
+  }
+  const sections = value as ProductsSections;
+  return { header: sections.header, services: sections.services, cases: sections.cases };
+}
+
 function parseHeader(header: unknown, fallback: HomeProductsHeader): HomeProductsHeader {
   if (!header || typeof header !== "object") {
     throw new ProductsValidationError("El campo header debe ser un objeto valido.");
@@ -81,6 +93,7 @@ function parseHeader(header: unknown, fallback: HomeProductsHeader): HomeProduct
   const imageUrl = typeof imageValue === "string" ? imageValue.trim() : "";
 
   return {
+    sections: fallback.sections ?? DEFAULT_PRODUCTS_SECTIONS,
     title,
     description,
     secondaryDescription,
@@ -110,6 +123,10 @@ function parseProducts(products: unknown): HomeProductItem[] {
       throw new ProductsValidationError(`El servicio ${index + 1} debe ser un objeto valido.`);
     }
 
+    const visible = (item as { visible?: unknown }).visible;
+    if (visible !== undefined && typeof visible !== "boolean") {
+      throw new ProductsValidationError("La visibilidad del servicio debe ser un booleano.");
+    }
     const idValue = (item as { id?: unknown }).id;
     const title = normalizeLocalizedText((item as { title?: unknown }).title, "product.title");
     const description = normalizeLocalizedText((item as { description?: unknown }).description, "product.description");
@@ -134,6 +151,7 @@ function parseProducts(products: unknown): HomeProductItem[] {
 
     return {
       id: idValue,
+      visible: visible !== false,
       title,
       description,
       icon,
@@ -173,8 +191,8 @@ export async function updateHomeProductsService(payload: unknown): Promise<HomeP
   }
 
   const data = payload as ProductsPayload;
-  if (!("header" in data) && !("products" in data)) {
-    throw new ProductsValidationError("El payload debe incluir header, products o ambos.");
+  if (!("header" in data) && !("products" in data) && !("sections" in data)) {
+    throw new ProductsValidationError("El payload debe incluir header, products o sections.");
   }
 
   const current = await getHomeProductsFromDb();
@@ -182,7 +200,9 @@ export async function updateHomeProductsService(payload: unknown): Promise<HomeP
 
   const nextHeader = "header" in data
     ? parseHeader(data.header, currentResponse.header)
-    : currentResponse.header;
+    : { ...currentResponse.header };
+
+  if ("sections" in data) nextHeader.sections = parseSections(data.sections);
 
   const nextProducts = "products" in data
     ? parseProducts(data.products)

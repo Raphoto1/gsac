@@ -65,11 +65,11 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     manifest: "/img/favicon/site.webmanifest",
     keywords: [
-      "consultoria empresarial",
-      "soluciones empresariales",
-      "optimizacion de procesos",
-      "transformacion operativa",
-      "GSAC",
+      "consultoría financiera",
+      "estructuración financiera",
+      "fundraising",
+      "inversión de impacto",
+      "GS Capital",
     ],
     alternates: {
       canonical: "/",

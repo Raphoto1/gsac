@@ -2,7 +2,12 @@ import type { LocalizedText } from "./home-bigcard";
 
 export type HomeProductIcon = "business" | "briefcase" | "construct" | "globe" | "rocket" | "settings";
 
+export type ProductsSections = { header: boolean; services: boolean; cases: boolean };
+
+export const DEFAULT_PRODUCTS_SECTIONS: ProductsSections = { header: true, services: true, cases: true };
+
 export type HomeProductsHeader = {
+  sections?: ProductsSections;
   title: LocalizedText;
   description: LocalizedText;
   secondaryDescription: LocalizedText;
@@ -10,6 +15,7 @@ export type HomeProductsHeader = {
 };
 
 export type HomeProductItem = {
+  visible?: boolean;
   id: number;
   title: LocalizedText;
   description: LocalizedText;
